@@ -15,68 +15,70 @@ function getClient(): GoogleGenAI {
     return ai
 }
 
-const ENHANCE_PROMPT = `You are a professional real estate photo editor. Transform this real estate photo into a stunning, listing-ready image by applying ALL of the following enhancements:
+const ENHANCE_PROMPT = `You are an ELITE real estate photo editor specializing in LUXURY property photography. Your goal is to create a STUNNING, BRIGHT, HIGH-KEY image that looks like it was professionally shot with multiple flash units and perfectly merged HDR.
 
-## 1. HDR MERGING & EXPOSURE BALANCE
-- Create perfect exposure balance across the ENTIRE image
-- Recover ALL shadow details in dark areas - make them bright and visible
-- Recover ALL highlight details in bright areas - no blown out whites
-- Interior should be dramatically brighter while maintaining natural look
+CRITICAL INSTRUCTION: The final image must be DRAMATICALLY BRIGHTER than the original. Think "bright, airy, luxurious showroom" - NOT subtle improvements.
 
-## 2. WINDOW PULLING (CRITICAL)
-- Windows MUST show a clear, sharp view of the outside
-- The exterior through windows should be perfectly visible, not white/blown out
-- Balance interior exposure with exterior view - both must be crystal clear
-- If there's sky visible through windows, it should be blue and inviting
+## 1. EXTREME BRIGHTNESS & HDR (MOST IMPORTANT)
+- Make the ENTIRE image VERY BRIGHT - aim for HIGH-KEY exposure
+- Walls and ceilings should appear almost GLOWING with soft, even light
+- Lift ALL shadows aggressively - there should be NO dark corners or areas
+- The overall exposure should be +1.5 to +2 stops brighter than typical
+- Think "bright sunny day flooding through every window"
+- Shadows should feel "lifted" and airy, not crushed or dark
 
-## 3. SKY REPLACEMENT
-- If any exterior sky is visible and it's dull/gray/overcast, replace with bright blue sky
-- Add natural-looking white clouds for visual interest
-- Sky should look inviting and enhance curb appeal
+## 2. WARM, CREAMY COLOR TEMPERATURE
+- Apply WARM color grading - cream whites, golden undertones
+- Color temperature should be around 6500K (warm daylight)
+- Whites should be WARM CREAM, not cool or neutral
+- Walls should have a subtle warm golden glow
+- Wood tones should be rich honey/golden brown
+- The overall feel should be INVITING and LUXURIOUS
 
-## 4. WHITE BALANCE CORRECTION
-- Correct any color cast (yellow, blue, green tints)
-- Whites should be pure white
-- Create warm, inviting tones that feel welcoming
-- Natural color temperature around 5500-6000K
+## 3. WINDOW PULLING WITH PERFECT BALANCE
+- Windows MUST show clear exterior views with blue sky
+- Interior exposure MUST match the bright exterior
+- No blown-out windows - both inside and outside crystal clear
+- Window views should enhance the bright, airy atmosphere
 
-## 5. PERSPECTIVE CORRECTION
-- Straighten ALL vertical lines (walls, door frames, windows)
-- Straighten ALL horizontal lines (floor edges, ceiling lines)
-- Correct any lens distortion or barrel distortion
-- Image should look professionally shot with a tilt-shift lens
+## 4. PROFESSIONAL LUXURY LIGHTING SIMULATION
+- Simulate the look of professional real estate photography lighting
+- Every surface should have soft, even illumination
+- Add subtle fill light effect to shadowy areas
+- Create the impression of multiple light sources
+- Carpets/floors should appear CLEAN and BRIGHT
+- Ceilings should be bright white/cream, never gray
 
-## 6. IMAGE RELIGHTING
-- Brighten ALL dark corners and shadowy areas dramatically
-- Add subtle highlights to surfaces to create depth
-- Create balanced, even lighting as if professionally lit
-- No harsh shadows - soft, natural-looking illumination
+## 5. PERSPECTIVE & GEOMETRY CORRECTION
+- Straighten all vertical and horizontal lines perfectly
+- Correct any lens distortion
+- Professional architectural photography standard
 
-## 7. RAW-QUALITY DETAIL ENHANCEMENT
-- Maximize sharpness and clarity
-- Enhance fine textures (wood grain, fabric, stone)
-- Preserve and enhance all micro-details
-- Output should look like it came from a professional camera RAW file
+## 6. COLOR ENHANCEMENT & VIBRANCE
+- Boost saturation slightly for visual pop
+- Enhance fabric and decor colors to look fresh
+- Plants should be vibrant green
+- Maintain realistic but enhanced color palette
 
-## 8. AUTO PRIVACY PROTECTION
-- If there are any family photos/portraits visible, apply subtle blur
-- If there are any license plates visible, blur them
-- Blur any personal documents or screens with sensitive info
-- Maintain natural appearance while protecting privacy
+## 7. DETAIL & CLARITY
+- Maximize sharpness without artifacts  
+- Enhance textures (wood grain, fabrics, stone)
+- Crystal clear, magazine-quality output
 
-## 9. COLOR CORRECTION & VIBRANCE
-- Boost color vibrance for visual pop without looking artificial
-- Enhance greens in plants to look healthy and vibrant
-- Enhance wood tones to look rich and warm
-- Make the space look inviting, clean, and move-in ready
+## 8. PRIVACY PROTECTION
+- Blur any visible faces in photos/portraits
+- Blur license plates if visible
+- Subtle, natural-looking privacy protection
 
-OUTPUT REQUIREMENTS:
-- The result should be DRAMATICALLY improved - obvious visible difference
-- Professional real estate listing quality
-- Natural and realistic - not over-processed or HDR-heavy
-- Ready for immediate use on Zillow, Redfin, Realtor.com
+TARGET LOOK:
+- Think LUXURY REAL ESTATE MAGAZINE cover
+- Bright, warm, welcoming, aspirational
+- "I want to live here!" emotional response
+- High-key, airy, sun-drenched feeling
+- Every corner visible and inviting
+- Professional HDR but NATURAL looking
 
-Apply ALL enhancements aggressively. The before/after difference should be STRIKING.`
+The transformation must be DRAMATIC and OBVIOUS. Take the dark original and make it GLOW with warmth and light. This is for a premium real estate listing.`
 
 
 const REMOVE_OBJECT_PROMPT = (objectToRemove: string) => `Edit this image by replacing the "${objectToRemove}" with the surrounding background (wall, floor, or ceiling). The result should look natural and seamless, as if the object was never there.`
