@@ -9,7 +9,8 @@ import {
     Eraser,
     Menu,
     X,
-    Home
+    Home,
+    Aperture
 } from 'lucide-react'
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
@@ -33,11 +34,11 @@ export function Navbar() {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-500 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-                            <span className="text-xl">🍌</span>
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                            <Aperture className="w-5 h-5 text-white" />
                         </div>
                         <span className="font-bold text-xl text-gray-900">
-                            Nana Banana <span className="text-blue-600">Pro</span>
+                            Aurix
                         </span>
                     </Link>
 

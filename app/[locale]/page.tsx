@@ -1,5 +1,5 @@
 import { Link } from '@/navigation'
-import { Sparkles, Eraser, Zap, Shield, Clock, ArrowRight } from 'lucide-react'
+import { Sparkles, Eraser, Zap, Shield, Clock, ArrowRight, Aperture } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PricingCards } from '@/components/PricingCards'
 import { useTranslations } from 'next-intl'
@@ -141,13 +141,13 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-500 flex items-center justify-center">
-                <span className="text-lg">🍌</span>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
+                <Aperture className="w-4 h-4 text-white" />
               </div>
-              <span className="font-semibold text-white">Nana Banana Pro</span>
+              <span className="font-semibold text-white">Aurix</span>
             </div>
             <p className="text-sm text-center md:text-right">
-              © {new Date().getFullYear()} Nana Banana Pro. {t('footerRights')}
+              © {new Date().getFullYear()} Aurix. {t('footerRights')}
             </p>
           </div>
         </div>

@@ -10,12 +10,12 @@ import '../globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Nana Banana Pro | AI Real Estate Photo Editor',
+  title: 'Aurix | AI Real Estate Photo Editor',
   description: 'Enhance photos & remove objects in seconds with AI-powered real estate photo editing.',
   keywords: ['real estate', 'photo editing', 'AI', 'HDR', 'property photos'],
-  authors: [{ name: 'Nana Banana Pro' }],
+  authors: [{ name: 'Aurix' }],
   openGraph: {
-    title: 'Nana Banana Pro | AI Real Estate Photo Editor',
+    title: 'Aurix | AI Real Estate Photo Editor',
     description: 'Enhance photos & remove objects in seconds with AI-powered real estate photo editing.',
     type: 'website',
   },

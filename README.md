@@ -1,4 +1,4 @@
-# Nana Banana Pro 🍌
+# Aurix 🚀
 
 AI-powered real estate photo editor with enhance and object removal features.
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, Loader2, Sparkles, RotateCcw, Check } from 'lucide-react'
 import { toast } from 'sonner'
@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button'
 import { ImageDropzone } from '@/components/ImageDropzone'
 import { BeforeAfter } from '@/components/BeforeAfter'
 import { compressImage } from '@/lib/utils'
+import { EmailGate } from '@/components/EmailGate'
+import { PaywallGate } from '@/components/PaywallGate'
 
 type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
@@ -34,6 +36,38 @@ export default function EnhancePage() {
     const [upscaledImage, setUpscaledImage] = useState<string | null>(null)
     const [processingState, setProcessingState] = useState<ProcessingState>('idle')
     const [selectedMode, setSelectedMode] = useState<EnhanceMode>('full')
+
+    // Gate States
+    const [emailGateOpen, setEmailGateOpen] = useState(false)
+    const [paywallGateOpen, setPaywallGateOpen] = useState(false)
+    const [hasEmail, setHasEmail] = useState(false)
+    const [usageCount, setUsageCount] = useState(0)
+    const [isPro, setIsPro] = useState(false)
+
+    useEffect(() => {
+        checkUsage()
+    }, [])
+
+    const checkUsage = async () => {
+        try {
+            const res = await fetch('/api/lead')
+            if (res.ok) {
+                const data = await res.json()
+                setHasEmail(data.hasEmail)
+                setUsageCount(data.usageCount)
+                setIsPro(data.isPro)
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const handleEmailSuccess = () => {
+        setHasEmail(true)
+        setEmailGateOpen(false)
+        // Retry processing after a brief delay to ensure state update
+        setTimeout(processImage, 100)
+    }
 
     const ENHANCE_MODES: ModeOption[] = [
         { id: 'full', icon: '✨', label: t('modes.full.label'), description: t('modes.full.description'), bgGradient: 'from-purple-50 to-indigo-50', borderColor: 'border-purple-200' },
@@ -63,6 +97,17 @@ export default function EnhancePage() {
             return
         }
 
+        // Gate Checks
+        if (!hasEmail) {
+            setEmailGateOpen(true)
+            return
+        }
+
+        if (usageCount >= 3 && !isPro) {
+            setPaywallGateOpen(true)
+            return
+        }
+
         setProcessingState('processing')
 
         try {
@@ -81,6 +126,19 @@ export default function EnhancePage() {
 
             if (!response.ok) {
                 const error = await response.json()
+                // Handle gate errors from API if frontend state was out of sync
+                if (response.status === 401 && error.error === 'EMAIL_REQUIRED') {
+                    setHasEmail(false)
+                    setEmailGateOpen(true)
+                    setProcessingState('idle')
+                    return
+                }
+                if (response.status === 403 && error.error === 'LIMIT_REACHED') {
+                    setUsageCount(3) // Force update
+                    setPaywallGateOpen(true)
+                    setProcessingState('idle')
+                    return
+                }
                 throw new Error(error.message || tToast('enhanceError'))
             }
 
@@ -90,6 +148,7 @@ export default function EnhancePage() {
                 setUpscaledImage(data.upscaled)
             }
             setProcessingState('done')
+            setUsageCount(prev => prev + 1) // Optimistic increment
             toast.success(tToast('enhanceSuccess'))
         } catch (error) {
             console.error('Enhancement error:', error)
@@ -150,6 +209,8 @@ export default function EnhancePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+            <EmailGate open={emailGateOpen} onSuccess={handleEmailSuccess} />
+            <PaywallGate open={paywallGateOpen} />
             <div className="max-w-5xl mx-auto px-4 py-12">
                 {/* Header */}
                 <div className="text-center mb-8">

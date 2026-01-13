@@ -116,6 +116,16 @@
         "before": "Predtým",
         "after": "Potom"
     },
+    "Gates": {
+        "emailTitle": "Získajte bezplatné vylepšenie",
+        "emailSubtitle": "Zadajte svoj e-mail a výsledok odomkneme.",
+        "emailPlaceholder": "vas@email.com",
+        "emailButton": "Pokračovať",
+        "promise": "Sľubujeme, že nebudeme spamovať.",
+        "limitTitle": "Dosiahli ste bezplatný limit",
+        "limitSubtitle": "Využili ste všetky 3 bezplatné vylepšenia. Pre neobmedzený prístup prejdite na Pro.",
+        "limitButton": "Zobraziť cenník"
+    },
     "Toasts": {
         "selectImage": "Najskôr vyberte obrázok",
         "enhanceSuccess": "Obrázok úspešne vylepšený!",

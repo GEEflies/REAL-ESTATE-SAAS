@@ -116,6 +116,16 @@
         "before": "Before",
         "after": "After"
     },
+    "Gates": {
+        "emailTitle": "Unlock Your Free Enhancement",
+        "emailSubtitle": "Enter your email to get your result instantly.",
+        "emailPlaceholder": "name@example.com",
+        "emailButton": "Continue",
+        "promise": "We promise not to spam you.",
+        "limitTitle": "Free Limit Reached",
+        "limitSubtitle": "You've used all 3 free enhancements. Upgrade to Pro for unlimited access.",
+        "limitButton": "View Pricing"
+    },
     "Toasts": {
         "selectImage": "Please select an image first",
         "enhanceSuccess": "Image enhanced successfully!",

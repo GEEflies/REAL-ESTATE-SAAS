@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, Loader2, Eraser, RotateCcw } from 'lucide-react'
 import { toast } from 'sonner'
@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input'
 import { ImageDropzone } from '@/components/ImageDropzone'
 import { BeforeAfter } from '@/components/BeforeAfter'
 import { getBase64FromFile } from '@/lib/utils'
+import { EmailGate } from '@/components/EmailGate'
+import { PaywallGate } from '@/components/PaywallGate'
 
 type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
@@ -23,6 +25,37 @@ export default function RemovePage() {
     const [objectToRemove, setObjectToRemove] = useState('')
     const [processingState, setProcessingState] = useState<ProcessingState>('idle')
 
+    // Gate States
+    const [emailGateOpen, setEmailGateOpen] = useState(false)
+    const [paywallGateOpen, setPaywallGateOpen] = useState(false)
+    const [hasEmail, setHasEmail] = useState(false)
+    const [usageCount, setUsageCount] = useState(0)
+    const [isPro, setIsPro] = useState(false)
+
+    useEffect(() => {
+        checkUsage()
+    }, [])
+
+    const checkUsage = async () => {
+        try {
+            const res = await fetch('/api/lead')
+            if (res.ok) {
+                const data = await res.json()
+                setHasEmail(data.hasEmail)
+                setUsageCount(data.usageCount)
+                setIsPro(data.isPro)
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const handleEmailSuccess = () => {
+        setHasEmail(true)
+        setEmailGateOpen(false)
+        setTimeout(processImage, 100)
+    }
+
     const handleImageSelect = async (file: File, preview: string) => {
         setOriginalImage(preview)
         setOriginalFile(file)
@@ -33,6 +66,17 @@ export default function RemovePage() {
     const processImage = async () => {
         if (!originalFile || !objectToRemove.trim()) {
             toast.error(tToast('specifyRemove'))
+            return
+        }
+
+        // Gate Checks
+        if (!hasEmail) {
+            setEmailGateOpen(true)
+            return
+        }
+
+        if (usageCount >= 3 && !isPro) {
+            setPaywallGateOpen(true)
             return
         }
 
@@ -53,12 +97,26 @@ export default function RemovePage() {
 
             if (!response.ok) {
                 const error = await response.json()
+                // Handle gate errors
+                if (response.status === 401 && error.error === 'EMAIL_REQUIRED') {
+                    setHasEmail(false)
+                    setEmailGateOpen(true)
+                    setProcessingState('idle')
+                    return
+                }
+                if (response.status === 403 && error.error === 'LIMIT_REACHED') {
+                    setUsageCount(3)
+                    setPaywallGateOpen(true)
+                    setProcessingState('idle')
+                    return
+                }
                 throw new Error(error.message || tToast('removeError'))
             }
 
             const data = await response.json()
             setProcessedImage(data.processed)
             setProcessingState('done')
+            setUsageCount(prev => prev + 1)
             toast.success(tToast('removeSuccess'))
         } catch (error) {
             console.error('Removal error:', error)
@@ -104,6 +162,8 @@ export default function RemovePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+            <EmailGate open={emailGateOpen} onSuccess={handleEmailSuccess} />
+            <PaywallGate open={paywallGateOpen} />
             <div className="max-w-4xl mx-auto px-4 py-12">
                 {/* Header */}
                 <div className="text-center mb-10">

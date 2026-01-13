@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { removeObject } from '@/lib/gemini'
+import { db } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
     try {
@@ -21,11 +22,30 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // TODO: Check user quota from database
-        // const user = await prisma.user.findUnique({ where: { clerkId: userId } })
-        // if (user.imagesUsed >= TIER_LIMITS[user.tier]) {
-        //   return NextResponse.json({ message: 'Quota exceeded' }, { status: 403 })
-        // }
+        const ip = request.headers.get('x-forwarded-for') || 'unknown'
+
+        // Check usage limits
+        const { data: lead, error: leadError } = await db
+            .from('leads')
+            .select('email, usage_count, is_pro')
+            .eq('ip', ip)
+            .single()
+
+        // 1. Check if email is registered (Gate)
+        if (!lead || !lead.email) {
+            return NextResponse.json(
+                { message: 'Email registration required', error: 'EMAIL_REQUIRED' },
+                { status: 401 }
+            )
+        }
+
+        // 2. Check usage limit (Paywall)
+        if (lead.usage_count >= 3 && !lead.is_pro) {
+            return NextResponse.json(
+                { message: 'Usage limit reached', error: 'LIMIT_REACHED' },
+                { status: 403 }
+            )
+        }
 
         // Process image with Gemini
         const processedBase64 = await removeObject(
@@ -34,11 +54,10 @@ export async function POST(request: NextRequest) {
             mimeType || 'image/jpeg'
         )
 
-        // TODO: Increment user quota
-        // await prisma.user.update({
-        //   where: { clerkId: userId },
-        //   data: { imagesUsed: { increment: 1 } }
-        // })
+        // Increment usage count
+        await db.from('leads')
+            .update({ usage_count: lead.usage_count + 1 })
+            .eq('ip', ip)
 
         return NextResponse.json({
             processed: processedBase64,

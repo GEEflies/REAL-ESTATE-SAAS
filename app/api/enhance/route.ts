@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { enhanceImageWithMode, EnhanceMode } from '@/lib/gemini'
 import { upscaleImage } from '@/lib/replicate'
+import { db } from '@/lib/supabase'
 
 // Max duration for serverless function (60 seconds)
 export const maxDuration = 60
@@ -19,11 +20,30 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // TODO: Check user quota from database
-        // const user = await prisma.user.findUnique({ where: { clerkId: userId } })
-        // if (user.imagesUsed >= TIER_LIMITS[user.tier]) {
-        //   return NextResponse.json({ message: 'Quota exceeded' }, { status: 403 })
-        // }
+        const ip = request.headers.get('x-forwarded-for') || 'unknown'
+
+        // Check usage limits
+        const { data: lead, error: leadError } = await db
+            .from('leads')
+            .select('email, usage_count, is_pro')
+            .eq('ip', ip)
+            .single()
+
+        // 1. Check if email is registered (Gate)
+        if (!lead || !lead.email) {
+            return NextResponse.json(
+                { message: 'Email registration required', error: 'EMAIL_REQUIRED' },
+                { status: 401 }
+            )
+        }
+
+        // 2. Check usage limit (Paywall)
+        if (lead.usage_count >= 3 && !lead.is_pro) {
+            return NextResponse.json(
+                { message: 'Usage limit reached', error: 'LIMIT_REACHED' },
+                { status: 403 }
+            )
+        }
 
         // Process image with Gemini using specified mode (defaults to 'full')
         const enhanceMode: EnhanceMode = mode || 'full'
@@ -46,11 +66,23 @@ export async function POST(request: NextRequest) {
 
         console.log('📦 [API] Preparing response - Enhanced:', !!enhancedBase64, 'Upscaled:', !!upscaledUrl)
 
-        // TODO: Increment user quota
-        // await prisma.user.update({
-        //   where: { clerkId: userId },
-        //   data: { imagesUsed: { increment: 1 } }
-        // })
+        // Increment usage count
+        await db.rpc('increment_usage', { user_ip: ip })
+            // Fallback to direct update if RPC doesn't exist (though RPC is safer for concurrency)
+            .then(({ error }) => {
+                if (error) {
+                    // Try direct update
+                    return db.from('leads')
+                        .update({ usage_count: lead.usage_count + 1 })
+                        .eq('ip', ip)
+                }
+            })
+        // Simple direct increment as fallback logic for now since we didn't define RPC function yet
+        // actually let's just do direct update for MVP simplicity, race conditions unlikely at this scale
+
+        await db.from('leads')
+            .update({ usage_count: lead.usage_count + 1 })
+            .eq('ip', ip)
 
         return NextResponse.json({
             enhanced: enhancedBase64,  // Original Gemini enhancement
