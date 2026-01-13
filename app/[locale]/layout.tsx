@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from 'sonner'
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server'; // Correct import for Next.js 14+
 import { Navbar } from '@/components/Navbar'
-import './globals.css'
+import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,25 +21,30 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params: { locale }
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
+  params: { locale: string };
 }) {
   const hasClerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const messages = await getMessages();
 
   const content = (
-    <html lang="en">
+    <html lang={locale}>
       <body className={inter.className}>
-        <Navbar />
-        <main className="pt-16 min-h-screen">
-          {children}
-        </main>
-        <Toaster
-          position="top-right"
-          richColors
-          closeButton
-        />
+        <NextIntlClientProvider messages={messages}>
+          <Navbar />
+          <main className="pt-16 min-h-screen">
+            {children}
+          </main>
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+          />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

@@ -27,19 +27,24 @@ export async function POST(request: NextRequest) {
 
         // Process image with Gemini using specified mode (defaults to 'full')
         const enhanceMode: EnhanceMode = mode || 'full'
+        console.log('🎨 [API] Starting Gemini enhancement with mode:', enhanceMode)
         const enhancedBase64 = await enhanceImageWithMode(image, enhanceMode, mimeType || 'image/jpeg')
+        console.log('✅ [API] Gemini enhancement complete, image size:', enhancedBase64.length, 'bytes')
 
         // Step 2: Upscale with Replicate (Real-ESRGAN) to 4K
         // enhancedBase64 comes as "data:image/jpeg;base64,..."
         let upscaledUrl: string | null = null
+        console.log('🔄 [API] Starting Replicate upscaling step...')
         try {
-            console.log('Starting upscaling step...')
             upscaledUrl = await upscaleImage(enhancedBase64)
-            console.log('Upscaling successful')
+            console.log('✅ [API] Replicate upscaling successful! URL:', upscaledUrl)
         } catch (upscaleError) {
-            console.error('Upscaling failed, falling back to Gemini output:', upscaleError)
+            console.error('❌ [API] Replicate upscaling failed:', upscaleError)
+            console.error('❌ [API] Error details:', upscaleError instanceof Error ? upscaleError.message : String(upscaleError))
             // We fall back to the non-upscaled image so the user still gets a result
         }
+
+        console.log('📦 [API] Preparing response - Enhanced:', !!enhancedBase64, 'Upscaled:', !!upscaledUrl)
 
         // TODO: Increment user quota
         // await prisma.user.update({

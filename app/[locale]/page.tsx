@@ -1,9 +1,13 @@
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import { Sparkles, Eraser, Zap, Shield, Clock, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PricingCards } from '@/components/PricingCards'
+import { useTranslations } from 'next-intl'
 
 export default function HomePage() {
+  const t = useTranslations('Home')
+  const tNav = useTranslations('Navbar')
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -16,20 +20,20 @@ export default function HomePage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
-            <span>AI-Powered Editing</span>
+            <span>{t('heroBadge')}</span>
           </div>
 
           {/* Heading */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
-            AI Real Estate
+            {t('heroTitlePrefix')}
             <span className="block bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              Photo Editor
+              {t('heroTitleSuffix')}
             </span>
           </h1>
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Enhance photos & remove objects in seconds. Transform ordinary listings into stunning, professional photography with the power of AI.
+            {t('heroSubtitle')}
           </p>
 
           {/* CTA Buttons */}
@@ -37,13 +41,13 @@ export default function HomePage() {
             <Link href="/enhance">
               <Button size="lg" className="w-full sm:w-auto gap-2 text-base px-8">
                 <Sparkles className="w-5 h-5" />
-                Enhance Photo
+                {t('ctaEnhance')}
               </Button>
             </Link>
             <Link href="/remove">
               <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 text-base px-8">
                 <Eraser className="w-5 h-5" />
-                Remove Object
+                {t('ctaRemove')}
               </Button>
             </Link>
           </div>
@@ -52,15 +56,15 @@ export default function HomePage() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-green-500" />
-              <span>Secure & Private</span>
+              <span>{t('trustSecure')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-blue-500" />
-              <span>Results in 30 seconds</span>
+              <span>{t('trustSpeed')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-yellow-500" />
-              <span>AI-Powered Quality</span>
+              <span>{t('trustQuality')}</span>
             </div>
           </div>
         </div>
@@ -71,10 +75,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Professional Results, Zero Effort
+              {t('featuresTitle')}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Our AI understands real estate photography and delivers stunning results every time.
+              {t('featuresSubtitle')}
             </p>
           </div>
 
@@ -85,13 +89,13 @@ export default function HomePage() {
                 <Sparkles className="w-7 h-7 text-blue-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                Photo Enhancement
+                {t('featureEnhanceTitle')}
               </h3>
               <p className="text-gray-600 mb-4">
-                Perfect HDR merge, bright window replacement, white balance correction, and professional lighting—all automatically.
+                {t('featureEnhanceDesc')}
               </p>
               <Link href="/enhance" className="inline-flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700">
-                Try Enhancement
+                {t('featureEnhanceLink')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -102,13 +106,13 @@ export default function HomePage() {
                 <Eraser className="w-7 h-7 text-purple-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                Object Removal
+                {t('featureRemoveTitle')}
               </h3>
               <p className="text-gray-600 mb-4">
-                Remove trash cans, power lines, cars, or any unwanted objects with seamless AI inpainting that matches the scene.
+                {t('featureRemoveDesc')}
               </p>
               <Link href="/remove" className="inline-flex items-center gap-2 text-purple-600 font-medium hover:text-purple-700">
-                Try Removal
+                {t('featureRemoveLink')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -121,10 +125,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Simple, Transparent Pricing
+              {t('pricingTitle')}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Start free, upgrade when you need more. No hidden fees, cancel anytime.
+              {t('pricingSubtitle')}
             </p>
           </div>
 
@@ -143,7 +147,7 @@ export default function HomePage() {
               <span className="font-semibold text-white">Nana Banana Pro</span>
             </div>
             <p className="text-sm text-center md:text-right">
-              © {new Date().getFullYear()} Nana Banana Pro. All rights reserved.
+              © {new Date().getFullYear()} Nana Banana Pro. {t('footerRights')}
             </p>
           </div>
         </div>

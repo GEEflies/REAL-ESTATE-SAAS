@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, Loader2, Sparkles, RotateCcw, Check } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { ImageDropzone } from '@/components/ImageDropzone'
@@ -24,26 +25,28 @@ interface ModeOption {
     borderColor: string
 }
 
-const ENHANCE_MODES: ModeOption[] = [
-    { id: 'full', icon: '✨', label: 'Full Enhance', description: 'All features combined', bgGradient: 'from-purple-50 to-indigo-50', borderColor: 'border-purple-200' },
-    { id: 'hdr', icon: '🌅', label: 'HDR Merge', description: 'Shadows & highlight', bgGradient: 'from-amber-50 to-orange-50', borderColor: 'border-amber-100' },
-    { id: 'window', icon: '🪟', label: 'Window Pull', description: 'Crystal clear views', bgGradient: 'from-sky-50 to-blue-50', borderColor: 'border-sky-100' },
-    { id: 'sky', icon: '☁️', label: 'Sky Replace', description: 'Blue sky & clouds', bgGradient: 'from-cyan-50 to-sky-50', borderColor: 'border-cyan-100' },
-    { id: 'white_balance', icon: '⚖️', label: 'White Balance', description: 'Color temperature fix', bgGradient: 'from-gray-50 to-slate-50', borderColor: 'border-gray-100' },
-    { id: 'perspective', icon: '📐', label: 'Perspective', description: 'Straighten lines', bgGradient: 'from-indigo-50 to-purple-50', borderColor: 'border-indigo-100' },
-    { id: 'relighting', icon: '💡', label: 'Relighting', description: 'Even illumination', bgGradient: 'from-yellow-50 to-amber-50', borderColor: 'border-yellow-100' },
-    { id: 'raw_quality', icon: '📷', label: 'RAW Quality', description: '4K maximum detail', bgGradient: 'from-emerald-50 to-green-50', borderColor: 'border-emerald-100' },
-    { id: 'privacy', icon: '🔒', label: 'Auto Privacy', description: 'Blur plates & faces', bgGradient: 'from-rose-50 to-pink-50', borderColor: 'border-rose-100' },
-    { id: 'color', icon: '🎨', label: 'Color Fix', description: 'Vibrant colors', bgGradient: 'from-violet-50 to-purple-50', borderColor: 'border-violet-100' },
-]
-
 export default function EnhancePage() {
+    const t = useTranslations('Enhance')
+    const tToast = useTranslations('Toasts')
     const [originalImage, setOriginalImage] = useState<string | null>(null)
     const [originalFile, setOriginalFile] = useState<File | null>(null)
     const [enhancedImage, setEnhancedImage] = useState<string | null>(null)
     const [upscaledImage, setUpscaledImage] = useState<string | null>(null)
     const [processingState, setProcessingState] = useState<ProcessingState>('idle')
     const [selectedMode, setSelectedMode] = useState<EnhanceMode>('full')
+
+    const ENHANCE_MODES: ModeOption[] = [
+        { id: 'full', icon: '✨', label: t('modes.full.label'), description: t('modes.full.description'), bgGradient: 'from-purple-50 to-indigo-50', borderColor: 'border-purple-200' },
+        { id: 'hdr', icon: '🌅', label: t('modes.hdr.label'), description: t('modes.hdr.description'), bgGradient: 'from-amber-50 to-orange-50', borderColor: 'border-amber-100' },
+        { id: 'window', icon: '🪟', label: t('modes.window.label'), description: t('modes.window.description'), bgGradient: 'from-sky-50 to-blue-50', borderColor: 'border-sky-100' },
+        { id: 'sky', icon: '☁️', label: t('modes.sky.label'), description: t('modes.sky.description'), bgGradient: 'from-cyan-50 to-sky-50', borderColor: 'border-cyan-100' },
+        { id: 'white_balance', icon: '⚖️', label: t('modes.white_balance.label'), description: t('modes.white_balance.description'), bgGradient: 'from-gray-50 to-slate-50', borderColor: 'border-gray-100' },
+        { id: 'perspective', icon: '📐', label: t('modes.perspective.label'), description: t('modes.perspective.description'), bgGradient: 'from-indigo-50 to-purple-50', borderColor: 'border-indigo-100' },
+        { id: 'relighting', icon: '💡', label: t('modes.relighting.label'), description: t('modes.relighting.description'), bgGradient: 'from-yellow-50 to-amber-50', borderColor: 'border-yellow-100' },
+        { id: 'raw_quality', icon: '📷', label: t('modes.raw_quality.label'), description: t('modes.raw_quality.description'), bgGradient: 'from-emerald-50 to-green-50', borderColor: 'border-emerald-100' },
+        { id: 'privacy', icon: '🔒', label: t('modes.privacy.label'), description: t('modes.privacy.description'), bgGradient: 'from-rose-50 to-pink-50', borderColor: 'border-rose-100' },
+        { id: 'color', icon: '🎨', label: t('modes.color.label'), description: t('modes.color.description'), bgGradient: 'from-violet-50 to-purple-50', borderColor: 'border-violet-100' },
+    ]
 
     const handleImageSelect = async (file: File, preview: string) => {
         setOriginalImage(preview)
@@ -56,7 +59,7 @@ export default function EnhancePage() {
 
     const processImage = async () => {
         if (!originalFile) {
-            toast.error('Please select an image first')
+            toast.error(tToast('selectImage'))
             return
         }
 
@@ -78,7 +81,7 @@ export default function EnhancePage() {
 
             if (!response.ok) {
                 const error = await response.json()
-                throw new Error(error.message || 'Enhancement failed')
+                throw new Error(error.message || tToast('enhanceError'))
             }
 
             const data = await response.json()
@@ -87,11 +90,11 @@ export default function EnhancePage() {
                 setUpscaledImage(data.upscaled)
             }
             setProcessingState('done')
-            toast.success('Image enhanced successfully!')
+            toast.success(tToast('enhanceSuccess'))
         } catch (error) {
             console.error('Enhancement error:', error)
             setProcessingState('error')
-            toast.error(error instanceof Error ? error.message : 'Enhancement failed. Please try again.')
+            toast.error(error instanceof Error ? error.message : tToast('enhanceError'))
         }
     }
 
@@ -127,10 +130,10 @@ export default function EnhancePage() {
             link.click()
             document.body.removeChild(link)
 
-            toast.success(`${label} downloaded!`)
+            toast.success(`${label} ${tToast('downloadSuccess')}`)
         } catch (error) {
             console.error('Download error:', error)
-            toast.error('Failed to download image')
+            toast.error(tToast('downloadError'))
         }
     }
 
@@ -152,19 +155,19 @@ export default function EnhancePage() {
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
                         <Sparkles className="w-4 h-4" />
-                        <span>AI Enhancement</span>
+                        <span>{t('badge')}</span>
                     </div>
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                        Enhance Your Photo
+                        {t('title')}
                     </h1>
                     <p className="text-gray-600 max-w-xl mx-auto">
-                        Select an enhancement mode below, then upload your image.
+                        {t('subtitle')}
                     </p>
                 </div>
 
                 {/* Mode Selection Grid */}
                 <div className="mb-8">
-                    <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">Choose Enhancement Mode</h2>
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">{t('modeTitle')}</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 max-w-4xl mx-auto">
                         {ENHANCE_MODES.map((mode) => (
                             <button
@@ -199,7 +202,7 @@ export default function EnhancePage() {
                     <div className="text-center mb-6">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-700">
                             <span className="text-xl">{selectedModeInfo.icon}</span>
-                            <span className="font-medium">Selected: {selectedModeInfo.label}</span>
+                            <span className="font-medium">{t('selected')}: {selectedModeInfo.label}</span>
                             <span className="text-blue-500">- {selectedModeInfo.description}</span>
                         </div>
                     </div>
@@ -221,15 +224,17 @@ export default function EnhancePage() {
                                 <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-100 p-6">
                                     <div className="flex items-center gap-2 mb-4">
                                         <Sparkles className="w-5 h-5 text-blue-600" />
-                                        <h3 className="text-lg font-semibold text-gray-800">AI Enhanced (Gemini)</h3>
-                                        <span className="ml-auto text-xs text-gray-500 bg-blue-50 px-3 py-1 rounded-full">Standard Quality</span>
+                                        <h3 className="text-lg font-semibold text-gray-800">{t('geminiCard.title')}</h3>
+                                        <span className="ml-auto text-xs text-gray-500 bg-blue-50 px-3 py-1 rounded-full">{t('geminiCard.badge')}</span>
                                     </div>
-                                    <div className="relative rounded-xl overflow-hidden bg-gray-100 mb-4">
-                                        <img
-                                            src={enhancedImage}
-                                            alt="Gemini Enhanced"
-                                            className="w-full h-auto"
+                                    <div className="mb-4">
+                                        <BeforeAfter
+                                            beforeImage={originalImage!}
+                                            afterImage={enhancedImage}
                                         />
+                                        <p className="text-center text-xs text-gray-500 mt-2">
+                                            {t('geminiCard.slider')}
+                                        </p>
                                     </div>
                                     <Button
                                         onClick={() => handleDownload(enhancedImage, 'Standard Enhanced')}
@@ -237,7 +242,7 @@ export default function EnhancePage() {
                                         variant="secondary"
                                     >
                                         <Download className="w-5 h-5" />
-                                        Download Standard Enhanced
+                                        {t('geminiCard.download')}
                                     </Button>
                                 </div>
 
@@ -246,22 +251,24 @@ export default function EnhancePage() {
                                     <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl shadow-lg border-2 border-purple-200 p-6">
                                         <div className="flex items-center gap-2 mb-4">
                                             <Sparkles className="w-5 h-5 text-purple-600" />
-                                            <h3 className="text-lg font-semibold text-gray-800">4K Upscaled (Replicate)</h3>
-                                            <span className="ml-auto text-xs text-purple-700 bg-purple-100 px-3 py-1 rounded-full font-medium">Ultra HD</span>
+                                            <h3 className="text-lg font-semibold text-gray-800">{t('replicateCard.title')}</h3>
+                                            <span className="ml-auto text-xs text-purple-700 bg-purple-100 px-3 py-1 rounded-full font-medium">{t('replicateCard.badge')}</span>
                                         </div>
-                                        <div className="relative rounded-xl overflow-hidden bg-white mb-4">
-                                            <img
-                                                src={upscaledImage}
-                                                alt="4K Upscaled"
-                                                className="w-full h-auto"
+                                        <div className="mb-4">
+                                            <BeforeAfter
+                                                beforeImage={enhancedImage}
+                                                afterImage={upscaledImage}
                                             />
+                                            <p className="text-center text-xs text-purple-600 mt-2 font-medium">
+                                                {t('replicateCard.slider')}
+                                            </p>
                                         </div>
                                         <Button
                                             onClick={() => handleDownload(upscaledImage, '4K Upscaled')}
                                             className="w-full gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-0"
                                         >
                                             <Download className="w-5 h-5" />
-                                            Download 4K Ultra HD Version
+                                            {t('replicateCard.download')}
                                         </Button>
                                     </div>
                                 )}
@@ -270,7 +277,7 @@ export default function EnhancePage() {
                                 <div className="flex justify-center">
                                     <Button onClick={handleReset} size="lg" variant="outline" className="gap-2">
                                         <RotateCcw className="w-5 h-5" />
-                                        Enhance Another Photo
+                                        {t('enhanceAnother')}
                                     </Button>
                                 </div>
                             </motion.div>
@@ -301,7 +308,7 @@ export default function EnhancePage() {
                                             className="gap-2 px-8 py-6 text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                                         >
                                             <Sparkles className="w-5 h-5" />
-                                            Enhance with {selectedModeInfo?.label}
+                                            {t('enhanceButton')} {selectedModeInfo?.label}
                                         </Button>
                                     </motion.div>
                                 )}
@@ -315,10 +322,10 @@ export default function EnhancePage() {
                                     >
                                         <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-blue-50 text-blue-700">
                                             <Loader2 className="w-5 h-5 animate-spin" />
-                                            <span className="font-medium">Applying {selectedModeInfo?.label}...</span>
+                                            <span className="font-medium">{t('applying')} {selectedModeInfo?.label}...</span>
                                         </div>
                                         <p className="text-sm text-gray-500 mt-2">
-                                            This usually takes 20-30 seconds
+                                            {t('timeEstimate')}
                                         </p>
                                     </motion.div>
                                 )}

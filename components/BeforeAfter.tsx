@@ -4,6 +4,8 @@ import { useState, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { GripVertical } from 'lucide-react'
 
+import { useTranslations } from 'next-intl'
+
 interface BeforeAfterProps {
     beforeImage: string
     afterImage: string
@@ -14,9 +16,14 @@ interface BeforeAfterProps {
 export function BeforeAfter({
     beforeImage,
     afterImage,
-    beforeLabel = 'Before',
-    afterLabel = 'After',
+    beforeLabel, // remove defaults here
+    afterLabel,
 }: BeforeAfterProps) {
+    const t = useTranslations('Common')
+    // Set defaults using translation if props not provided
+    const finalBeforeLabel = beforeLabel || t('before')
+    const finalAfterLabel = afterLabel || t('after')
+
     const [sliderPosition, setSliderPosition] = useState(50)
     const containerRef = useRef<HTMLDivElement>(null)
     const isDragging = useRef(false)
@@ -66,7 +73,7 @@ export function BeforeAfter({
             ref={containerRef}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-col-resize select-none shadow-xl"
+            className="relative w-full rounded-2xl overflow-hidden cursor-col-resize select-none shadow-xl"
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
@@ -74,17 +81,25 @@ export function BeforeAfter({
             onTouchEnd={handleMouseUp}
             onClick={handleClick}
         >
-            {/* After Image (Background) */}
+            {/* Invisible image to set container aspect ratio based on the 'before' (original) image */}
+            <img
+                src={beforeImage}
+                alt=""
+                className="w-full h-auto opacity-0 pointer-events-none"
+                aria-hidden="true"
+            />
+
+            {/* After Image (Background) - forced to fill container */}
             <div className="absolute inset-0">
                 <img
                     src={afterImage}
                     alt={afterLabel}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     draggable={false}
                 />
             </div>
 
-            {/* Before Image (Clipped) */}
+            {/* Before Image (Clipped) - forced to fill container */}
             <div
                 className="absolute inset-0 overflow-hidden"
                 style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
@@ -92,7 +107,7 @@ export function BeforeAfter({
                 <img
                     src={beforeImage}
                     alt={beforeLabel}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     draggable={false}
                 />
             </div>
@@ -112,10 +127,10 @@ export function BeforeAfter({
 
             {/* Labels */}
             <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-white text-sm font-medium">
-                {beforeLabel}
+                {finalBeforeLabel}
             </div>
             <div className="absolute top-4 right-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-white text-sm font-medium">
-                {afterLabel}
+                {finalAfterLabel}
             </div>
         </motion.div>
     )

@@ -1,0 +1,171 @@
+{
+    "Navbar": {
+        "home": "Domov",
+        "enhance": "Vylepšiť",
+        "remove": "Odstrániť",
+        "signIn": "Prihlásiť sa",
+        "authDisabled": "Auth Vypnuté"
+    },
+    "Home": {
+        "heroBadge": "AI Úprava",
+        "heroTitlePrefix": "AI Editor",
+        "heroTitleSuffix": "Realitných Fotiek",
+        "heroSubtitle": "Vylepšite fotky a odstráňte objekty za pár sekúnd. Premeňte bežné inzeráty na ohromujúce profesionálne fotografie pomocou sily AI.",
+        "ctaEnhance": "Vylepšiť Fotku",
+        "ctaRemove": "Odstrániť Objekt",
+        "trustSecure": "Bezpečné a súkromné",
+        "trustSpeed": "Výsledky do 30 sekúnd",
+        "trustQuality": "Kvalita umelej inteligencie",
+        "featuresTitle": "Profesionálne výsledky, nulová námaha",
+        "featuresSubtitle": "Naša AI rozumie realitnej fotografii a vždy prináša ohromujúce výsledky.",
+        "featureEnhanceTitle": "Vylepšenie Fotografií",
+        "featureEnhanceDesc": "Dokonalé zlúčenie HDR, jasný výhľad z okien, korekcia vyváženia bielej a profesionálne osvetlenie – všetko automaticky.",
+        "featureEnhanceLink": "Vyskúšať Vylepšenie",
+        "featureRemoveTitle": "Odstránenie Objektov",
+        "featureRemoveDesc": "Odstráňte odpadkové koše, elektrické vedenia, autá alebo akékoľvek nežiaduce objekty pomocou plynulého AI retušovania, ktoré ladí so scénou.",
+        "featureRemoveLink": "Vyskúšať Odstránenie",
+        "pricingTitle": "Jednoduchý a transparentný cenník",
+        "pricingSubtitle": "Začnite zadarmo, prejdite na vyšší balík, keď budete potrebovať viac. Žiadne skryté poplatky, kedykoľvek zrušiteľné.",
+        "footerRights": "Všetky práva vyhradené."
+    },
+    "Enhance": {
+        "badge": "AI Vylepšenie",
+        "title": "Vylepšite svoju fotku",
+        "subtitle": "Vyberte režim vylepšenia nižšie a potom nahrajte svoj obrázok.",
+        "modeTitle": "Vyberte režim vylepšenia",
+        "selected": "Vybrané",
+        "modes": {
+            "full": {
+                "label": "Kompletné Vylepšenie",
+                "description": "Všetky funkcie spolu"
+            },
+            "hdr": {
+                "label": "HDR Zlúčenie",
+                "description": "Tiene a svetlá"
+            },
+            "window": {
+                "label": "Zjasnenie Okien",
+                "description": "Krištáľovo čistý výhľad"
+            },
+            "sky": {
+                "label": "Výmena Oblohy",
+                "description": "Modrá obloha a oblaky"
+            },
+            "white_balance": {
+                "label": "Vyváženie Bielej",
+                "description": "Oprava teploty farieb"
+            },
+            "perspective": {
+                "label": "Perspektíva",
+                "description": "Vyrovnanie línií"
+            },
+            "relighting": {
+                "label": "Nasvietenie",
+                "description": "Rovnomerné osvetlenie"
+            },
+            "raw_quality": {
+                "label": "RAW Kvalita",
+                "description": "4K maximálny detail"
+            },
+            "privacy": {
+                "label": "Auto Súkromie",
+                "description": "Rozmazanie ŠPZ a tvárí"
+            },
+            "color": {
+                "label": "Oprava Farieb",
+                "description": "Živé farby"
+            }
+        },
+        "geminiCard": {
+            "title": "AI Vylepšené (Gemini)",
+            "badge": "Štandardná Kvalita",
+            "slider": "Posuvník: Pôvodná vs. Vylepšená",
+            "download": "Stiahnuť Štandardnú Verziu"
+        },
+        "replicateCard": {
+            "title": "4K Upscaled (Replicate)",
+            "badge": "Ultra HD",
+            "slider": "Posuvník: Vylepšená vs. 4K Ultra HD",
+            "download": "Stiahnuť 4K Ultra HD Verziu"
+        },
+        "enhanceAnother": "Vylepšiť ďalšiu fotku",
+        "enhanceButton": "Vylepšiť pomocou",
+        "applying": "Aplikuje sa",
+        "timeEstimate": "Zvyčajne to trvá 20-30 sekúnd"
+    },
+    "Remove": {
+        "badge": "AI Odstránenie Objektov",
+        "title": "Odstrániť nežiaduce objekty",
+        "subtitle": "Nahrajte fotku a povedzte nám, čo máme odstrániť. Naša AI to plynule vymaže a doplní pozadie.",
+        "label": "Čo si prajete odstrániť?",
+        "placeholder": "napr. odpadkový kôš, káble, auto",
+        "button": "Odstrániť Objekt",
+        "removing": "Odstraňuje sa",
+        "timeEstimate": "Zvyčajne to trvá 20-30 sekúnd",
+        "download": "Stiahnuť Obrázok",
+        "editAnother": "Upraviť Ďalšiu"
+    },
+    "Dropzone": {
+        "dragDrop": "Potiahnite sem obrázok alebo kliknite pre výber",
+        "supports": "Podporuje JPG a PNG do 10MB",
+        "changeImage": "Zmeniť Obrázok",
+        "errorFormat": "Prosím nahrajte platný obrázok (JPG, PNG, WebP)",
+        "errorSize": "Obrázok je príliš veľký (Max 10MB)"
+    },
+    "Common": {
+        "before": "Predtým",
+        "after": "Potom"
+    },
+    "Toasts": {
+        "selectImage": "Najskôr vyberte obrázok",
+        "enhanceSuccess": "Obrázok úspešne vylepšený!",
+        "enhanceError": "Vylepšenie zlyhalo. Skúste to prosím znova.",
+        "downloadSuccess": "stiahnuté!",
+        "downloadError": "Nepodarilo sa stiahnuť obrázok",
+        "specifyRemove": "Prosím uveďte, čo sa má odstrániť",
+        "removeSuccess": "Objekt úspešne odstránený!",
+        "removeError": "Odstránenie zlyhalo. Skúste to prosím znova."
+    },
+    "Pricing": {
+        "free": {
+            "name": "Free",
+            "desc": "Ideálne na vyskúšanie platformy",
+            "period": "navždy",
+            "features": {
+                "0": "3 obrázky mesačne",
+                "1": "Základné vylepšenie",
+                "2": "Odstránenie objektov",
+                "3": "Štandardné spracovanie"
+            }
+        },
+        "starter": {
+            "name": "Starter",
+            "desc": "Skvelé pre aktívnych maklérov",
+            "period": "mesačne",
+            "features": {
+                "0": "50 obrázkov mesačne",
+                "1": "Prioritné spracovanie",
+                "2": "HD kvalita exportov",
+                "3": "E-mailová podpora",
+                "4": "€0.50 za extra obrázok"
+            }
+        },
+        "pro": {
+            "name": "Pro",
+            "desc": "Pre agentúry a náročných",
+            "period": "mesačne",
+            "features": {
+                "0": "200 obrázkov mesačne",
+                "1": "Okamžité spracovanie",
+                "2": "4K kvalita exportov",
+                "3": "Prioritná podpora",
+                "4": "€0.50 za extra obrázok",
+                "5": "API prístup (čoskoro)"
+            }
+        },
+        "mostPopular": "Najpopulárnejšie",
+        "getStarted": "Začať Zadarmo",
+        "upgrade": "Inovovať",
+        "currentPlan": "Aktuálny Plán"
+    }
+}

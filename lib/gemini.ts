@@ -43,6 +43,8 @@ APPLY ALL THESE ENHANCEMENTS:
 8. AUTO PRIVACY: Blur all license plates and faces completely
 9. COLOR CORRECTION: +15% saturation boost, vibrant natural colors
 
+IMPORTANT: MAINTAIN THE EXACT ASPECT RATIO AND COMPOSITION OF THE ORIGINAL IMAGE. DO NOT CROP OR RESIZE.
+
 Output a professional real estate magazine quality image.`,
 
     hdr: `You are an expert HDR photo editor. YOUR PRIMARY TASK IS HDR ENHANCEMENT.
@@ -170,9 +172,13 @@ THIS IS THE MOST IMPORTANT INSTRUCTION - DO THIS FIRST:
 2. BLUR ALL FACES IN PHOTOS/FRAMES
    - Any photos on walls showing faces - blur them
    - Any people visible - blur their faces
+   - Apply STRONG HEAVY BLUR (radius 20+ pixels)
+   - The face must be 100% UNREADABLE
+   - This is MANDATORY and CRITICAL
 
 3. BLUR PERSONAL DOCUMENTS
    - Any visible mail, documents, screens with text
+    - Apply STRONG HEAVY BLUR (radius 20+ pixels)
 
 ALSO APPLY:
 - Standard photo enhancement (HDR, color, sharpness)
@@ -254,13 +260,26 @@ export async function enhanceImageWithMode(
 
         // Extract image from response
         const candidate = response.candidates?.[0]
+
+        // Handle Gemini Safety/Recitation blocks
+        if (candidate?.finishReason === 'IMAGE_RECITATION') {
+            console.error('Gemini blocked generation due to IMAGE_RECITATION')
+            throw new Error('Gemini refused to process this image (Recitation/Copyright trigger). Please try a different photo.')
+        }
+
+        if (candidate?.finishReason === 'SAFETY') {
+            console.error('Gemini blocked generation due to SAFETY')
+            throw new Error('Gemini refused to process this image (Safety trigger).')
+        }
+
         if (!candidate?.content?.parts) {
             console.error('No candidate or content in response:', {
                 hasCandidates: !!response.candidates,
                 candidatesLength: response.candidates?.length,
                 firstCandidate: candidate,
+                finishReason: candidate?.finishReason
             })
-            throw new Error('No content in response')
+            throw new Error(`Gemini generation failed: ${candidate?.finishReason || 'Unknown reason'}`)
         }
 
         for (const part of candidate.content.parts) {

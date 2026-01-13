@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, Loader2, Eraser, RotateCcw } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,6 +15,8 @@ import { getBase64FromFile } from '@/lib/utils'
 type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
 export default function RemovePage() {
+    const t = useTranslations('Remove')
+    const tToast = useTranslations('Toasts')
     const [originalImage, setOriginalImage] = useState<string | null>(null)
     const [originalFile, setOriginalFile] = useState<File | null>(null)
     const [processedImage, setProcessedImage] = useState<string | null>(null)
@@ -29,7 +32,7 @@ export default function RemovePage() {
 
     const processImage = async () => {
         if (!originalFile || !objectToRemove.trim()) {
-            toast.error('Please specify what to remove')
+            toast.error(tToast('specifyRemove'))
             return
         }
 
@@ -50,17 +53,17 @@ export default function RemovePage() {
 
             if (!response.ok) {
                 const error = await response.json()
-                throw new Error(error.message || 'Object removal failed')
+                throw new Error(error.message || tToast('removeError'))
             }
 
             const data = await response.json()
             setProcessedImage(data.processed)
             setProcessingState('done')
-            toast.success('Object removed successfully!')
+            toast.success(tToast('removeSuccess'))
         } catch (error) {
             console.error('Removal error:', error)
             setProcessingState('error')
-            toast.error(error instanceof Error ? error.message : 'Removal failed. Please try again.')
+            toast.error(error instanceof Error ? error.message : tToast('removeError'))
         }
     }
 
@@ -84,10 +87,10 @@ export default function RemovePage() {
             link.click()
             document.body.removeChild(link)
 
-            toast.success('Image downloaded!')
+            toast.success(`${tToast('downloadSuccess')}`)
         } catch (error) {
             console.error('Download error:', error)
-            toast.error('Failed to download image')
+            toast.error(tToast('downloadError'))
         }
     }
 
@@ -106,13 +109,13 @@ export default function RemovePage() {
                 <div className="text-center mb-10">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 text-sm font-medium mb-4">
                         <Eraser className="w-4 h-4" />
-                        <span>AI Object Removal</span>
+                        <span>{t('badge')}</span>
                     </div>
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                        Remove Unwanted Objects
+                        {t('title')}
                     </h1>
                     <p className="text-gray-600 max-w-xl mx-auto">
-                        Upload a photo and tell us what to remove. Our AI will seamlessly erase it and fill in the background.
+                        {t('subtitle')}
                     </p>
                 </div>
 
@@ -135,11 +138,11 @@ export default function RemovePage() {
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                     <Button onClick={handleDownload} size="lg" className="gap-2">
                                         <Download className="w-5 h-5" />
-                                        Download Image
+                                        {t('download')}
                                     </Button>
                                     <Button onClick={handleReset} size="lg" variant="outline" className="gap-2">
                                         <RotateCcw className="w-5 h-5" />
-                                        Edit Another
+                                        {t('editAnother')}
                                     </Button>
                                 </div>
                             </motion.div>
@@ -170,12 +173,12 @@ export default function RemovePage() {
                                                 htmlFor="objectToRemove"
                                                 className="block text-sm font-medium text-gray-700 mb-2"
                                             >
-                                                What would you like to remove?
+                                                {t('label')}
                                             </label>
                                             <Input
                                                 id="objectToRemove"
                                                 type="text"
-                                                placeholder="e.g., trash can, power lines, car"
+                                                placeholder={t('placeholder')}
                                                 value={objectToRemove}
                                                 onChange={(e) => setObjectToRemove(e.target.value)}
                                                 className="max-w-md"
@@ -189,7 +192,7 @@ export default function RemovePage() {
                                             disabled={!objectToRemove.trim()}
                                         >
                                             <Eraser className="w-5 h-5" />
-                                            Remove Object
+                                            {t('button')}
                                         </Button>
                                     </motion.div>
                                 )}
@@ -203,10 +206,10 @@ export default function RemovePage() {
                                     >
                                         <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-purple-50 text-purple-700">
                                             <Loader2 className="w-5 h-5 animate-spin" />
-                                            <span className="font-medium">Removing &quot;{objectToRemove}&quot;...</span>
+                                            <span className="font-medium">{t('removing')} &quot;{objectToRemove}&quot;...</span>
                                         </div>
                                         <p className="text-sm text-gray-500 mt-2">
-                                            This usually takes 20-30 seconds
+                                            {t('timeEstimate')}
                                         </p>
                                     </motion.div>
                                 )}

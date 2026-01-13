@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname } from '@/navigation'
+import { Link } from '@/navigation'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -14,16 +14,18 @@ import {
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-
-const navItems = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/enhance', label: 'Enhance', icon: Sparkles },
-    { href: '/remove', label: 'Remove', icon: Eraser },
-]
+import { useTranslations } from 'next-intl'
 
 export function Navbar() {
+    const t = useTranslations('Navbar')
     const pathname = usePathname()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+    const navItems = [
+        { href: '/', label: t('home'), icon: Home },
+        { href: '/enhance', label: t('enhance'), icon: Sparkles },
+        { href: '/remove', label: t('remove'), icon: Eraser },
+    ]
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
@@ -67,7 +69,7 @@ export function Navbar() {
                             <>
                                 <SignedOut>
                                     <SignInButton mode="modal">
-                                        <Button size="sm">Sign In</Button>
+                                        <Button size="sm">{t('signIn')}</Button>
                                     </SignInButton>
                                 </SignedOut>
                                 <SignedIn>
@@ -83,7 +85,7 @@ export function Navbar() {
                             </>
                         ) : (
                             <Button size="sm" disabled className="opacity-50">
-                                Auth Disabled
+                                {t('authDisabled')}
                             </Button>
                         )}
 

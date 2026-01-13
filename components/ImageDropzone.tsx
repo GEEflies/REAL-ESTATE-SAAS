@@ -14,12 +14,15 @@ interface ImageDropzoneProps {
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 
+import { useTranslations } from 'next-intl'
+
 export function ImageDropzone({
     onImageSelect,
     disabled = false,
     currentPreview,
     onClear,
 }: ImageDropzoneProps) {
+    const t = useTranslations('Dropzone')
     const [isDragging, setIsDragging] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -28,12 +31,12 @@ export function ImageDropzone({
             setError(null)
 
             if (!isValidImageType(file.type)) {
-                setError('Please upload a JPG, PNG, or WebP image')
+                setError(t('errorFormat'))
                 return
             }
 
             if (file.size > MAX_FILE_SIZE) {
-                setError(`File too large. Maximum size is ${formatFileSize(MAX_FILE_SIZE)}`)
+                setError(t('errorSize', { maxSize: formatFileSize(MAX_FILE_SIZE) }))
                 return
             }
 
@@ -44,7 +47,7 @@ export function ImageDropzone({
             }
             reader.readAsDataURL(file)
         },
-        [onImageSelect]
+        [onImageSelect, t]
     )
 
     const handleDrop = useCallback(
@@ -150,13 +153,10 @@ export function ImageDropzone({
                             </motion.div>
 
                             <p className="text-lg font-medium text-gray-900 mb-1">
-                                {isDragging ? 'Drop your image here' : 'Drag & drop your image'}
+                                {t('dragDrop')}
                             </p>
-                            <p className="text-sm text-gray-500 mb-4">
-                                or click to browse
-                            </p>
-                            <p className="text-xs text-gray-400">
-                                JPG, PNG, WebP • Max 10MB
+                            <p className="text-xs text-gray-400 mt-2">
+                                {t('supports')}
                             </p>
                         </div>
                     </motion.div>

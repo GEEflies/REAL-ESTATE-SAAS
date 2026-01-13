@@ -1,0 +1,171 @@
+{
+    "Navbar": {
+        "home": "Home",
+        "enhance": "Enhance",
+        "remove": "Remove",
+        "signIn": "Sign In",
+        "authDisabled": "Auth Disabled"
+    },
+    "Home": {
+        "heroBadge": "AI-Powered Editing",
+        "heroTitlePrefix": "AI Real Estate",
+        "heroTitleSuffix": "Photo Editor",
+        "heroSubtitle": "Enhance photos & remove objects in seconds. Transform ordinary listings into stunning, professional photography with the power of AI.",
+        "ctaEnhance": "Enhance Photo",
+        "ctaRemove": "Remove Object",
+        "trustSecure": "Secure & Private",
+        "trustSpeed": "Results in 30 seconds",
+        "trustQuality": "AI-Powered Quality",
+        "featuresTitle": "Professional Results, Zero Effort",
+        "featuresSubtitle": "Our AI understands real estate photography and delivers stunning results every time.",
+        "featureEnhanceTitle": "Photo Enhancement",
+        "featureEnhanceDesc": "Perfect HDR merge, bright window replacement, white balance correction, and professional lighting—all automatically.",
+        "featureEnhanceLink": "Try Enhancement",
+        "featureRemoveTitle": "Object Removal",
+        "featureRemoveDesc": "Remove trash cans, power lines, cars, or any unwanted objects with seamless AI inpainting that matches the scene.",
+        "featureRemoveLink": "Try Removal",
+        "pricingTitle": "Simple, Transparent Pricing",
+        "pricingSubtitle": "Start free, upgrade when you need more. No hidden fees, cancel anytime.",
+        "footerRights": "All rights reserved."
+    },
+    "Enhance": {
+        "badge": "AI Enhancement",
+        "title": "Enhance Your Photo",
+        "subtitle": "Select an enhancement mode below, then upload your image.",
+        "modeTitle": "Choose Enhancement Mode",
+        "selected": "Selected",
+        "modes": {
+            "full": {
+                "label": "Full Enhance",
+                "description": "All features combined"
+            },
+            "hdr": {
+                "label": "HDR Merge",
+                "description": "Shadows & highlight"
+            },
+            "window": {
+                "label": "Window Pull",
+                "description": "Crystal clear views"
+            },
+            "sky": {
+                "label": "Sky Replace",
+                "description": "Blue sky & clouds"
+            },
+            "white_balance": {
+                "label": "White Balance",
+                "description": "Color temperature fix"
+            },
+            "perspective": {
+                "label": "Perspective",
+                "description": "Straighten lines"
+            },
+            "relighting": {
+                "label": "Relighting",
+                "description": "Even illumination"
+            },
+            "raw_quality": {
+                "label": "RAW Quality",
+                "description": "4K maximum detail"
+            },
+            "privacy": {
+                "label": "Auto Privacy",
+                "description": "Blur plates & faces"
+            },
+            "color": {
+                "label": "Color Fix",
+                "description": "Vibrant colors"
+            }
+        },
+        "geminiCard": {
+            "title": "AI Enhanced (Gemini)",
+            "badge": "Standard Quality",
+            "slider": "Slider: Original vs Enhanced",
+            "download": "Download Standard Enhanced"
+        },
+        "replicateCard": {
+            "title": "4K Upscaled (Replicate)",
+            "badge": "Ultra HD",
+            "slider": "Slider: Enhanced vs 4K Upscaled",
+            "download": "Download 4K Ultra HD Version"
+        },
+        "enhanceAnother": "Enhance Another Photo",
+        "enhanceButton": "Enhance with",
+        "applying": "Applying",
+        "timeEstimate": "This usually takes 20-30 seconds"
+    },
+    "Remove": {
+        "badge": "AI Object Removal",
+        "title": "Remove Unwanted Objects",
+        "subtitle": "Upload a photo and tell us what to remove. Our AI will seamlessly erase it and fill in the background.",
+        "label": "What would you like to remove?",
+        "placeholder": "e.g., trash can, power lines, car",
+        "button": "Remove Object",
+        "removing": "Removing",
+        "timeEstimate": "This usually takes 20-30 seconds",
+        "download": "Download Image",
+        "editAnother": "Edit Another"
+    },
+    "Dropzone": {
+        "dragDrop": "Drag & drop an image here, or click to select",
+        "supports": "Supports JPG & PNG up to 10MB",
+        "changeImage": "Change Image",
+        "errorFormat": "Please upload a valid image (JPG, PNG, WebP)",
+        "errorSize": "Image is too large (Max 10MB)"
+    },
+    "Common": {
+        "before": "Before",
+        "after": "After"
+    },
+    "Toasts": {
+        "selectImage": "Please select an image first",
+        "enhanceSuccess": "Image enhanced successfully!",
+        "enhanceError": "Enhancement failed. Please try again.",
+        "downloadSuccess": "downloaded!",
+        "downloadError": "Failed to download image",
+        "specifyRemove": "Please specify what to remove",
+        "removeSuccess": "Object removed successfully!",
+        "removeError": "Removal failed. Please try again."
+    },
+    "Pricing": {
+        "free": {
+            "name": "Free",
+            "desc": "Perfect for trying out the platform",
+            "period": "forever",
+            "features": {
+                "0": "3 images per month",
+                "1": "Basic enhancement",
+                "2": "Object removal",
+                "3": "Standard processing"
+            }
+        },
+        "starter": {
+            "name": "Starter",
+            "desc": "Great for active real estate agents",
+            "period": "month",
+            "features": {
+                "0": "50 images per month",
+                "1": "Priority processing",
+                "2": "HD quality exports",
+                "3": "Email support",
+                "4": "€0.50 per extra image"
+            }
+        },
+        "pro": {
+            "name": "Pro",
+            "desc": "For agencies and power users",
+            "period": "month",
+            "features": {
+                "0": "200 images per month",
+                "1": "Instant processing",
+                "2": "4K quality exports",
+                "3": "Priority support",
+                "4": "€0.50 per extra image",
+                "5": "API access (coming soon)"
+            }
+        },
+        "mostPopular": "Most Popular",
+        "getStarted": "Get Started",
+        "upgrade": "Upgrade",
+        "currentPlan": "Current Plan"
+    }
+}

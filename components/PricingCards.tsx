@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
+import { useTranslations } from 'next-intl'
+
 interface PricingTier {
     name: string
     price: number
@@ -20,63 +22,64 @@ interface PricingTier {
     priceId?: string
 }
 
-const tiers: PricingTier[] = [
-    {
-        name: 'Free',
-        price: 0,
-        period: 'forever',
-        description: 'Perfect for trying out the platform',
-        features: [
-            '3 images per month',
-            'Basic enhancement',
-            'Object removal',
-            'Standard processing',
-        ],
-        images: 3,
-        icon: Sparkles,
-    },
-    {
-        name: 'Starter',
-        price: 25,
-        period: 'month',
-        description: 'Great for active real estate agents',
-        features: [
-            '50 images per month',
-            'Priority processing',
-            'HD quality exports',
-            'Email support',
-            '€0.50 per extra image',
-        ],
-        images: 50,
-        icon: Zap,
-        popular: true,
-        priceId: process.env.NEXT_PUBLIC_STRIPE_STARTER_PRICE_ID,
-    },
-    {
-        name: 'Pro',
-        price: 69,
-        period: 'month',
-        description: 'For agencies and power users',
-        features: [
-            '200 images per month',
-            'Instant processing',
-            '4K quality exports',
-            'Priority support',
-            '€0.50 per extra image',
-            'API access (coming soon)',
-        ],
-        images: 200,
-        icon: Crown,
-        priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
-    },
-]
-
 interface PricingCardsProps {
     currentTier?: 'FREE' | 'STARTER' | 'PRO'
 }
 
 export function PricingCards({ currentTier = 'FREE' }: PricingCardsProps) {
+    const t = useTranslations('Pricing')
     const [loading, setLoading] = useState<string | null>(null)
+
+    const tiers: PricingTier[] = [
+        {
+            name: t('free.name'),
+            price: 0,
+            period: t('free.period'),
+            description: t('free.desc'),
+            features: [
+                t('free.features.0'),
+                t('free.features.1'),
+                t('free.features.2'),
+                t('free.features.3'),
+            ],
+            images: 3,
+            icon: Sparkles,
+        },
+        {
+            name: t('starter.name'),
+            price: 25,
+            period: t('starter.period'),
+            description: t('starter.desc'),
+            features: [
+                t('starter.features.0'),
+                t('starter.features.1'),
+                t('starter.features.2'),
+                t('starter.features.3'),
+                t('starter.features.4'),
+            ],
+            images: 50,
+            icon: Zap,
+            popular: true,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_STARTER_PRICE_ID,
+        },
+        {
+            name: t('pro.name'),
+            price: 69,
+            period: t('pro.period'),
+            description: t('pro.desc'),
+            features: [
+                t('pro.features.0'),
+                t('pro.features.1'),
+                t('pro.features.2'),
+                t('pro.features.3'),
+                t('pro.features.4'),
+                t('pro.features.5'),
+            ],
+            images: 200,
+            icon: Crown,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
+        },
+    ]
 
     const handleUpgrade = async (tier: PricingTier) => {
         if (!tier.priceId) return
