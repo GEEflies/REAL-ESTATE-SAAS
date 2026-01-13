@@ -19,7 +19,8 @@ const ENHANCE_PROMPT = `You are an expert real estate photo editor. Apply the fo
 
 {
   "task": "professional_real_estate_photo_enhancement",
-  "output_quality": "magazine_cover_ready",
+  "output_quality": "4K_ultra_high_definition_magazine_cover_ready",
+  "resolution": "4K_3840x2160_or_highest_possible",
   
   "exposure": {
     "CRITICAL": "MAKE_EXTREMELY_BRIGHT",
@@ -99,7 +100,14 @@ CRITICAL BRIGHTNESS REQUIREMENTS - THIS IS THE MOST IMPORTANT:
 The final image should look like the room is flooded with natural daylight from every direction. Make it BRIGHT.`
 
 
-const REMOVE_OBJECT_PROMPT = (objectToRemove: string) => `Edit this image by replacing the "${objectToRemove}" with the surrounding background (wall, floor, or ceiling). The result should look natural and seamless, as if the object was never there.`
+const REMOVE_OBJECT_PROMPT = (objectToRemove: string) => `You are an expert real estate photo editor. Edit this image by replacing the "${objectToRemove}" with the surrounding background (wall, floor, or ceiling). 
+
+CRITICAL REQUIREMENTS:
+1. The result should look natural and seamless, as if the object was never there.
+2. OUTPUT RESOLUTION: 4K Ultra High Definition (3840x2160).
+3. Ensure textures and lighting match the surrounding area perfectly.
+4. Maintain maximum sharpness and detail in the edited area.`
+
 
 export async function enhanceImage(imageBase64: string, mimeType: string = 'image/jpeg'): Promise<string> {
     try {
@@ -172,7 +180,7 @@ export async function removeObject(
     try {
         const client = getClient()
         const response = await client.models.generateContent({
-            model: 'gemini-2.5-flash-image',
+            model: 'gemini-3-pro-image-preview',
             config: {
                 safetySettings: [
                     { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
