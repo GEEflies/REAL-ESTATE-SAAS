@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { enhanceImage } from '@/lib/gemini'
 
+// Increase body size limit for large images
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb',
+        },
+    },
+}
+
+// Next.js 13+ App Router config
+export const maxDuration = 60 // seconds
+
 export async function POST(request: NextRequest) {
     try {
         // Parse request body
