@@ -15,89 +15,96 @@ function getClient(): GoogleGenAI {
     return ai
 }
 
-const ENHANCE_PROMPT = `You are an expert real estate photo editor. Apply the following enhancements precisely as specified in this JSON configuration:
+const ENHANCE_PROMPT = `You are an expert real estate photo editor. Apply ALL of the following professional enhancements as specified:
 
 {
   "task": "professional_real_estate_photo_enhancement",
-  "output_quality": "4K_ultra_high_definition_magazine_cover_ready",
+  "output_quality": "4K_ultra_high_definition_magazine_ready",
   "resolution": "4K_3840x2160_or_highest_possible",
-  
-  "exposure": {
-    "CRITICAL": "MAKE_EXTREMELY_BRIGHT",
-    "overall_exposure_boost": "+1.5_stops_brighter_than_input",
-    "target": "very_high_key_extremely_bright",
-    "shadow_lift": "+3_stops_aggressive",
-    "highlight_recovery": "full_but_keep_bright",
-    "overall_brightness": "MAXIMUM_brightness_like_sunny_day_indoors",
-    "dark_corners": "eliminate_completely_no_shadows",
-    "walls": "almost_glowing_near_white_very_bright",
-    "ceilings": "pure_bright_white",
-    "floors_and_carpet": "bright_light_colored_no_dark_areas",
-    "midtones": "push_up_significantly"
+
+  "1_HDR_MERGE": {
+    "description": "Merge multiple exposure levels into balanced HDR",
+    "shadow_recovery": "+1.5_stops_lift_dark_areas",
+    "highlight_recovery": "preserve_window_and_bright_areas",
+    "overall_exposure": "balanced_natural_NOT_overexposed",
+    "avoid": ["washed_out", "overexposed", "flat_look"],
+    "preserve": "texture_and_detail_in_walls_and_surfaces"
   },
-  
-  "white_balance": {
-    "CRITICAL": "DO_NOT_MAKE_WARM_OR_ORANGE",
+
+  "2_WINDOW_PULL": {
+    "description": "Make exterior view through windows crystal clear",
+    "exterior_visibility": "100%_clear_and_sharp",
+    "sky_visible": true,
+    "balance": "interior_and_exterior_both_properly_exposed",
+    "glass_clarity": "perfectly_transparent_no_haze"
+  },
+
+  "3_SKY_REPLACEMENT": {
+    "description": "Replace dull or overcast sky with appealing blue sky",
+    "sky_color": "natural_bright_blue",
+    "clouds": "soft_white_natural_clouds",
+    "apply_when": "sky_is_gray_overcast_or_blown_out"
+  },
+
+  "4_WHITE_BALANCE": {
+    "description": "Correct color temperature to neutral daylight",
     "color_temperature": "5500K_neutral_daylight",
-    "whites": "pure_clean_white_NOT_cream_NOT_yellow",
-    "avoid": ["orange_tint", "yellow_cast", "golden_glow", "warm_tungsten"],
-    "target_look": "natural_daylight_through_windows",
-    "walls": "clean_bright_white_almost_glowing"
+    "whites": "pure_clean_white_no_color_cast",
+    "avoid": ["orange_tint", "yellow_cast", "blue_cast", "green_tint"],
+    "result": "natural_true_to_life_colors"
   },
-  
-  "window_treatment": {
-    "priority": "high",
-    "exterior_visibility": "crystal_clear_sharp",
-    "sky": {
-      "appearance": "bright_blue_with_white_clouds",
-      "visibility": "100%_clear_not_hazy",
-      "color": "natural_sky_blue"
-    },
-    "glass_clarity": "perfectly_transparent",
-    "balance": "interior_MUST_be_as_bright_as_exterior"
+
+  "5_PERSPECTIVE_CORRECTION": {
+    "description": "Straighten architectural lines",
+    "vertical_lines": "perfectly_straight_walls_and_doorframes",
+    "horizontal_lines": "perfectly_level_floors_and_ceilings",
+    "lens_distortion": "fully_corrected"
   },
-  
-  "color_correction": {
-    "saturation": "natural_plus_10%",
-    "vibrance": "enhanced_but_realistic",
-    "red_fabrics": "true_vibrant_red_not_orange",
-    "wood_tones": "natural_brown_not_orange",
-    "greens": "healthy_natural_green"
+
+  "6_IMAGE_RELIGHTING": {
+    "description": "Enhance lighting for even, professional illumination",
+    "dark_corners": "subtly_brighten_to_match_room",
+    "shadows": "lift_while_preserving_depth_and_dimension",
+    "highlights": "soft_natural_not_blown_out",
+    "overall_lighting": "even_professional_but_natural",
+    "avoid": ["flat_shadowless_look", "artificial_appearance"]
   },
-  
-  "contrast_and_clarity": {
-    "contrast": "medium_preserve_brightness",
-    "clarity": "crisp_sharp",
-    "local_contrast": "enhanced_for_depth",
-    "tone_curve": "lift_shadows_and_midtones_aggressively"
+
+  "7_RAW_QUALITY": {
+    "description": "Maximize detail and sharpness",
+    "sharpness": "magazine_print_quality",
+    "texture_enhancement": "wood_grain_fabric_stone_clearly_visible",
+    "noise_reduction": "clean_but_preserve_detail",
+    "output": "4K_ultra_high_definition"
   },
-  
-  "perspective": {
-    "vertical_lines": "perfectly_straight",
-    "horizontal_lines": "perfectly_level"
-  },
-  
-  "sharpness": {
-    "level": "magazine_print_quality",
-    "details": "enhanced_textures"
-  },
-  
-  "privacy": {
+
+  "8_AUTO_PRIVACY": {
+    "description": "Protect sensitive information",
     "blur_faces_in_photos": true,
-    "blur_license_plates": true
+    "blur_license_plates": true,
+    "blur_personal_documents": true,
+    "style": "subtle_natural_gaussian_blur"
+  },
+
+  "9_COLOR_CORRECTION": {
+    "description": "Enhance colors for vibrant natural appearance",
+    "saturation": "+15%_boost_for_vibrant_look",
+    "vibrance": "enhanced_especially_in_muted_areas",
+    "red_fabrics": "rich_vibrant_true_red",
+    "wood_tones": "warm_natural_brown",
+    "greens": "healthy_vibrant_natural",
+    "maintain": "color_accuracy_and_separation"
   }
 }
 
-CRITICAL BRIGHTNESS REQUIREMENTS - THIS IS THE MOST IMPORTANT:
-1. THE IMAGE MUST BE EXTREMELY BRIGHT - like a room flooded with sunlight
-2. WALLS should appear ALMOST GLOWING - near white, very bright
-3. CEILINGS must be PURE BRIGHT WHITE - no gray tones at all
-4. NO DARK AREAS anywhere - every corner and shadow must be completely lifted
-5. The overall exposure should be boosted +1.5 stops compared to typical editing
-6. Think "high-key photography" - bright, airy, luminous throughout
-7. CARPET/FLOORS should be light and bright, not dark or shadowy
+CRITICAL BALANCE REQUIREMENTS:
+1. BALANCED EXPOSURE - Bright but NOT washed out or overexposed
+2. PRESERVE TEXTURE - Walls, carpet, and surfaces must show visible texture and detail
+3. MAINTAIN DEPTH - Keep natural shadows for 3D dimensional look, do NOT flatten the image
+4. VIBRANT COLORS - Colors should be saturated and rich, NOT muted or desaturated
+5. NATURAL LOOK - The result should look like professional photography, not over-processed
 
-The final image should look like the room is flooded with natural daylight from every direction. Make it BRIGHT.`
+The goal is a PROFESSIONAL REAL ESTATE MAGAZINE quality image that looks natural and inviting, with perfect window views, balanced lighting, and vibrant colors. NOT flat, NOT washed out, NOT overexposed.`
 
 
 const REMOVE_OBJECT_PROMPT = (objectToRemove: string) => `You are an expert real estate photo editor. Edit this image by replacing the "${objectToRemove}" with the surrounding background (wall, floor, or ceiling). 
