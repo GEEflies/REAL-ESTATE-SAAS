@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { ImageDropzone } from '@/components/ImageDropzone'
 import { BeforeAfter } from '@/components/BeforeAfter'
-import { getBase64FromFile } from '@/lib/utils'
+import { compressImage } from '@/lib/utils'
 
 type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
@@ -61,14 +61,15 @@ export default function EnhancePage() {
         setProcessingState('processing')
 
         try {
-            const base64 = await getBase64FromFile(originalFile)
+            // Compress image to reduce file size (max 4MB, max 2048px dimension)
+            const { base64, mimeType } = await compressImage(originalFile, 4, 2048)
 
             const response = await fetch('/api/enhance', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     image: base64,
-                    mimeType: originalFile.type,
+                    mimeType: mimeType,
                     mode: selectedMode,
                 }),
             })
