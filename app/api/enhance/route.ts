@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { enhanceImageWithMode, EnhanceMode } from '@/lib/gemini'
+import { upscaleImage } from '@/lib/replicate'
 
 // Max duration for serverless function (60 seconds)
 export const maxDuration = 60
@@ -28,6 +29,18 @@ export async function POST(request: NextRequest) {
         const enhanceMode: EnhanceMode = mode || 'full'
         const enhancedBase64 = await enhanceImageWithMode(image, enhanceMode, mimeType || 'image/jpeg')
 
+        // Step 2: Upscale with Replicate (Real-ESRGAN) to 4K
+        // enhancedBase64 comes as "data:image/jpeg;base64,..."
+        let upscaledUrl: string | null = null
+        try {
+            console.log('Starting upscaling step...')
+            upscaledUrl = await upscaleImage(enhancedBase64)
+            console.log('Upscaling successful')
+        } catch (upscaleError) {
+            console.error('Upscaling failed, falling back to Gemini output:', upscaleError)
+            // We fall back to the non-upscaled image so the user still gets a result
+        }
+
         // TODO: Increment user quota
         // await prisma.user.update({
         //   where: { clerkId: userId },
@@ -35,8 +48,9 @@ export async function POST(request: NextRequest) {
         // })
 
         return NextResponse.json({
-            enhanced: enhancedBase64,
-            message: 'Image enhanced successfully',
+            enhanced: enhancedBase64,  // Original Gemini enhancement
+            upscaled: upscaledUrl,     // 4K Replicate upscale (might be null if failed)
+            message: 'Image enhanced and upscaled successfully',
         })
     } catch (error) {
         console.error('Enhance API error:', error)

@@ -26,7 +26,7 @@ interface ModeOption {
 
 const ENHANCE_MODES: ModeOption[] = [
     { id: 'full', icon: '✨', label: 'Full Enhance', description: 'All features combined', bgGradient: 'from-purple-50 to-indigo-50', borderColor: 'border-purple-200' },
-    { id: 'hdr', icon: '🌅', label: 'HDR Merge', description: 'Shadow & highlight balance', bgGradient: 'from-amber-50 to-orange-50', borderColor: 'border-amber-100' },
+    { id: 'hdr', icon: '🌅', label: 'HDR Merge', description: 'Shadows & highlight', bgGradient: 'from-amber-50 to-orange-50', borderColor: 'border-amber-100' },
     { id: 'window', icon: '🪟', label: 'Window Pull', description: 'Crystal clear views', bgGradient: 'from-sky-50 to-blue-50', borderColor: 'border-sky-100' },
     { id: 'sky', icon: '☁️', label: 'Sky Replace', description: 'Blue sky & clouds', bgGradient: 'from-cyan-50 to-sky-50', borderColor: 'border-cyan-100' },
     { id: 'white_balance', icon: '⚖️', label: 'White Balance', description: 'Color temperature fix', bgGradient: 'from-gray-50 to-slate-50', borderColor: 'border-gray-100' },
@@ -41,6 +41,7 @@ export default function EnhancePage() {
     const [originalImage, setOriginalImage] = useState<string | null>(null)
     const [originalFile, setOriginalFile] = useState<File | null>(null)
     const [enhancedImage, setEnhancedImage] = useState<string | null>(null)
+    const [upscaledImage, setUpscaledImage] = useState<string | null>(null)
     const [processingState, setProcessingState] = useState<ProcessingState>('idle')
     const [selectedMode, setSelectedMode] = useState<EnhanceMode>('full')
 
@@ -48,6 +49,7 @@ export default function EnhancePage() {
         setOriginalImage(preview)
         setOriginalFile(file)
         setEnhancedImage(null)
+        setUpscaledImage(null)
         setProcessingState('idle')
         // Don't auto-process - wait for user to select mode and click enhance
     }
@@ -81,6 +83,9 @@ export default function EnhancePage() {
 
             const data = await response.json()
             setEnhancedImage(data.enhanced)
+            if (data.upscaled) {
+                setUpscaledImage(data.upscaled)
+            }
             setProcessingState('done')
             toast.success('Image enhanced successfully!')
         } catch (error) {
@@ -90,27 +95,39 @@ export default function EnhancePage() {
         }
     }
 
-    const handleDownload = () => {
-        if (!enhancedImage) return
+    const handleDownload = (imageToDownload: string | null, label: string) => {
+        if (!imageToDownload) return
 
         try {
-            console.log('Download start. Image starts with:', enhancedImage.substring(0, 50))
+            console.log(`Download start (${label})...`)
 
-            // Force browser to treat it as a download by changing MIME type to octet-stream
-            const base64Data = enhancedImage.split(',')[1]
-            const mimeType = enhancedImage.split(',')[0].split(':')[1].split(';')[0]
-            const ext = mimeType.includes('png') ? 'png' : 'jpg'
-            const filename = `enhanced-image-${Date.now()}.${ext}`
-
+            // Detect if it's base64 or URL
+            const isBase64 = imageToDownload.startsWith('data:')
             const link = document.createElement('a')
-            link.href = `data:application/octet-stream;base64,${base64Data}`
-            link.download = filename
+
+            if (isBase64) {
+                // Force browser to treat it as a download by changing MIME type to octet-stream
+                const base64Data = imageToDownload.split(',')[1]
+                const mimeType = imageToDownload.split(',')[0].split(':')[1].split(';')[0]
+                const ext = mimeType.includes('png') ? 'png' : 'jpg'
+                const filename = `${label.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.${ext}`
+
+                link.href = `data:application/octet-stream;base64,${base64Data}`
+                link.download = filename
+            } else {
+                // For URLs (Replicate output), we can just download directly
+                // However, cross-origin might be an issue for programmatic download without opening new tab
+                // Let's try opening in new tab if download fails, or fetch and blob it
+                link.href = imageToDownload
+                link.download = `${label.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`
+                link.target = "_blank"
+            }
 
             document.body.appendChild(link)
             link.click()
             document.body.removeChild(link)
 
-            toast.success('Image downloaded!')
+            toast.success(`${label} downloaded!`)
         } catch (error) {
             console.error('Download error:', error)
             toast.error('Failed to download image')
@@ -121,6 +138,7 @@ export default function EnhancePage() {
         setOriginalImage(null)
         setOriginalFile(null)
         setEnhancedImage(null)
+        setUpscaledImage(null)
         setProcessingState('idle')
         setSelectedMode('full')
     }
@@ -201,14 +219,27 @@ export default function EnhancePage() {
                             >
                                 <BeforeAfter
                                     beforeImage={originalImage!}
-                                    afterImage={enhancedImage}
+                                    afterImage={upscaledImage || enhancedImage}
                                 />
+                                {upscaledImage && (
+                                    <div className="text-center text-sm text-gray-500 -mt-4">
+                                        Showing 4K Upscaled Result
+                                    </div>
+                                )}
 
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                    <Button onClick={handleDownload} size="lg" className="gap-2">
+                                    <Button onClick={() => handleDownload(enhancedImage, 'Standard Enhanced')} size="lg" variant="secondary" className="gap-2">
                                         <Download className="w-5 h-5" />
-                                        Download Enhanced
+                                        Standard Enhanced
                                     </Button>
+
+                                    {upscaledImage && (
+                                        <Button onClick={() => handleDownload(upscaledImage, '4K Upscaled')} size="lg" className="gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-0">
+                                            <Download className="w-5 h-5" />
+                                            Download 4K Version
+                                        </Button>
+                                    )}
+
                                     <Button onClick={handleReset} size="lg" variant="outline" className="gap-2">
                                         <RotateCcw className="w-5 h-5" />
                                         Enhance Another
