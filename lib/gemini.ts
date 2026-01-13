@@ -15,70 +15,85 @@ function getClient(): GoogleGenAI {
     return ai
 }
 
-const ENHANCE_PROMPT = `You are an ELITE real estate photo editor specializing in LUXURY property photography. Your goal is to create a STUNNING, BRIGHT, HIGH-KEY image that looks like it was professionally shot with multiple flash units and perfectly merged HDR.
+const ENHANCE_PROMPT = `You are an expert real estate photo editor. Apply the following enhancements precisely as specified in this JSON configuration:
 
-CRITICAL INSTRUCTION: The final image must be DRAMATICALLY BRIGHTER than the original. Think "bright, airy, luxurious showroom" - NOT subtle improvements.
+{
+  "task": "professional_real_estate_photo_enhancement",
+  "output_quality": "magazine_cover_ready",
+  
+  "exposure": {
+    "target": "high_key_bright",
+    "shadow_lift": "+2_stops",
+    "highlight_recovery": "full",
+    "overall_brightness": "very_bright",
+    "dark_corners": "eliminate_completely",
+    "walls_and_ceilings": "bright_glowing_appearance"
+  },
+  
+  "white_balance": {
+    "CRITICAL": "DO_NOT_MAKE_WARM_OR_ORANGE",
+    "color_temperature": "5500K_neutral_daylight",
+    "whites": "pure_clean_white_NOT_cream_NOT_yellow",
+    "avoid": ["orange_tint", "yellow_cast", "golden_glow", "warm_tungsten"],
+    "target_look": "natural_daylight_through_windows",
+    "walls": "clean_neutral_white_or_very_light_gray"
+  },
+  
+  "window_treatment": {
+    "CRITICAL": "HIGHEST_PRIORITY",
+    "exterior_visibility": "crystal_clear_sharp",
+    "sky": {
+      "appearance": "bright_blue_with_white_clouds",
+      "visibility": "100%_clear_not_hazy",
+      "color": "natural_sky_blue"
+    },
+    "glass_clarity": "perfectly_transparent",
+    "balance": "interior_and_exterior_equally_exposed",
+    "avoid": ["blown_out_white", "hazy_unclear", "foggy_appearance"]
+  },
+  
+  "color_correction": {
+    "saturation": "natural_plus_10%",
+    "vibrance": "enhanced_but_realistic",
+    "red_fabrics": "true_vibrant_red_not_orange",
+    "wood_tones": "natural_brown_not_orange",
+    "greens": "healthy_natural_green",
+    "maintain": "color_accuracy_and_separation"
+  },
+  
+  "contrast_and_clarity": {
+    "contrast": "professional_medium_high",
+    "clarity": "crisp_sharp_magazine_quality",
+    "local_contrast": "enhanced_for_depth",
+    "avoid": ["muddy_flat_look", "hazy_appearance"]
+  },
+  
+  "perspective": {
+    "vertical_lines": "perfectly_straight",
+    "horizontal_lines": "perfectly_level",
+    "lens_distortion": "fully_corrected"
+  },
+  
+  "sharpness": {
+    "level": "magazine_print_quality",
+    "details": "enhanced_textures",
+    "edges": "crisp_and_defined"
+  },
+  
+  "privacy": {
+    "blur_faces_in_photos": true,
+    "blur_license_plates": true,
+    "style": "subtle_natural"
+  }
+}
 
-## 1. EXTREME BRIGHTNESS & HDR (MOST IMPORTANT)
-- Make the ENTIRE image VERY BRIGHT - aim for HIGH-KEY exposure
-- Walls and ceilings should appear almost GLOWING with soft, even light
-- Lift ALL shadows aggressively - there should be NO dark corners or areas
-- The overall exposure should be +1.5 to +2 stops brighter than typical
-- Think "bright sunny day flooding through every window"
-- Shadows should feel "lifted" and airy, not crushed or dark
+CRITICAL REQUIREMENTS:
+1. WINDOW CLARITY IS #1 PRIORITY - The view through windows MUST be crystal clear with visible blue sky and clouds
+2. DO NOT ADD WARM/ORANGE TINT - Keep colors neutral daylight, whites must be PURE WHITE not cream or yellow
+3. HIGH KEY BRIGHTNESS - Entire image should be very bright, no dark areas
+4. PROFESSIONAL CONTRAST - Image should feel crisp and defined, not muddy or flat
 
-## 2. WARM, CREAMY COLOR TEMPERATURE
-- Apply WARM color grading - cream whites, golden undertones
-- Color temperature should be around 6500K (warm daylight)
-- Whites should be WARM CREAM, not cool or neutral
-- Walls should have a subtle warm golden glow
-- Wood tones should be rich honey/golden brown
-- The overall feel should be INVITING and LUXURIOUS
-
-## 3. WINDOW PULLING WITH PERFECT BALANCE
-- Windows MUST show clear exterior views with blue sky
-- Interior exposure MUST match the bright exterior
-- No blown-out windows - both inside and outside crystal clear
-- Window views should enhance the bright, airy atmosphere
-
-## 4. PROFESSIONAL LUXURY LIGHTING SIMULATION
-- Simulate the look of professional real estate photography lighting
-- Every surface should have soft, even illumination
-- Add subtle fill light effect to shadowy areas
-- Create the impression of multiple light sources
-- Carpets/floors should appear CLEAN and BRIGHT
-- Ceilings should be bright white/cream, never gray
-
-## 5. PERSPECTIVE & GEOMETRY CORRECTION
-- Straighten all vertical and horizontal lines perfectly
-- Correct any lens distortion
-- Professional architectural photography standard
-
-## 6. COLOR ENHANCEMENT & VIBRANCE
-- Boost saturation slightly for visual pop
-- Enhance fabric and decor colors to look fresh
-- Plants should be vibrant green
-- Maintain realistic but enhanced color palette
-
-## 7. DETAIL & CLARITY
-- Maximize sharpness without artifacts  
-- Enhance textures (wood grain, fabrics, stone)
-- Crystal clear, magazine-quality output
-
-## 8. PRIVACY PROTECTION
-- Blur any visible faces in photos/portraits
-- Blur license plates if visible
-- Subtle, natural-looking privacy protection
-
-TARGET LOOK:
-- Think LUXURY REAL ESTATE MAGAZINE cover
-- Bright, warm, welcoming, aspirational
-- "I want to live here!" emotional response
-- High-key, airy, sun-drenched feeling
-- Every corner visible and inviting
-- Professional HDR but NATURAL looking
-
-The transformation must be DRAMATIC and OBVIOUS. Take the dark original and make it GLOW with warmth and light. This is for a premium real estate listing.`
+The result should look like a professional real estate magazine cover photo shot in perfect natural daylight conditions.`
 
 
 const REMOVE_OBJECT_PROMPT = (objectToRemove: string) => `Edit this image by replacing the "${objectToRemove}" with the surrounding background (wall, floor, or ceiling). The result should look natural and seamless, as if the object was never there.`
