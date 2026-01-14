@@ -14,10 +14,28 @@ export const metadata: Metadata = {
   description: 'Enhance photos & remove objects in seconds with AI-powered real estate photo editing.',
   keywords: ['real estate', 'photo editing', 'AI', 'HDR', 'property photos'],
   authors: [{ name: 'Aurix' }],
+  icons: {
+    icon: '/aurix-logo.png',
+    apple: '/aurix-logo.png',
+  },
   openGraph: {
     title: 'Aurix | AI Real Estate Photo Editor',
     description: 'Enhance photos & remove objects in seconds with AI-powered real estate photo editing.',
     type: 'website',
+    images: [
+      {
+        url: '/aurix-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Aurix Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aurix | AI Real Estate Photo Editor',
+    description: 'Enhance photos & remove objects in seconds with AI-powered real estate photo editing.',
+    images: ['/aurix-logo.png'],
   },
 }
 

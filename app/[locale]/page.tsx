@@ -1,5 +1,5 @@
 import { Link } from '@/navigation'
-import { ArrowRight, Play, Aperture, Star } from 'lucide-react'
+import { ArrowRight, Play, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ImageCompareSlider } from '@/components/ImageCompareSlider'
 import { useTranslations } from 'next-intl'
@@ -241,8 +241,13 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
-                <Aperture className="w-4 h-4 text-white" />
+              <div className="relative w-8 h-8 rounded-lg overflow-hidden">
+                <Image
+                  src="/aurix-logo.png"
+                  alt="Aurix Logo"
+                  fill
+                  className="object-contain p-1"
+                />
               </div>
               <span className="font-semibold text-white">Aurix</span>
             </div>
