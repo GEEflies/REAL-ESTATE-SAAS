@@ -110,8 +110,8 @@ export default function HomePage() {
                   afterImage="/landing/hero images/wb-after.jpg"
                   className="rounded-2xl shadow-2xl"
                 />
-                {/* Used by badge with testimonial avatars */}
-                <div className="absolute bottom-4 left-4 bg-white/95 rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-xl">
+                {/* Full-width testimonial overlay bar */}
+                <div className="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md px-6 py-4 flex items-center justify-center gap-4 rounded-b-2xl">
                   {/* Overlapping avatars */}
                   <div className="flex items-center -space-x-2.5">
                     <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-gray-200 ring-1 ring-gray-200">
@@ -142,17 +142,16 @@ export default function HomePage() {
                       />
                     </div>
                   </div>
-                  {/* Stars and text */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-0.5">
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700">{t('usedBy')}</span>
+                  {/* Stars */}
+                  <div className="flex items-center gap-0.5">
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                   </div>
+                  {/* Text */}
+                  <span className="text-sm font-medium text-gray-700">{t('usedBy')}</span>
                 </div>
               </div>
             </div>
