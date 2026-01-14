@@ -241,8 +241,8 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     {[
-                                        { count: 50, price: '16.99', per: '0.34', highlight: false, id: 'starter' },
-                                        { count: 100, price: '24.99', per: '0.25', highlight: true, id: 'pro' }
+                                        { count: 50, price: '16.99', originalPrice: '42.99', per: '0.34', highlight: false, id: 'starter' },
+                                        { count: 100, price: '24.99', originalPrice: '62.49', per: '0.25', highlight: true, id: 'pro' }
                                     ].map((plan) => (
                                         <div
                                             key={plan.count}
@@ -264,7 +264,12 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                                 {plan.count} {t('limitedOffer.images')}
                                             </h3>
                                             <div className="flex items-baseline gap-2 mb-4">
-                                                <span className="text-4xl font-bold text-gray-900">€{plan.price}</span>
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs text-gray-400 line-through font-medium">
+                                                        €{plan.originalPrice}
+                                                    </span>
+                                                    <span className="text-4xl font-bold text-gray-900">€{plan.price}</span>
+                                                </div>
                                                 <span className="text-xs font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-md">
                                                     €{plan.per}/{t('payPerImage.perImage')}
                                                 </span>
