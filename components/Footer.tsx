@@ -77,12 +77,12 @@ export function Footer() {
                     <div>
                         <h3 className="font-bold text-gray-900 mb-6">{t('features')}</h3>
                         <ul className="space-y-4">
-                            <li className="text-gray-600 text-sm">{t('featureList.sky')}</li>
-                            <li className="text-gray-600 text-sm">{t('featureList.perspective')}</li>
-                            <li className="text-gray-600 text-sm">{t('featureList.hdr')}</li>
-                            <li className="text-gray-600 text-sm">{t('featureList.window')}</li>
-                            <li className="text-gray-600 text-sm">{t('featureList.whiteBalance')}</li>
-                            <li className="text-gray-600 text-sm">{t('featureList.relighting')}</li>
+                            <li><Link href="/feature/sky-replacement" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">{t('featureList.sky')}</Link></li>
+                            <li><Link href="/feature/perspective-correction" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">{t('featureList.perspective')}</Link></li>
+                            <li><Link href="/feature/hdr-merge" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">{t('featureList.hdr')}</Link></li>
+                            <li><Link href="/feature/window-pulling" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">{t('featureList.window')}</Link></li>
+                            <li><Link href="/feature/white-balance" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">{t('featureList.whiteBalance')}</Link></li>
+                            <li><Link href="/feature/image-relighting" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">{t('featureList.relighting')}</Link></li>
                         </ul>
                     </div>
                 </div>
