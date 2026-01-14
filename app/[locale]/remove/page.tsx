@@ -163,7 +163,7 @@ export default function RemovePage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
             <EmailGate open={emailGateOpen} onSuccess={handleEmailSuccess} />
-            <PaywallGate open={paywallGateOpen} />
+            <PaywallGate open={paywallGateOpen} onClose={() => setPaywallGateOpen(false)} />
             <div className="max-w-4xl mx-auto px-4 py-12">
                 {/* Header */}
                 <div className="text-center mb-10">
