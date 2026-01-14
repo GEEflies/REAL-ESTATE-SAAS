@@ -297,5 +297,151 @@
             "privacy": "Auto Súkromie"
         },
         "rights": "Všetky práva vyhradené."
+    },
+    "FeaturePages": {
+        "sky-replacement": {
+            "title": "AI Výmena oblohy",
+            "description": "Okamžite vymeňte fádnu, zamračenú oblohu za krásnu modrú. Naša AI automaticky detekuje oblohu a nahradí ju perfektnou zhodou, pričom upraví osvetlenie pre prirodzený vzhľad.",
+            "cta": "Vylepšiť oblohu",
+            "benefitsTitle": "Prečo využiť výmenu oblohy?",
+            "benefit1": {
+                "title": "Perfektné počasie",
+                "desc": "Garantujte modrú oblohu v každom inzeráte, bez ohľadu na to, kedy ste fotili."
+            },
+            "benefit2": {
+                "title": "Automatické maskovanie",
+                "desc": "Žiadny manuálny výber. Naša AI zvládne aj zložité horizonty ako stromy a káble."
+            },
+            "benefit3": {
+                "title": "Realistické osvetlenie",
+                "desc": "Celý obrázok je preosvetlený tak, aby zodpovedal novej oblohe pre fotorealistický výsledok."
+            }
+        },
+        "perspective-correction": {
+            "title": "Korekcia perspektívy",
+            "description": "Automaticky opravte zbiehajúce sa vertikály a skreslené uhly. Uistite sa, že vaše architektonické línie sú rovné a pravdivé, presne ako pri profesionálnej tilt-shift fotografii.",
+            "cta": "Opraviť perspektívu",
+            "benefitsTitle": "Profesionálny vzhľad",
+            "benefit1": {
+                "title": "Vertikálne zarovnanie",
+                "desc": "Automaticky vyrovná vertikálne línie pre profesionálnu, vyváženú kompozíciu."
+            },
+            "benefit2": {
+                "title": "Oprava skreslenia objektívu",
+                "desc": "Koriguje súdkovité a poduškovité skreslenie širokouhlých objektívov."
+            },
+            "benefit3": {
+                "title": "Auto-orezanie",
+                "desc": "Inteligentné orezanie zabezpečí, že si zachováte najdôležitejšie časti obrazu."
+            }
+        },
+        "hdr-merge": {
+            "title": "HDR zlučovanie",
+            "description": "Zlúčte viacero expozícií do jedného, dokonale vyváženého obrazu. Zachyťte detaily v najjasnejších svetlách aj najtmavších tieňoch bez falošného 'HDR efektu'.",
+            "cta": "Zlúčiť HDR fotky",
+            "benefitsTitle": "Vyvážené osvetlenie",
+            "benefit1": {
+                "title": "Celý dynamický rozsah",
+                "desc": "Vidieť jasne von z okien a zároveň mať svetlé detaily v interiéri."
+            },
+            "benefit2": {
+                "title": "Prirodzené farby",
+                "desc": "Naše algoritmy zabezpečujú, že farby zostanú prirodzené a živé."
+            },
+            "benefit3": {
+                "title": "Redukcia duchov",
+                "desc": "Automaticky odstraňuje pohybové artefakty z pohybujúcich sa objektov medzi snímkami."
+            }
+        },
+        "window-pulling": {
+            "title": "Krištáľovo čistý výhľad z okna",
+            "description": "Urobte výhľady cez okná jasné a živé. Už si nemusíte vyberať medzi exponovanou miestnosťou alebo exponovaným výhľadom – majte oboje.",
+            "cta": "Vyskúšať Window Pulling",
+            "benefitsTitle": "Ukážte výhľad",
+            "benefit1": {
+                "title": "Čistota výhľadu",
+                "desc": "Odhaľte záhradu, mesto alebo more, ktoré predáva nehnuteľnosť."
+            },
+            "benefit2": {
+                "title": "Redukcia odleskov",
+                "desc": "Minimalizuje odrazy a závoj na sklenených povrchoch."
+            },
+            "benefit3": {
+                "title": "Bezšvové prelínanie",
+                "desc": "Vonkajší výhľad sa prirodzene prelína s interiérovým osvetlením."
+            }
+        },
+        "white-balance": {
+            "title": "Auto vyváženie bielej",
+            "description": "Efektívne odstráňte farebné nádychy. Zmeňte oranžové žiarovkové svetlo alebo modrý chlad tieňa na čisté, neutrálne biele svetlo, ktoré kupujúci milujú.",
+            "cta": "Opraviť farby",
+            "benefitsTitle": "Verné farby",
+            "benefit1": {
+                "title": "Neutrálne biele",
+                "desc": "Steny a stropy vyzerajú sviežo a bielo, nie žlto alebo modro."
+            },
+            "benefit2": {
+                "title": "Oprava zmiešaného svetla",
+                "desc": "Zvláda zložité scény s kombináciou denného a umelého svetla."
+            },
+            "benefit3": {
+                "title": "Živé akcenty",
+                "desc": "Zachováva presné a výrazné farby nábytku a dekorácií."
+            }
+        },
+        "image-relighting": {
+            "title": "AI Preosvetlenie obrazu",
+            "description": "Zosvetlite tmavé miestnosti a pridajte hĺbku plochým obrázkom. Simuluje profesionálne osvetlenie, aby každá miestnosť pôsobila útulne a priestranne.",
+            "cta": "Preosvetliť miestnosť",
+            "benefitsTitle": "Svetlé a vzdušné interiéry",
+            "benefit1": {
+                "title": "Vytiahnutie tieňov",
+                "desc": "Jemne zosvetlí tmavé kúty bez pridania šumu."
+            },
+            "benefit2": {
+                "title": "Zvýraznenie hĺbky",
+                "desc": "Pridáva jemný kontrast pre zdôraznenie štruktúry a rozloženia miestnosti."
+            },
+            "benefit3": {
+                "title": "Rovnomerné osvetlenie",
+                "desc": "Vyvažuje distribúciu svetla v celej miestnosti pre maximálnu príťažlivosť."
+            }
+        },
+        "raw-support": {
+            "title": "Podpora RAW formátov",
+            "description": "Upravujte priamo z RAW súborov vášho fotoaparátu pre maximálnu kvalitu. Podporujeme CR2, NEF, ARW, DNG a ďalšie.",
+            "cta": "Upraviť RAW súbory",
+            "benefitsTitle": "Maximálna kvalita",
+            "benefit1": {
+                "title": "Nedeštruktívne",
+                "desc": "Zachovajte všetky pôvodné dáta obrazu počas procesu úprav."
+            },
+            "benefit2": {
+                "title": "Väčšia farebná hĺbka",
+                "desc": "Pracujte s viac farebnými informáciami pre hladšie prechody."
+            },
+            "benefit3": {
+                "title": "Univerzálna podpora",
+                "desc": "Kompatibilné s RAW súbormi od všetkých hlavných výrobcov fotoaparátov."
+            }
+        },
+        "auto-privacy": {
+            "title": "Automatické rozmazanie súkromia",
+            "description": "Automaticky detekujte a rozmažte tváre a evidenčné čísla pre súlad s GDPR bez manuálnej práce.",
+            "cta": "Chrániť súkromie",
+            "benefitsTitle": "Jednoduchý súlad",
+            "benefit1": {
+                "title": "Detekcia tvárí",
+                "desc": "Identifikuje a rozmaže tváre na záberoch z verejnosti alebo ulice."
+            },
+            "benefit2": {
+                "title": "Evidenčné čísla",
+                "desc": "Automaticky rozmaže ŠPZ áut na príjazdových cestách a uliciach."
+            },
+            "benefit3": {
+                "title": "Bezpečné pre GDPR",
+                "desc": "Zabezpečí, že vaše marketingové materiály spĺňajú štandardy ochrany súkromia."
+            }
+        }
     }
 }

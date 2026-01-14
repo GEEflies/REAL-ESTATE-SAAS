@@ -297,5 +297,151 @@
             "privacy": "Auto Privacy"
         },
         "rights": "All rights reserved."
+    },
+    "FeaturePages": {
+        "sky-replacement": {
+            "title": "AI Sky Replacement",
+            "description": "Instantly replace dull, overcast skies with beautiful blue skies. Our AI automatically detects the sky and replaces it with a perfect match, adjusting lighting and reflections for a natural look.",
+            "cta": "Enhance Sky Now",
+            "benefitsTitle": "Why use Sky Replacement?",
+            "benefit1": {
+                "title": "Perfect Weather",
+                "desc": "Guarantee blue skies in every listing, regardless of when you shot."
+            },
+            "benefit2": {
+                "title": "Automated Masking",
+                "desc": "No need for manual selection. Our AI handles complex horizons like trees and wires."
+            },
+            "benefit3": {
+                "title": "Realistic Lighting",
+                "desc": "The entire image is relit to match the new sky for a photorealistic result."
+            }
+        },
+        "perspective-correction": {
+            "title": "Perspective Correction",
+            "description": "Fix converging verticals and distorted angles automatically. Ensure your architectural lines are straight and true, just like professional tilt-shift photography.",
+            "cta": "Fix Perspectives",
+            "benefitsTitle": "Professional Architecture Look",
+            "benefit1": {
+                "title": "Vertical Alignment",
+                "desc": "Automatically straighten vertical lines for a professional, balanced composition."
+            },
+            "benefit2": {
+                "title": "Lens Distortion Fix",
+                "desc": "Correct barrel and pincushion distortion from wide-angle lenses."
+            },
+            "benefit3": {
+                "title": "Auto-Crop",
+                "desc": "Intelligent cropping ensures you keep the most important parts of the image."
+            }
+        },
+        "hdr-merge": {
+            "title": "HDR Merging",
+            "description": "Merge multiple exposures into a single, perfectly balanced image. Capture details in both the brightest highlights and darkest shadows without the fake 'HDR look'.",
+            "cta": "Merge HDR Photos",
+            "benefitsTitle": "Balanced Lighting",
+            "benefit1": {
+                "title": "Full Dynamic Range",
+                "desc": "See clearly out of windows while keeping interior details bright."
+            },
+            "benefit2": {
+                "title": "Natural Tone Check",
+                "desc": "Our algorithms ensure colors remain natural and vibrant."
+            },
+            "benefit3": {
+                "title": "Ghost Reduction",
+                "desc": "Automatically removes motion artifacts from moving objects between frames."
+            }
+        },
+        "window-pulling": {
+            "title": "Crystal Clear Window Pulling",
+            "description": "Make views through windows clear and vibrant. Stop choosing between an exposed room or an exposed view—get both perfectly.",
+            "cta": "Try Window Pulling",
+            "benefitsTitle": "Show Off the View",
+            "benefit1": {
+                "title": "View Clarity",
+                "desc": "Reveal the garden, city, or ocean view that sells the property."
+            },
+            "benefit2": {
+                "title": "Glare Reduction",
+                "desc": "Minimize reflections and haze on glass surfaces."
+            },
+            "benefit3": {
+                "title": "Seamless Blending",
+                "desc": "The exterior view blends naturally with the interior lighting."
+            }
+        },
+        "white-balance": {
+            "title": "Auto White Balance",
+            "description": "Remove color casts effectively. Turn orange tungsten light or blue shade coldness into clean, neutral white light that potential buyers love.",
+            "cta": "Correct Colors",
+            "benefitsTitle": "True-to-Life Colors",
+            "benefit1": {
+                "title": "Neutral Whites",
+                "desc": "Walls and ceilings look crisp and white, not yellow or blue."
+            },
+            "benefit2": {
+                "title": "Mixed Lighting Fix",
+                "desc": "Handles complex scenes with mixed daylight and artificial light sources."
+            },
+            "benefit3": {
+                "title": "Vibrant Accents",
+                "desc": "Keeps furniture and decor colors accurate and punchy."
+            }
+        },
+        "image-relighting": {
+            "title": "AI Image Relighting",
+            "description": "Brighten dark rooms and add depth to flat images. Simulates professional lighting setups to make every room feel inviting and spacious.",
+            "cta": "Relight Room",
+            "benefitsTitle": "Bright & Airy Interiors",
+            "benefit1": {
+                "title": "Shadow Lifting",
+                "desc": "Gently brighten dark corners without introducing noise."
+            },
+            "benefit2": {
+                "title": "Depth Enhancement",
+                "desc": "Adds subtle contrast to emphasize room structure and layout."
+            },
+            "benefit3": {
+                "title": "Even Illumination",
+                "desc": "Balances light distribution across the room for significant appeal."
+            }
+        },
+        "raw-support": {
+            "title": "RAW Format Support",
+            "description": "Edit directly from your camera's RAW files for maximum quality. We support CR2, NEF, ARW, DNG and more.",
+            "cta": "Edit RAW Files",
+            "benefitsTitle": "Maximum Quality",
+            "benefit1": {
+                "title": "Non-Destructive",
+                "desc": "Preserve all original image data during the editing process."
+            },
+            "benefit2": {
+                "title": "Higher Bit Depth",
+                "desc": "Work with more color information for smoother gradients."
+            },
+            "benefit3": {
+                "title": "Universal Support",
+                "desc": "Compatible with RAW files from all major camera manufacturers."
+            }
+        },
+        "auto-privacy": {
+            "title": "Automated Privacy Blurring",
+            "description": "Automatically detect and blur faces and license plates to comply with privacy regulations like GDPR without manual work.",
+            "cta": "Protect Privacy",
+            "benefitsTitle": "Compliance Made Easy",
+            "benefit1": {
+                "title": "Face Detection",
+                "desc": "Identifies and blurs faces in public or street view shots."
+            },
+            "benefit2": {
+                "title": "License Plates",
+                "desc": "Automatically blurs car number plates in driveway and street photos."
+            },
+            "benefit3": {
+                "title": "GDPR Safe",
+                "desc": "Ensures your marketing materials meet privacy standards."
+            }
+        }
     }
 }

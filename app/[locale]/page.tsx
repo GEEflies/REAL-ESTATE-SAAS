@@ -113,7 +113,7 @@ export default function HomePage() {
                   className=""
                 />
                 {/* Full-width testimonial overlay bar */}
-                <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/10 backdrop-blur-md px-6 py-3 flex items-center justify-center gap-4">
+                <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/5 backdrop-blur-sm px-6 py-3 flex items-center justify-center gap-4">
                   {/* Overlapping avatars */}
                   <div className="flex items-center -space-x-2.5">
                     <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-gray-200 ring-1 ring-gray-200">
