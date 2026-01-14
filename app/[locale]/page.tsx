@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button'
 import { ImageCompareSlider } from '@/components/ImageCompareSlider'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { Footer } from '@/components/Footer'
+import { PreFooter } from '@/components/PreFooter'
 
 export default function HomePage() {
   const t = useTranslations('Home')
@@ -237,26 +239,11 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="px-4 py-12 bg-gray-900 text-gray-400">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="relative w-10 h-10 rounded-xl bg-white/10 border-2 border-white/20 overflow-hidden backdrop-blur-sm p-1.5">
-                <Image
-                  src="/aurix-logo.png"
-                  alt="Aurix Logo"
-                  fill
-                  className="object-contain p-1.5"
-                />
-              </div>
-              <span className="font-semibold text-white">Aurix</span>
-            </div>
-            <p className="text-sm text-center md:text-right">
-              © {new Date().getFullYear()} Aurix. {t('footerRights')}
-            </p>
-          </div>
-        </div>
-      </footer>
+      {/* Pre-Footer CTA */}
+      <PreFooter />
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
