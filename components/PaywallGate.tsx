@@ -163,7 +163,7 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                     {/* Container for images to preserve aspect ratio */}
                                     <div className="relative w-full aspect-[4/3]">
                                         {/* Before Image - Behind and Higher Up */}
-                                        <div className="absolute -top-12 left-0 w-full h-[90%] rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-gray-100 z-0 scale-95 origin-top opacity-60 rotate-[-8deg]">
+                                        <div className="absolute -top-16 left-0 w-full h-[90%] rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-gray-100 z-0 scale-95 origin-top opacity-60 rotate-[-8deg]">
                                             <div className="absolute top-3 left-3 z-30 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full backdrop-blur-md">
                                                 {t('before')}
                                             </div>
@@ -176,7 +176,7 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                         </div>
 
                                         {/* After Image - Front and Lower Down */}
-                                        <div className="absolute -bottom-4 left-0 w-full h-[90%] rounded-2xl overflow-hidden shadow-2xl border-2 border-white bg-white z-10 rotate-[8deg]">
+                                        <div className="absolute -bottom-8 left-0 w-full h-[90%] rounded-2xl overflow-hidden shadow-2xl border-2 border-white bg-white z-10 rotate-[8deg]">
                                             <div className="absolute top-3 right-3 z-30 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
                                                 {t('after')}
                                             </div>
