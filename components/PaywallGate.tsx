@@ -265,15 +265,15 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                             <h3 className="text-base font-medium text-gray-500 mb-1">
                                                 {plan.count} {t('limitedOffer.images')}
                                             </h3>
-                                            <div className="flex items-baseline gap-2 mb-4">
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs text-gray-400 line-through font-medium">
-                                                        €{plan.originalPrice}
-                                                    </span>
-                                                    <span className="text-4xl font-bold text-gray-900">€{plan.price}</span>
-                                                </div>
-                                                <span className="text-xs font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-md">
-                                                    €{plan.per}/{t('payPerImage.perImage')}
+                                            <div className="flex items-baseline flex-wrap gap-2 mb-4">
+                                                <span className="text-xl text-gray-400 line-through font-medium">
+                                                    €{plan.originalPrice}
+                                                </span>
+                                                <span className="text-4xl font-bold text-gray-900">
+                                                    €{plan.price}
+                                                </span>
+                                                <span className="text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                    (€{plan.per}/{t('payPerImage.perImage')})
                                                 </span>
                                             </div>
 
