@@ -114,29 +114,31 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="relative">
-                                {/* Before Image */}
-                                <div className="relative w-48 h-64 rounded-xl overflow-hidden shadow-lg">
-                                    <div className="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded z-10">
+                            <div className="relative flex items-center justify-center py-8">
+                                {/* Before Image - Tilted left */}
+                                <div className="relative w-36 rounded-xl overflow-hidden shadow-lg transform -rotate-[15deg] z-10">
+                                    <div className="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded z-20">
                                         {t('before')}
                                     </div>
                                     <Image
                                         src="/landing/pricing/before.jpeg"
                                         alt="Before"
-                                        fill
-                                        className="object-cover"
+                                        width={300}
+                                        height={400}
+                                        className="w-full h-auto"
                                     />
                                 </div>
-                                {/* After Image - Overlapping */}
-                                <div className="absolute top-16 left-32 w-56 h-72 rounded-xl overflow-hidden shadow-2xl border-4 border-white">
-                                    <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded z-10">
+                                {/* After Image - Tilted right, overlapping */}
+                                <div className="relative w-40 rounded-xl overflow-hidden shadow-2xl border-4 border-white transform rotate-[15deg] -ml-8 z-20">
+                                    <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded z-20">
                                         {t('after')}
                                     </div>
                                     <Image
                                         src="/landing/pricing/after.jpeg"
                                         alt="After"
-                                        fill
-                                        className="object-cover"
+                                        width={300}
+                                        height={400}
+                                        className="w-full h-auto"
                                     />
                                 </div>
                             </div>
@@ -217,8 +219,8 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
 
                     {/* Enterprise */}
                     {activeTab === 'enterprise' && (
-                        <div className="text-center max-w-lg mx-auto">
-                            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <div className="flex flex-col items-center justify-center text-center max-w-lg mx-auto">
+                            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6">
                                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
@@ -229,20 +231,20 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                             <p className="text-gray-600 mb-8">
                                 {t('enterprise.description')}
                             </p>
-                            <ul className="space-y-3 text-left mb-8">
-                                <li className="flex items-center gap-3 text-gray-700">
+                            <ul className="space-y-3 mb-8 w-full">
+                                <li className="flex items-center justify-center gap-3 text-gray-700">
                                     <Check className="w-5 h-5 text-green-500 shrink-0" />
                                     {t('enterprise.features.0')}
                                 </li>
-                                <li className="flex items-center gap-3 text-gray-700">
+                                <li className="flex items-center justify-center gap-3 text-gray-700">
                                     <Check className="w-5 h-5 text-green-500 shrink-0" />
                                     {t('enterprise.features.1')}
                                 </li>
-                                <li className="flex items-center gap-3 text-gray-700">
+                                <li className="flex items-center justify-center gap-3 text-gray-700">
                                     <Check className="w-5 h-5 text-green-500 shrink-0" />
                                     {t('enterprise.features.2')}
                                 </li>
-                                <li className="flex items-center gap-3 text-gray-700">
+                                <li className="flex items-center justify-center gap-3 text-gray-700">
                                     <Check className="w-5 h-5 text-green-500 shrink-0" />
                                     {t('enterprise.features.3')}
                                 </li>
