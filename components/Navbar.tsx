@@ -16,10 +16,10 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { Poppins } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 
-const poppins = Poppins({
-    weight: '700',
+const montserrat = Montserrat({
+    weight: '900',
     subsets: ['latin']
 })
 
