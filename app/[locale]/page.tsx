@@ -1,78 +1,135 @@
 import { Link } from '@/navigation'
-import { Sparkles, Eraser, Zap, Shield, Clock, ArrowRight, Aperture } from 'lucide-react'
+import { ArrowRight, Play, Aperture, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PricingCards } from '@/components/PricingCards'
+import { ImageCompareSlider } from '@/components/ImageCompareSlider'
 import { useTranslations } from 'next-intl'
 
 export default function HomePage() {
   const t = useTranslations('Home')
-  const tNav = useTranslations('Navbar')
+
+  const features = [
+    {
+      key: 'hdr',
+      before: '/landing/hdr merging/hdr-before.jpg',
+      after: '/landing/hdr merging/hdr-after.jpeg',
+    },
+    {
+      key: 'window',
+      before: '/landing/window pulling/wp-before.jpg',
+      after: '/landing/window pulling/wp-after.jpeg',
+    },
+    {
+      key: 'sky',
+      before: '/landing/sky replacement/sky-before.jpeg',
+      after: '/landing/sky replacement/sky-after.jpeg',
+    },
+    {
+      key: 'whiteBalance',
+      before: '/landing/white balance/wb-before.jpg',
+      after: '/landing/white balance/wb-after.jpeg',
+    },
+    {
+      key: 'perspective',
+      before: '/landing/perspective correction/prsp-before.jpeg',
+      after: '/landing/perspective correction/prsp-after.jpeg',
+    },
+    {
+      key: 'relighting',
+      before: '/landing/relighting/religh-before.jpg',
+      after: '/landing/relighting/religh-after.jpg',
+    },
+    {
+      key: 'raw',
+      before: '/landing/raw/raw-before.jpg',
+      after: '/landing/raw/raw-after.jpg',
+    },
+    {
+      key: 'privacy',
+      before: '/landing/privacy/privacy-before.jpeg',
+      after: '/landing/privacy/privacy-after.jpeg',
+    },
+    {
+      key: 'colorCorrection',
+      before: '/landing/color correction/cc-before.jpg',
+      after: '/landing/color correction/cc-after.jpg',
+    },
+  ]
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative px-4 py-20 md:py-32 overflow-hidden">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-yellow-50 animate-gradient" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent" />
+      <section className="px-4 py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Text Content */}
+            <div className="order-2 lg:order-1">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                <span className="text-blue-600">{t('heroTitle')}</span>
+                <br />
+                <span className="text-gray-900">{t('heroSubtitle')}</span>
+              </h1>
+              <p className="text-lg text-gray-600 mb-8 max-w-lg">
+                {t('heroDescription')}
+              </p>
 
-        <div className="relative max-w-5xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4" />
-            <span>{t('heroBadge')}</span>
-          </div>
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <Link href="/enhance">
+                  <Button size="lg" className="gap-2 px-6">
+                    {t('ctaTryFree')}
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-medium">
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center">
+                    <Play className="w-4 h-4 ml-0.5" />
+                  </div>
+                  {t('ctaWatchDemo')}
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 mb-8">{t('noAccount')}</p>
 
-          {/* Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
-            {t('heroTitlePrefix')}
-            <span className="block bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              {t('heroTitleSuffix')}
-            </span>
-          </h1>
-
-          {/* Subheading */}
-          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            {t('heroSubtitle')}
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/enhance">
-              <Button size="lg" className="w-full sm:w-auto gap-2 text-base px-8">
-                <Sparkles className="w-5 h-5" />
-                {t('ctaEnhance')}
-              </Button>
-            </Link>
-            <Link href="/remove">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 text-base px-8">
-                <Eraser className="w-5 h-5" />
-                {t('ctaRemove')}
-              </Button>
-            </Link>
-          </div>
-
-          {/* Trust Badges */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-green-500" />
-              <span>{t('trustSecure')}</span>
+              {/* Trust Badges */}
+              <div className="text-sm text-gray-500">
+                <span className="font-medium">{t('trustedBy')}</span>
+                <div className="flex items-center gap-6 mt-3 opacity-60">
+                  <span className="font-semibold text-gray-700">OnTheMarket</span>
+                  <span className="font-semibold text-gray-700">MADE</span>
+                  <span className="font-semibold text-gray-700">CoreLogic</span>
+                  <span className="font-semibold text-gray-700">DCTR</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-blue-500" />
-              <span>{t('trustSpeed')}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-yellow-500" />
-              <span>{t('trustQuality')}</span>
+
+            {/* Right: Hero Image Slider */}
+            <div className="order-1 lg:order-2">
+              <div className="relative">
+                <ImageCompareSlider
+                  beforeImage="/landing/hero images/wb-before.jpg"
+                  afterImage="/landing/hero images/wb-after.jpg"
+                  className="rounded-2xl shadow-2xl"
+                />
+                {/* Used by badge */}
+                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-lg">
+                  <div className="flex items-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                  </div>
+                  <span className="text-sm text-gray-600">{t('usedBy')}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="px-4 py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+      <section className="px-4 py-20 bg-white">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('featuresTitle')}
@@ -82,46 +139,73 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Enhance Feature */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center mb-6">
-                <Sparkles className="w-7 h-7 text-blue-600" />
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature) => (
+              <div key={feature.key} className="group">
+                <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                  <ImageCompareSlider
+                    beforeImage={feature.before}
+                    afterImage={feature.after}
+                    className="aspect-[4/3]"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      {t(`features.${feature.key}.title`)}
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {t(`features.${feature.key}.description`)}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {t('featureEnhanceTitle')}
-              </h3>
-              <p className="text-gray-600 mb-4">
-                {t('featureEnhanceDesc')}
-              </p>
-              <Link href="/enhance" className="inline-flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700">
-                {t('featureEnhanceLink')}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Section: Aurix vs Human Editor */}
+      <section className="px-4 py-20 bg-slate-900 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {t('comparisonTitle')}
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              {t('comparisonSubtitle')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Aurix Edit */}
+            <div className="relative">
+              <div className="absolute top-4 left-4 bg-blue-600 text-white text-sm font-medium px-3 py-1 rounded-md z-10">
+                {t('aurixLabel')}
+              </div>
+              <ImageCompareSlider
+                beforeImage="/landing/aurix edit/original-edit.jpg"
+                afterImage="/landing/aurix edit/aurix-edit.jpg"
+                className="rounded-xl"
+              />
             </div>
 
-            {/* Remove Feature */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center mb-6">
-                <Eraser className="w-7 h-7 text-purple-600" />
+            {/* Human Editor */}
+            <div className="relative">
+              <div className="absolute top-4 left-4 bg-gray-600 text-white text-sm font-medium px-3 py-1 rounded-md z-10">
+                {t('humanLabel')}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {t('featureRemoveTitle')}
-              </h3>
-              <p className="text-gray-600 mb-4">
-                {t('featureRemoveDesc')}
-              </p>
-              <Link href="/remove" className="inline-flex items-center gap-2 text-purple-600 font-medium hover:text-purple-700">
-                {t('featureRemoveLink')}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              <ImageCompareSlider
+                beforeImage="/landing/human edit/original-edit.jpg"
+                afterImage="/landing/human edit/human-edit.jpg"
+                className="rounded-xl"
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="px-4 py-20">
+      <section id="pricing" className="px-4 py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

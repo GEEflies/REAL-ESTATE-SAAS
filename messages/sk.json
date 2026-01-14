@@ -8,22 +8,58 @@
     },
     "Home": {
         "heroBadge": "AI Úprava",
-        "heroTitlePrefix": "AI Editor",
-        "heroTitleSuffix": "Realitných Fotiek",
-        "heroSubtitle": "Vylepšite fotky a odstráňte objekty za pár sekúnd. Premeňte bežné inzeráty na ohromujúce profesionálne fotografie pomocou sily AI.",
-        "ctaEnhance": "Vylepšiť Fotku",
-        "ctaRemove": "Odstrániť Objekt",
-        "trustSecure": "Bezpečné a súkromné",
-        "trustSpeed": "Výsledky do 30 sekúnd",
-        "trustQuality": "Kvalita umelej inteligencie",
-        "featuresTitle": "Profesionálne výsledky, nulová námaha",
-        "featuresSubtitle": "Naša AI rozumie realitnej fotografii a vždy prináša ohromujúce výsledky.",
-        "featureEnhanceTitle": "Vylepšenie Fotografií",
-        "featureEnhanceDesc": "Dokonalé zlúčenie HDR, jasný výhľad z okien, korekcia vyváženia bielej a profesionálne osvetlenie – všetko automaticky.",
-        "featureEnhanceLink": "Vyskúšať Vylepšenie",
-        "featureRemoveTitle": "Odstránenie Objektov",
-        "featureRemoveDesc": "Odstráňte odpadkové koše, elektrické vedenia, autá alebo akékoľvek nežiaduce objekty pomocou plynulého AI retušovania, ktoré ladí so scénou.",
-        "featureRemoveLink": "Vyskúšať Odstránenie",
+        "heroTitle": "AI Nástroj",
+        "heroSubtitle": "Pre Úpravu Realitných Fotografií vo Veľkom",
+        "heroDescription": "Rýchle, konzistentné a cenovo výhodné AI HDR zlúčenie, zjasnenie okien, korekcia farieb a viac... s nadľudskou kvalitou.",
+        "ctaTryFree": "Vyskúšať Zadarmo",
+        "ctaWatchDemo": "Pozrieť Demo",
+        "noAccount": "*Nevyžaduje sa účet",
+        "trustedBy": "Dôverujú nám:",
+        "usedBy": "Používané tisíckami realitných profesionálov",
+        "featuresTitle": "Úspech Obrazu s AI Úpravou",
+        "featuresSubtitle": "Aurix upraví vaše realitné fotografie do najmenšieho detailu. Plne optimalizované pre realitný priemysel.",
+        "features": {
+            "hdr": {
+                "title": "HDR Zlúčenie",
+                "description": "Okamžite zoskupte a zlúčte viacero expozícií do jedného obrazu s vysokým dynamickým rozsahom. Výsledkom je vyvážený, prirodzený vzhľad, ktorý zachytáva plnú hĺbku vášho obrazu."
+            },
+            "window": {
+                "title": "Zjasnenie Okien",
+                "description": "Aurix detekuje okná a aplikuje presnú masku na odkrytie jasného výhľadu von. Toto zabezpečí, že interiéry aj exteriéry sú viditeľné s dokonalou jasnosťou."
+            },
+            "sky": {
+                "title": "Výmena Oblohy",
+                "description": "Automaticky premeňte zamračenú oblohu na jasnú oblohu pre príťažlivejší vzhľad. Okamžite zvýšte príťažlivosť a jasnosť každého obrazu s prirodzene vyzerajúcou oblohou."
+            },
+            "whiteBalance": {
+                "title": "Vyváženie Bielej",
+                "description": "Vyváženie bielej sa automaticky upraví tak, aby dokonale odrážalo prirodzené farby, identifikovaním toho, čo by malo byť biele v každom obraze. Výsledkom sú obrazy s konzistentnými, presnými farebnými tónmi."
+            },
+            "perspective": {
+                "title": "Korekcia Perspektívy",
+                "description": "Dokonale narovnajte svoje obrazy pre vyvážený, reprezentatívny pohľad. Interiéry aj exteriéry budú vyzerať prirodzene zarovnané a profesionálne upravené."
+            },
+            "relighting": {
+                "title": "Nasvietenie Obrazu",
+                "description": "Nasvietenie obrazu upravuje jas, svetlá a tiene, aby vytvorilo dobre osvetlený, dynamický obraz. Výsledkom je vizuálne pútavejší obraz s vyváženou expozíciou."
+            },
+            "raw": {
+                "title": "RAW Podpora",
+                "description": "Nahrajte RAW súbory priamo pre maximálne zachovanie kvality. Získajte najviac detailov a dynamický rozsah z vašich profesionálnych fotografií."
+            },
+            "privacy": {
+                "title": "Auto Súkromie",
+                "description": "Automaticky detekuje a rozmaže ŠPZ, tváre a ďalšie citlivé informácie. Zabezpečte súlad a chráňte súkromie na každej fotke nehnuteľnosti."
+            },
+            "colorCorrection": {
+                "title": "Korekcia Farieb",
+                "description": "Vylepšite živosť a zabezpečte presnú reprodukciu farieb na všetkých obrázkoch. Vytvorte úžasné, verné fotografie, ktoré priťahujú viac kupujúcich."
+            }
+        },
+        "comparisonTitle": "Rýchlejšie, Cenovo Dostupnejšie a Jednoduchšie ako Manuálna Úprava",
+        "comparisonSubtitle": "Získajte vysokokvalitné vylepšenia za zlomok času a nákladov v porovnaní s manuálnou úpravou.",
+        "aurixLabel": "Aurix",
+        "humanLabel": "Ľudský Editor",
         "pricingTitle": "Jednoduchý a transparentný cenník",
         "pricingSubtitle": "Začnite zadarmo, prejdite na vyšší balík, keď budete potrebovať viac. Žiadne skryté poplatky, kedykoľvek zrušiteľné.",
         "footerRights": "Všetky práva vyhradené."

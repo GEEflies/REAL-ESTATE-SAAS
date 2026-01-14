@@ -8,22 +8,58 @@
     },
     "Home": {
         "heroBadge": "AI-Powered Editing",
-        "heroTitlePrefix": "AI Real Estate",
-        "heroTitleSuffix": "Photo Editor",
-        "heroSubtitle": "Enhance photos & remove objects in seconds. Transform ordinary listings into stunning, professional photography with the power of AI.",
-        "ctaEnhance": "Enhance Photo",
-        "ctaRemove": "Remove Object",
-        "trustSecure": "Secure & Private",
-        "trustSpeed": "Results in 30 seconds",
-        "trustQuality": "AI-Powered Quality",
-        "featuresTitle": "Professional Results, Zero Effort",
-        "featuresSubtitle": "Our AI understands real estate photography and delivers stunning results every time.",
-        "featureEnhanceTitle": "Photo Enhancement",
-        "featureEnhanceDesc": "Perfect HDR merge, bright window replacement, white balance correction, and professional lighting—all automatically.",
-        "featureEnhanceLink": "Try Enhancement",
-        "featureRemoveTitle": "Object Removal",
-        "featureRemoveDesc": "Remove trash cans, power lines, cars, or any unwanted objects with seamless AI inpainting that matches the scene.",
-        "featureRemoveLink": "Try Removal",
+        "heroTitle": "The AI Engine",
+        "heroSubtitle": "Powering Real Estate Photo Editing at Scale",
+        "heroDescription": "Fast, consistent, and cost-effective AI HDR merging, window pulls, color correction, and more... with superhuman quality.",
+        "ctaTryFree": "Try For Free",
+        "ctaWatchDemo": "Watch Demo",
+        "noAccount": "*No account required",
+        "trustedBy": "Trusted by:",
+        "usedBy": "Used by 1000s of real estate professionals",
+        "featuresTitle": "Picture Success With AI Image Editing",
+        "featuresSubtitle": "Aurix edits your real estate images to the finest detail. Fully optimized for the real estate industry.",
+        "features": {
+            "hdr": {
+                "title": "HDR Merging",
+                "description": "Instantly group and merge multiple exposures into a single high dynamic range image. The result is a balanced, natural look that captures the full depth of your image."
+            },
+            "window": {
+                "title": "Window Pulling",
+                "description": "Aurix detects windows and applies a precise mask to reveal a clear view of the outside. This ensures interiors and exteriors are both visible with perfect clarity."
+            },
+            "sky": {
+                "title": "Sky Replacement",
+                "description": "Automatically transform overcast skies into bright skies for a more inviting look. Instantly boost the appeal and clarity of every image with natural-looking skies."
+            },
+            "whiteBalance": {
+                "title": "White Balance",
+                "description": "White balance is adjusted automatically to perfectly reflect natural colors, by identifying what should be white in each image. This results in images with consistent, accurate color tones."
+            },
+            "perspective": {
+                "title": "Perspective Correction",
+                "description": "Perfectly straighten your images for a balanced, representative view. Both internals and externals will appear naturally aligned and professionally edited."
+            },
+            "relighting": {
+                "title": "Image Relighting",
+                "description": "Image relighting adjusts brightness, highlights, and shadows to create a well-lit, dynamic image. The result is a more visually engaging image with well-balanced exposure."
+            },
+            "raw": {
+                "title": "RAW Support",
+                "description": "Upload RAW files directly for maximum quality preservation. Get the most detail and dynamic range from your professional camera shots."
+            },
+            "privacy": {
+                "title": "Auto Privacy",
+                "description": "Automatically detect and blur license plates, faces, and other sensitive information. Ensure compliance and protect privacy in every listing photo."
+            },
+            "colorCorrection": {
+                "title": "Color Correction",
+                "description": "Enhance vibrancy and ensure accurate color reproduction across all images. Create stunning, true-to-life photos that attract more buyers."
+            }
+        },
+        "comparisonTitle": "Faster, More Affordable And Easier Than Manual Editing",
+        "comparisonSubtitle": "Get high quality enhancements at a fraction of the time and cost compared to manual editing.",
+        "aurixLabel": "Aurix",
+        "humanLabel": "Human Editor",
         "pricingTitle": "Simple, Transparent Pricing",
         "pricingSubtitle": "Start free, upgrade when you need more. No hidden fees, cancel anytime.",
         "footerRights": "All rights reserved."
