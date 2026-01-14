@@ -12,6 +12,7 @@ import { BeforeAfter } from '@/components/BeforeAfter'
 import { compressImage } from '@/lib/utils'
 import { EmailGate } from '@/components/EmailGate'
 import { PaywallGate } from '@/components/PaywallGate'
+import { Footer } from '@/components/Footer'
 
 type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
@@ -208,10 +209,10 @@ export default function EnhancePage() {
     const selectedModeInfo = ENHANCE_MODES.find(m => m.id === selectedMode)
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
             <EmailGate open={emailGateOpen} onSuccess={handleEmailSuccess} />
             <PaywallGate open={paywallGateOpen} onClose={() => setPaywallGateOpen(false)} />
-            <div className="max-w-5xl mx-auto px-4 py-12">
+            <div className="max-w-5xl mx-auto px-4 py-12 flex-1 w-full">
                 {/* Header */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
@@ -395,6 +396,7 @@ export default function EnhancePage() {
                     </AnimatePresence>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

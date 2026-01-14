@@ -13,6 +13,7 @@ import { BeforeAfter } from '@/components/BeforeAfter'
 import { getBase64FromFile } from '@/lib/utils'
 import { EmailGate } from '@/components/EmailGate'
 import { PaywallGate } from '@/components/PaywallGate'
+import { Footer } from '@/components/Footer'
 
 type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
@@ -161,10 +162,10 @@ export default function RemovePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+        <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white flex flex-col">
             <EmailGate open={emailGateOpen} onSuccess={handleEmailSuccess} />
             <PaywallGate open={paywallGateOpen} onClose={() => setPaywallGateOpen(false)} />
-            <div className="max-w-4xl mx-auto px-4 py-12">
+            <div className="max-w-4xl mx-auto px-4 py-12 flex-1 w-full">
                 {/* Header */}
                 <div className="text-center mb-10">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 text-sm font-medium mb-4">
@@ -278,6 +279,7 @@ export default function RemovePage() {
                     </AnimatePresence>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
