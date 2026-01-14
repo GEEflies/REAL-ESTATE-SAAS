@@ -108,7 +108,7 @@ export default function HomePage() {
               </p>
 
               {/* Benefits Bar */}
-              <div className="w-full pt-8 border-t border-gray-100 grid grid-cols-3 gap-4">
+              <div className="w-full pt-8 border-t border-gray-100 grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2 text-gray-900 font-semibold">
                     <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />

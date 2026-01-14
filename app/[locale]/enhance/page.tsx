@@ -136,6 +136,7 @@ export default function EnhancePage() {
                 }
                 if (response.status === 403 && error.error === 'LIMIT_REACHED') {
                     setUsageCount(3) // Force update
+                    toast.error(tToast('limitReached'))
                     setPaywallGateOpen(true)
                     setProcessingState('idle')
                     return

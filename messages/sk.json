@@ -16,20 +16,21 @@
         "noAccount": "*Bez nutnosti kreditnej karty",
         "heroBenefits": {
             "speed": "Hotovo do 30s",
+            "privacy": "GDPR Súlad",
             "cost": "10x Lacnejšie"
         },
         "animatedHero": {
             "static": "Realitné fotografie s",
             "rotating": {
-                "0": "Dokonalou oblohou",
-                "1": "Rovnými líniami",
-                "2": "Vyváženým svetlom",
+                "0": "dokonalou oblohou",
+                "1": "rovnými líniami",
+                "2": "vyváženým svetlom",
                 "3": "použitím HDR",
-                "4": "Vylepšením okien",
-                "5": "Vyvážením bielej",
-                "6": "Preosvetlením",
-                "7": "Ochranou súkromia",
-                "8": "Korekciou farieb"
+                "4": "vylepšením okien",
+                "5": "vyvážením bielej",
+                "6": "presvetlením",
+                "7": "ochranou súkromia",
+                "8": "korekciou farieb"
             }
         },
         "usedBy": "Spoľahlivá kvalita pre profesionálne výsledky",
@@ -187,7 +188,8 @@
         "downloadError": "Nepodarilo sa stiahnuť obrázok",
         "specifyRemove": "Prosím uveďte, čo sa má odstrániť",
         "removeSuccess": "Objekt úspešne odstránený!",
-        "removeError": "Odstránenie zlyhalo. Skúste to prosím znova."
+        "removeError": "Odstránenie zlyhalo. Skúste to prosím znova.",
+        "limitReached": "Dosiahli ste limit 3 obrázkov zdarma. Pre viac upgradujte."
     },
     "Pricing": {
         "title": "Jednoduchý, transparentný cenník",

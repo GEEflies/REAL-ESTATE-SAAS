@@ -42,6 +42,10 @@ export function ImageCompareSlider({
         handleMove(e.clientX)
     }, [handleMove])
 
+    // Track loading state for both images
+    const [imagesLoaded, setImagesLoaded] = useState({ before: false, after: false })
+    const allImagesLoaded = imagesLoaded.before && imagesLoaded.after
+
     // Global mouse event handlers
     useEffect(() => {
         const handleGlobalMouseMove = (e: MouseEvent) => {
@@ -65,12 +69,12 @@ export function ImageCompareSlider({
     return (
         <div
             ref={containerRef}
-            className={`relative overflow-hidden rounded-xl cursor-ew-resize select-none ${className}`}
+            className={`relative overflow-hidden rounded-xl cursor-ew-resize select-none ${className} bg-gray-100 transition-opacity duration-500 ease-in-out ${allImagesLoaded ? 'opacity-100' : 'opacity-0'}`}
             onMouseDown={handleMouseDown}
             onTouchMove={handleTouchMove}
             onClick={handleClick}
         >
-            {/* After Image (Background) */}
+            {/* AfterImage (Background) */}
             <div className="relative w-full aspect-[4/3]">
                 <Image
                     src={afterImage}
@@ -79,6 +83,7 @@ export function ImageCompareSlider({
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority
+                    onLoad={() => setImagesLoaded(prev => ({ ...prev, after: true }))}
                 />
             </div>
 
@@ -93,6 +98,8 @@ export function ImageCompareSlider({
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                    onLoad={() => setImagesLoaded(prev => ({ ...prev, before: true }))}
                 />
             </div>
 

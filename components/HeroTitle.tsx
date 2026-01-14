@@ -1,8 +1,8 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export function HeroTitle() {
     const t = useTranslations('Home.animatedHero')
@@ -34,23 +34,19 @@ export function HeroTitle() {
                 {t('static')}
             </span>
             <span className="inline-grid grid-cols-1 grid-rows-1 h-[1.3em] align-top overflow-hidden">
-                {phrases.map((phrase, i) => (
-                    <span
-                        key={i}
-                        className={cn(
-                            "row-start-1 col-start-1 w-full block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pl-1",
-                            index === i
-                                ? "opacity-100 transform-none"
-                                : "opacity-0 -translate-y-[100%]"
-                        )}
-                        style={{
-                            willChange: 'transform, opacity',
-                            transformOrigin: '50% 50% 0px'
-                        }}
+                <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.span
+                        key={index}
+                        initial={{ y: "100%", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: "-100%", opacity: 0 }}
+                        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="row-start-1 col-start-1 block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 whitespace-nowrap pl-1"
                     >
-                        {phrase}
-                    </span>
-                ))}
+                        {phrases[index]}
+                    </motion.span>
+                </AnimatePresence>
+
                 {/* Invisible duplicate to force width to be the max necessary */}
                 <span className="row-start-1 col-start-1 opacity-0 pointer-events-none invisible whitespace-nowrap pl-1" aria-hidden="true">
                     {phrases.sort((a, b) => b.length - a.length)[0]}

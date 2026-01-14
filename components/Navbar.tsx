@@ -58,7 +58,7 @@ export function Navbar() {
                                     <Button
                                         variant="ghost"
                                         className={cn(
-                                            'gap-2',
+                                            'gap-2 cursor-pointer',
                                             isActive && 'bg-blue-50 text-blue-600'
                                         )}
                                     >
@@ -130,7 +130,7 @@ export function Navbar() {
                                         href={item.href}
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={cn(
-                                            'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors',
+                                            'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer',
                                             isActive
                                                 ? 'bg-blue-50 text-blue-600'
                                                 : 'text-gray-600 hover:bg-gray-50'

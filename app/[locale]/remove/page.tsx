@@ -107,6 +107,7 @@ export default function RemovePage() {
                 }
                 if (response.status === 403 && error.error === 'LIMIT_REACHED') {
                     setUsageCount(3)
+                    toast.error(tToast('limitReached'))
                     setPaywallGateOpen(true)
                     setProcessingState('idle')
                     return

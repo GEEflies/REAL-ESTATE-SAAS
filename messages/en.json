@@ -16,6 +16,7 @@
         "noAccount": "*No credit card required",
         "heroBenefits": {
             "speed": "30s Turnaround",
+            "privacy": "GDPR Compliant",
             "cost": "10x Cheaper"
         },
         "animatedHero": {
@@ -187,7 +188,8 @@
         "downloadError": "Failed to download image",
         "specifyRemove": "Please specify what to remove",
         "removeSuccess": "Object removed successfully!",
-        "removeError": "Removal failed. Please try again."
+        "removeError": "Removal failed. Please try again.",
+        "limitReached": "Maximum 3 free images allowed. Upgrade for more."
     },
     "Pricing": {
         "title": "Simple, Transparent Pricing",
