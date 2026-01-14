@@ -197,11 +197,11 @@ export default function RemovePage() {
                                 />
 
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                    <Button onClick={handleDownload} size="lg" className="gap-2">
+                                    <Button onClick={handleDownload} size="lg" className="gap-2 cursor-pointer bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:shadow-purple-500/30 transition-all">
                                         <Download className="w-5 h-5" />
                                         {t('download')}
                                     </Button>
-                                    <Button onClick={handleReset} size="lg" variant="outline" className="gap-2">
+                                    <Button onClick={handleReset} size="lg" variant="outline" className="gap-2 cursor-pointer hover:bg-gray-50">
                                         <RotateCcw className="w-5 h-5" />
                                         {t('editAnother')}
                                     </Button>
@@ -249,7 +249,7 @@ export default function RemovePage() {
                                         <Button
                                             onClick={processImage}
                                             size="lg"
-                                            className="gap-2"
+                                            className="gap-2 px-8 py-6 text-lg bg-gradient-to-r from-purple-600 to-rose-600 hover:from-purple-700 hover:to-rose-700 shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 cursor-pointer"
                                             disabled={!objectToRemove.trim()}
                                         >
                                             <Eraser className="w-5 h-5" />

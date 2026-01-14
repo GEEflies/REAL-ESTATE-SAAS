@@ -300,7 +300,7 @@ export default function EnhancePage() {
                                     </div>
                                     <Button
                                         onClick={() => handleDownload(enhancedImage, 'Standard Enhanced')}
-                                        className="w-full gap-2"
+                                        className="w-full gap-2 cursor-pointer hover:bg-gray-100 transition-colors"
                                         variant="secondary"
                                     >
                                         <Download className="w-5 h-5" />
@@ -327,7 +327,7 @@ export default function EnhancePage() {
                                         </div>
                                         <Button
                                             onClick={() => handleDownload(upscaledImage, '4K Upscaled')}
-                                            className="w-full gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-0"
+                                            className="w-full gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-0 shadow-lg shadow-purple-500/20 hover:shadow-xl hover:shadow-purple-500/30 cursor-pointer transition-all"
                                         >
                                             <Download className="w-5 h-5" />
                                             {t('replicateCard.download')}
@@ -337,7 +337,7 @@ export default function EnhancePage() {
 
                                 {/* Action Buttons */}
                                 <div className="flex justify-center">
-                                    <Button onClick={handleReset} size="lg" variant="outline" className="gap-2">
+                                    <Button onClick={handleReset} size="lg" variant="outline" className="gap-2 cursor-pointer hover:bg-gray-50">
                                         <RotateCcw className="w-5 h-5" />
                                         {t('enhanceAnother')}
                                     </Button>
@@ -367,7 +367,7 @@ export default function EnhancePage() {
                                         <Button
                                             onClick={processImage}
                                             size="lg"
-                                            className="gap-2 px-8 py-6 text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                                            className="gap-2 px-8 py-6 text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 cursor-pointer"
                                         >
                                             <Sparkles className="w-5 h-5" />
                                             {t('enhanceButton')} {selectedModeInfo?.label}

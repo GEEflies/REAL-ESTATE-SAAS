@@ -103,7 +103,7 @@ export function ImageDropzone({
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="relative rounded-2xl overflow-hidden border-2 border-gray-200 bg-gray-50"
+                        className="relative rounded-2xl overflow-hidden border-2 border-gray-200 bg-gray-50 w-fit mx-auto"
                     >
                         <img
                             src={currentPreview}
@@ -113,7 +113,7 @@ export function ImageDropzone({
                         {onClear && !disabled && (
                             <button
                                 onClick={onClear}
-                                className="absolute top-3 right-3 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                                className="absolute top-2 right-2 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors cursor-pointer backdrop-blur-sm"
                             >
                                 <X className="w-4 h-4" />
                             </button>
