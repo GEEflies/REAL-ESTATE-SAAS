@@ -19,6 +19,20 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
     const t = useTranslations('Paywall')
     const [activeTab, setActiveTab] = useState<PricingTab>('payPerImage')
     const [timeLeft, setTimeLeft] = useState(300) // 5 minutes in seconds
+    const [selectedProTier, setSelectedProTier] = useState(100)
+    const [proDropdownOpen, setProDropdownOpen] = useState(false)
+
+    // Pro tier pricing tiers
+    const proTiers = [
+        { count: 100, price: '29.00', originalPrice: '72.50', per: '0.29' },
+        { count: 200, price: '54.00', originalPrice: '135.00', per: '0.27' },
+        { count: 300, price: '75.00', originalPrice: '187.50', per: '0.25' },
+        { count: 400, price: '92.00', originalPrice: '230.00', per: '0.23' },
+        { count: 500, price: '105.00', originalPrice: '262.50', per: '0.21' },
+        { count: 1000, price: '190.00', originalPrice: '475.00', per: '0.19' },
+    ]
+
+    const selectedProPricing = proTiers.find(t => t.count === selectedProTier) || proTiers[0]
 
     useEffect(() => {
         if (!open) return
@@ -85,7 +99,7 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as PricingTab)}
                                     className={cn(
-                                        "relative px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 z-10",
+                                        "relative px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 z-10 cursor-pointer",
                                         activeTab === tab.id
                                             ? "text-gray-900 shadow-sm"
                                             : "text-gray-500 hover:text-gray-900"
@@ -242,68 +256,120 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                 </motion.div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
-                                    {[
-                                        { count: 50, price: '16.99', originalPrice: '42.99', per: '0.34', highlight: false, id: 'starter' },
-                                        { count: 100, price: '24.99', originalPrice: '62.49', per: '0.25', highlight: true, id: 'pro' }
-                                    ].map((plan) => (
-                                        <div
-                                            key={plan.count}
-                                            className={cn(
-                                                "relative p-6 rounded-2xl border-2 transition-all duration-300",
-                                                plan.highlight
-                                                    ? "border-orange-500/50 bg-orange-50/30 shadow-xl shadow-orange-500/10 scale-102 z-10"
-                                                    : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-lg"
-                                            )}
-                                        >
-                                            {plan.highlight && (
-                                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
-                                                    <Flame className="w-3 h-3 fill-current" />
-                                                    {t('limitedOffer.bestValue')}
+                                    {/* Starter Tier */}
+                                    <div className="relative p-6 rounded-2xl border-2 border-gray-100 bg-white hover:border-gray-200 hover:shadow-lg transition-all duration-300">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-1">
+                                            {t('limitedOffer.starterName')}
+                                        </h3>
+                                        <p className="text-sm text-gray-500 mb-3">50 {t('limitedOffer.images')}</p>
+
+                                        <div className="flex items-baseline flex-wrap gap-2 mb-1">
+                                            <span className="text-lg text-gray-400 line-through font-medium">€42.49</span>
+                                            <span className="text-4xl font-bold text-gray-900">€16.99</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+                                            <span>(€0.34/{t('payPerImage.perImage')})</span>
+                                            <span className="font-medium text-orange-600">{t('limitedOffer.perMonth')}</span>
+                                        </div>
+
+                                        <Button className="w-full h-10 text-sm mb-6 rounded-lg bg-gray-900 hover:bg-gray-800">
+                                            {t('selectPlan')}
+                                        </Button>
+
+                                        <div className="space-y-2.5">
+                                            <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Features</div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-gray-100 text-gray-500">
+                                                    <Check className="w-3 h-3" />
+                                                </div>
+                                                <span className="text-gray-700 text-sm font-medium">50 {t('limitedOffer.images').toLowerCase()}</span>
+                                            </div>
+                                            {[1, 2, 3].map((i) => (
+                                                <div key={i} className="flex items-center gap-2">
+                                                    <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-gray-100 text-gray-500">
+                                                        <Check className="w-3 h-3" />
+                                                    </div>
+                                                    <span className="text-gray-700 text-sm font-medium">{t(`limitedOffer.features.${i}`)}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Pro Tier with Dropdown */}
+                                    <div className="relative p-6 rounded-2xl border-2 border-orange-500/50 bg-orange-50/30 shadow-xl shadow-orange-500/10 transition-all duration-300">
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                                            <Flame className="w-3 h-3 fill-current" />
+                                            {t('limitedOffer.bestValue')}
+                                        </div>
+
+                                        <h3 className="text-lg font-bold text-gray-900 mb-1">
+                                            {t('limitedOffer.proName')}
+                                        </h3>
+
+                                        {/* Dropdown for image count */}
+                                        <div className="relative mb-3">
+                                            <button
+                                                onClick={() => setProDropdownOpen(!proDropdownOpen)}
+                                                className="flex items-center gap-2 text-sm text-gray-700 font-medium bg-white border border-gray-200 rounded-lg px-3 py-1.5 hover:border-orange-400 transition-colors cursor-pointer"
+                                            >
+                                                <span>{selectedProTier} {t('limitedOffer.images')}</span>
+                                                <svg className={cn("w-4 h-4 transition-transform", proDropdownOpen && "rotate-180")} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+
+                                            {proDropdownOpen && (
+                                                <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1">
+                                                    {proTiers.map((tier) => (
+                                                        <button
+                                                            key={tier.count}
+                                                            onClick={() => {
+                                                                setSelectedProTier(tier.count)
+                                                                setProDropdownOpen(false)
+                                                            }}
+                                                            className={cn(
+                                                                "w-full text-left px-3 py-2 text-sm hover:bg-orange-50 transition-colors cursor-pointer",
+                                                                selectedProTier === tier.count && "bg-orange-100 font-semibold"
+                                                            )}
+                                                        >
+                                                            {tier.count} {t('limitedOffer.images')} — €{tier.per}/{t('payPerImage.perImage')}
+                                                        </button>
+                                                    ))}
                                                 </div>
                                             )}
-
-                                            <h3 className="text-base font-medium text-gray-500 mb-1">
-                                                {plan.count} {t('limitedOffer.images')}
-                                            </h3>
-                                            <div className="flex items-baseline flex-wrap gap-2 mb-4">
-                                                <span className="text-xl text-gray-400 line-through font-medium">
-                                                    €{plan.originalPrice}
-                                                </span>
-                                                <span className="text-4xl font-bold text-gray-900">
-                                                    €{plan.price}
-                                                </span>
-                                                <span className="text-sm font-medium text-gray-500 whitespace-nowrap">
-                                                    (€{plan.per}/{t('payPerImage.perImage')})
-                                                </span>
-                                            </div>
-
-                                            <Button
-                                                className={cn(
-                                                    "w-full h-10 text-sm mb-6 rounded-lg",
-                                                    plan.highlight
-                                                        ? "bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-lg shadow-orange-500/20"
-                                                        : "bg-gray-900 hover:bg-gray-800"
-                                                )}
-                                            >
-                                                {t('selectPlan')}
-                                            </Button>
-
-                                            <div className="space-y-3">
-                                                <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Features</div>
-                                                {[0, 1, 2, 3].map((i) => (
-                                                    <div key={i} className="flex items-center gap-2">
-                                                        <div className={cn(
-                                                            "w-5 h-5 rounded-full flex items-center justify-center shrink-0",
-                                                            plan.highlight ? "bg-orange-100 text-orange-600" : "bg-gray-100 text-gray-500"
-                                                        )}>
-                                                            <Check className="w-3 h-3" />
-                                                        </div>
-                                                        <span className="text-gray-700 text-sm font-medium">{t(`limitedOffer.features.${i}`)}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
                                         </div>
-                                    ))}
+
+                                        <div className="flex items-baseline flex-wrap gap-2 mb-1">
+                                            <span className="text-lg text-gray-400 line-through font-medium">€{selectedProPricing.originalPrice}</span>
+                                            <span className="text-4xl font-bold text-gray-900">€{selectedProPricing.price}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+                                            <span>(€{selectedProPricing.per}/{t('payPerImage.perImage')})</span>
+                                            <span className="font-medium text-orange-600">{t('limitedOffer.perMonth')}</span>
+                                        </div>
+
+                                        <Button className="w-full h-10 text-sm mb-6 rounded-lg bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-lg shadow-orange-500/20">
+                                            {t('selectPlan')}
+                                        </Button>
+
+                                        <div className="space-y-2.5">
+                                            <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Features</div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-orange-600">
+                                                    <Check className="w-3 h-3" />
+                                                </div>
+                                                <span className="text-gray-700 text-sm font-medium">{selectedProTier} {t('limitedOffer.images').toLowerCase()}</span>
+                                            </div>
+                                            {[1, 2, 3].map((i) => (
+                                                <div key={i} className="flex items-center gap-2">
+                                                    <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-orange-600">
+                                                        <Check className="w-3 h-3" />
+                                                    </div>
+                                                    <span className="text-gray-700 text-sm font-medium">{t(`limitedOffer.features.${i}`)}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </motion.div>
                         )}

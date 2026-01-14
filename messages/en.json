@@ -241,20 +241,24 @@
             "perImage": "image",
             "invoiceNote": "Downloaded images are invoiced at the end of the month",
             "features": {
-                "0": "Images saved for 30 days",
-                "1": "AI Version 5",
-                "2": "6K resolution enhancements"
+                "0": "Generated in 30 seconds",
+                "1": "Latest AI model",
+                "2": "4K/6K resolution"
             }
         },
         "limitedOffer": {
             "popular": "Popular Choice",
             "bestValue": "Best Value",
             "images": "Images",
+            "starterName": "Starter",
+            "proName": "Pro",
+            "perMonth": "/month",
+            "chooseImages": "Choose images",
             "features": {
-                "0": "Never expires",
-                "1": "Priority processing",
-                "2": "6K resolution",
-                "3": "Priority support"
+                "0": "{count} images included",
+                "1": "Never expires",
+                "2": "Priority processing",
+                "3": "6K resolution"
             }
         },
         "enterprise": {

@@ -224,8 +224,8 @@
         "currentPlan": "Aktuálny Plán"
     },
     "Paywall": {
-        "title": "Vylepšite svoj plán",
-        "subtitle": "Vyberte si ideálny plán pre pokračovanie vo vylepšovaní obrázkov",
+        "title": "Odomknite plný potenciál",
+        "subtitle": "Vyberte si plán, ktorý vám vyhovuje a začnite vylepšovať fotky ešte dnes",
         "tabs": {
             "payPerImage": "Platba za obrázok",
             "limitedOffer": "Limitovaná ponuka",
@@ -241,20 +241,24 @@
             "perImage": "obrázok",
             "invoiceNote": "Stiahnuté obrázky sú fakturované na konci mesiaca",
             "features": {
-                "0": "Obrázky uložené 30 dní",
-                "1": "AI Verzia 5",
-                "2": "6K rozlíšenie vylepšení"
+                "0": "Vygenerované za 30s",
+                "1": "Najnovší AI model",
+                "2": "4K/6K rozlíšenie"
             }
         },
         "limitedOffer": {
-            "popular": "Populárna voľba",
+            "popular": "Obľúbená voľba",
             "bestValue": "Najlepšia hodnota",
             "images": "Obrázkov",
+            "starterName": "Štartér",
+            "proName": "Pro",
+            "perMonth": "/mesiac",
+            "chooseImages": "Vybrať počet",
             "features": {
-                "0": "Nikdy nevyprší",
-                "1": "Prioritné spracovanie",
-                "2": "6K rozlíšenie",
-                "3": "Prioritná podpora"
+                "0": "{count} obrázkov v balíku",
+                "1": "Nikdy nevyprší",
+                "2": "Prioritné spracovanie",
+                "3": "6K rozlíšenie"
             }
         },
         "enterprise": {
