@@ -235,6 +235,11 @@
         "after": "After",
         "getStarted": "Get started",
         "selectPlan": "Select Plan",
+        "banner": {
+            "sale": "60% OFF Sale",
+            "spots": "9 spots remaining",
+            "expires": "Expires in"
+        },
         "payPerImage": {
             "title": "Pay Per Image",
             "description": "Enhance images whenever you need and pay as you go",
@@ -258,6 +263,9 @@
                 "0": "{count} images included",
                 "1": "Never expires",
                 "2": "Priority processing",
+                "3": "4K resolution"
+            },
+            "proFeatures": {
                 "3": "6K resolution"
             }
         },

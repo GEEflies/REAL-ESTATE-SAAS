@@ -235,6 +235,11 @@
         "after": "Po",
         "getStarted": "Začať",
         "selectPlan": "Vybrať plán",
+        "banner": {
+            "sale": "60% ZĽAVA",
+            "spots": "ostáva 9 miest",
+            "expires": "Končí za"
+        },
         "payPerImage": {
             "title": "Platba za obrázok",
             "description": "Vylepšujte obrázky kedykoľvek a plaťte priebežne",
@@ -250,7 +255,7 @@
             "popular": "Obľúbená voľba",
             "bestValue": "Najlepšia hodnota",
             "images": "Obrázkov",
-            "starterName": "Štartér",
+            "starterName": "Základný",
             "proName": "Pro",
             "perMonth": "/mesiac",
             "chooseImages": "Vybrať počet",
@@ -258,6 +263,9 @@
                 "0": "{count} obrázkov v balíku",
                 "1": "Nikdy nevyprší",
                 "2": "Prioritné spracovanie",
+                "3": "4K rozlíšenie"
+            },
+            "proFeatures": {
                 "3": "6K rozlíšenie"
             }
         },

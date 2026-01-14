@@ -17,7 +17,7 @@ type PricingTab = 'payPerImage' | 'limitedOffer' | 'enterprise'
 
 export function PaywallGate({ open, onClose }: PaywallGateProps) {
     const t = useTranslations('Paywall')
-    const [activeTab, setActiveTab] = useState<PricingTab>('payPerImage')
+    const [activeTab, setActiveTab] = useState<PricingTab>('limitedOffer')
     const [timeLeft, setTimeLeft] = useState(300) // 5 minutes in seconds
     const [selectedProTier, setSelectedProTier] = useState(100)
     const [proDropdownOpen, setProDropdownOpen] = useState(false)
@@ -233,18 +233,18 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <span className="font-bold text-lg leading-none tracking-tight">
-                                                        60% OFF Sale
+                                                        {t('banner.sale')}
                                                     </span>
                                                     <span className="text-xs font-medium text-orange-50/90 mt-1 flex items-center gap-1.5">
                                                         <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                                                        9 spots remaining
+                                                        {t('banner.spots')}
                                                     </span>
                                                 </div>
                                             </div>
 
                                             <div className="flex items-center gap-2 bg-black/20 rounded-lg px-3 py-1.5 border border-white/10">
                                                 <span className="text-xs uppercase tracking-wider font-medium text-orange-100/80">
-                                                    Expires in
+                                                    {t('banner.expires')}
                                                 </span>
                                                 <span className="font-mono text-xl font-bold tabular-nums tracking-widest text-white">
                                                     {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:
@@ -364,7 +364,9 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                                     <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-orange-600">
                                                         <Check className="w-3 h-3" />
                                                     </div>
-                                                    <span className="text-gray-700 text-sm font-medium">{t(`limitedOffer.features.${i}`)}</span>
+                                                    <span className="text-gray-700 text-sm font-medium">
+                                                        {i === 3 ? t('limitedOffer.proFeatures.3') : t(`limitedOffer.features.${i}`)}
+                                                    </span>
                                                 </div>
                                             ))}
                                         </div>
