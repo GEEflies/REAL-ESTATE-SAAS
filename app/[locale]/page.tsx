@@ -104,7 +104,7 @@ export default function HomePage() {
 
             {/* Right: Hero Image Slider */}
             <div className="order-1 lg:order-2">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl pb-16">
                 <ImageCompareSlider
                   beforeImage="/landing/hero images/wb-before.jpg"
                   afterImage="/landing/hero images/wb-after.jpg"
