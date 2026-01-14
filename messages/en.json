@@ -16,8 +16,16 @@
         "noAccount": "*No credit card required",
         "heroBenefits": {
             "speed": "30s Turnaround",
-            "privacy": "GDPR Compliant",
             "cost": "10x Cheaper"
+        },
+        "animatedHero": {
+            "static": "Real Estate Photos with",
+            "rotating": {
+                "0": "Perfect Skies",
+                "1": "Straight Lines",
+                "2": "Balanced Light",
+                "3": "HDR Merge"
+            }
         },
         "usedBy": "Trusted for professional quality results",
         "featuresTitle": "Picture Success With AI Image Editing",

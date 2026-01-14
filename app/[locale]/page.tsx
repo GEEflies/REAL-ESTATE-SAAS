@@ -7,6 +7,7 @@ import { ImageCompareSlider } from '@/components/ImageCompareSlider'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { Footer } from '@/components/Footer'
+import { HeroTitle } from '@/components/HeroTitle'
 import { PreFooter } from '@/components/PreFooter'
 
 export default function HomePage() {
@@ -76,9 +77,7 @@ export default function HomePage() {
                 {t('heroBadge')}
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-gray-900 leading-[1.1]">
-                {t('heroTitle')}
-              </h1>
+              <HeroTitle />
 
               <p className="text-xl text-gray-600 mb-8 max-w-lg leading-relaxed">
                 {t.rich('heroDescription', {

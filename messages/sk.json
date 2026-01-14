@@ -16,8 +16,16 @@
         "noAccount": "*Bez nutnosti kreditnej karty",
         "heroBenefits": {
             "speed": "Hotovo do 30s",
-            "privacy": "GDPR Súlad",
             "cost": "10x Lacnejšie"
+        },
+        "animatedHero": {
+            "static": "Realitné fotografie s",
+            "rotating": {
+                "0": "Dokonalou oblohou",
+                "1": "Rovnými líniami",
+                "2": "Vyváženým svetlom",
+                "3": "HDR zlúčením"
+            }
         },
         "usedBy": "Spoľahlivá kvalita pre profesionálne výsledky",
         "featuresTitle": "Úspech Obrazu s AI Úpravou",
