@@ -24,7 +24,12 @@
                 "0": "Dokonalou oblohou",
                 "1": "Rovnými líniami",
                 "2": "Vyváženým svetlom",
-                "3": "HDR zlúčením"
+                "3": "použitím HDR",
+                "4": "Vylepšením okien",
+                "5": "Vyvážením bielej",
+                "6": "Preosvetlením",
+                "7": "Ochranou súkromia",
+                "8": "Korekciou farieb"
             }
         },
         "usedBy": "Spoľahlivá kvalita pre profesionálne výsledky",

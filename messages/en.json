@@ -24,7 +24,12 @@
                 "0": "Perfect Skies",
                 "1": "Straight Lines",
                 "2": "Balanced Light",
-                "3": "HDR Merge"
+                "3": "HDR Merge",
+                "4": "Window Pulling",
+                "5": "White Balance",
+                "6": "Start to Finish",
+                "7": "Privacy Protection",
+                "8": "Color Correction"
             }
         },
         "usedBy": "Trusted for professional quality results",
