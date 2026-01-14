@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from 'sonner'
 import { NextIntlClientProvider } from 'next-intl';
@@ -7,7 +7,7 @@ import { getMessages } from 'next-intl/server'; // Correct import for Next.js 14
 import { Navbar } from '@/components/Navbar'
 import '../globals.css'
 
-const montserrat = Montserrat({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Aurix | AI Real Estate Photo Editor',
@@ -52,7 +52,7 @@ export default async function RootLayout({
 
   const content = (
     <html lang={locale}>
-      <body className={montserrat.className}>
+      <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
           <main className="pt-16 min-h-screen">

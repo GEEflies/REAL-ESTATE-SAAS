@@ -16,12 +16,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { Montserrat } from 'next/font/google'
-
-const montserrat = Montserrat({
-    weight: '900',
-    subsets: ['latin']
-})
+import Image from 'next/image'
 
 export function Navbar() {
     const t = useTranslations('Navbar')
@@ -48,7 +43,7 @@ export function Navbar() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className={`${montserrat.className} font-black text-2xl text-gray-900`}>
+                        <span className="font-bold text-2xl text-gray-900">
                             Aurix
                         </span>
                     </Link>
