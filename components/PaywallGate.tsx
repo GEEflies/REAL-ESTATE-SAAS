@@ -107,11 +107,13 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                             >
                                 <div className="space-y-6">
                                     <div>
-                                        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-medium mb-3">
-                                            <Zap className="w-3.5 h-3.5" />
-                                            Flexible Usage
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <h3 className="text-2xl font-bold text-gray-900">{t('payPerImage.title')}</h3>
+                                            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider">
+                                                <Zap className="w-3 h-3" />
+                                                Flexible Usage
+                                            </div>
                                         </div>
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('payPerImage.title')}</h3>
                                         <p className="text-gray-600 text-base leading-relaxed">{t('payPerImage.description')}</p>
                                     </div>
 
@@ -140,34 +142,36 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                     </p>
                                 </div>
 
-                                <div className="relative group">
-                                    <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-[2rem] blur-xl opacity-50 group-hover:opacity-100 transition-opacity" />
-                                    <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white">
-                                        <div className="aspect-[4/3] relative">
-                                            <div className="absolute inset-0 flex">
-                                                <div className="w-1/2 relative overflow-hidden border-r-2 border-white">
-                                                    <div className="absolute top-3 left-3 z-10 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full backdrop-blur-md">
-                                                        {t('before')}
-                                                    </div>
-                                                    <Image
-                                                        src="/landing/pricing/before.jpeg"
-                                                        alt="Before"
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                </div>
-                                                <div className="w-1/2 relative overflow-hidden">
-                                                    <div className="absolute top-3 right-3 z-10 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
-                                                        {t('after')}
-                                                    </div>
-                                                    <Image
-                                                        src="/landing/pricing/after.jpeg"
-                                                        alt="After"
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                </div>
+                                <div className="relative pt-8 px-4 pb-4">
+                                    {/* Abstract background decorative element */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-blue-100/50 via-purple-100/30 to-transparent rounded-full blur-3xl -z-10" />
+
+                                    {/* Container for images to preserve aspect ratio */}
+                                    <div className="relative w-full aspect-[4/3]">
+                                        {/* Before Image - Behind and Higher Up */}
+                                        <div className="absolute top-0 left-0 w-full h-[90%] rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-gray-100 z-0 scale-95 origin-top opacity-60">
+                                            <div className="absolute top-3 left-3 z-30 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full backdrop-blur-md">
+                                                {t('before')}
                                             </div>
+                                            <Image
+                                                src="/landing/pricing/before.jpeg"
+                                                alt="Before"
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+
+                                        {/* After Image - Front and Lower Down */}
+                                        <div className="absolute bottom-0 left-0 w-full h-[90%] rounded-2xl overflow-hidden shadow-2xl border-2 border-white bg-white z-10">
+                                            <div className="absolute top-3 right-3 z-30 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
+                                                {t('after')}
+                                            </div>
+                                            <Image
+                                                src="/landing/pricing/after.jpeg"
+                                                alt="After"
+                                                fill
+                                                className="object-cover"
+                                            />
                                         </div>
                                     </div>
                                 </div>
