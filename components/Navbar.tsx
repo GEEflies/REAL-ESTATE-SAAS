@@ -19,7 +19,7 @@ import Image from 'next/image'
 import { Poppins } from 'next/font/google'
 
 const poppins = Poppins({
-    weight: '900',
+    weight: '700',
     subsets: ['latin']
 })
 
@@ -48,7 +48,7 @@ export function Navbar() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className={`${poppins.className} font-black text-2xl text-gray-900`}>
+                        <span className={`${montserrat.className} font-black text-2xl text-gray-900`}>
                             Aurix
                         </span>
                     </Link>
