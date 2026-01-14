@@ -34,7 +34,17 @@ export function ImageCompareSlider({
         isDragging.current = true
     }, [])
 
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        isDragging.current = true
+        // Prevent page scroll when starting touch on slider
+        e.preventDefault()
+        handleMove(e.touches[0].clientX)
+    }, [handleMove])
+
     const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        if (!isDragging.current) return
+        // Prevent page scroll during slider drag
+        e.preventDefault()
         handleMove(e.touches[0].clientX)
     }, [handleMove])
 
@@ -57,12 +67,27 @@ export function ImageCompareSlider({
             isDragging.current = false
         }
 
+        // Global touch handlers for smooth dragging
+        const handleGlobalTouchMove = (e: TouchEvent) => {
+            if (!isDragging.current) return
+            e.preventDefault()
+            handleMove(e.touches[0].clientX)
+        }
+
+        const handleGlobalTouchEnd = () => {
+            isDragging.current = false
+        }
+
         document.addEventListener('mousemove', handleGlobalMouseMove)
         document.addEventListener('mouseup', handleGlobalMouseUp)
+        document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false })
+        document.addEventListener('touchend', handleGlobalTouchEnd)
 
         return () => {
             document.removeEventListener('mousemove', handleGlobalMouseMove)
             document.removeEventListener('mouseup', handleGlobalMouseUp)
+            document.removeEventListener('touchmove', handleGlobalTouchMove)
+            document.removeEventListener('touchend', handleGlobalTouchEnd)
         }
     }, [handleMove])
 
@@ -70,7 +95,9 @@ export function ImageCompareSlider({
         <div
             ref={containerRef}
             className={`relative overflow-hidden rounded-xl cursor-ew-resize select-none ${className} bg-gray-100 transition-opacity duration-500 ease-in-out ${allImagesLoaded ? 'opacity-100' : 'opacity-0'}`}
+            style={{ touchAction: 'none' }}
             onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onClick={handleClick}
         >
@@ -90,7 +117,10 @@ export function ImageCompareSlider({
             {/* Before Image (Clipped) */}
             <div
                 className="absolute inset-0"
-                style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+                style={{
+                    clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
+                    willChange: 'clip-path'
+                }}
             >
                 <Image
                     src={beforeImage}
@@ -106,7 +136,11 @@ export function ImageCompareSlider({
             {/* Slider Handle */}
             <div
                 className="absolute top-0 bottom-0 w-1 bg-white shadow-lg"
-                style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+                style={{
+                    left: `${sliderPosition}%`,
+                    transform: 'translateX(-50%)',
+                    willChange: 'left, transform'
+                }}
             >
                 {/* Handle Circle with Arrows */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center gap-0.5">

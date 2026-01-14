@@ -7,7 +7,7 @@
         "authDisabled": "Auth Vypnuté"
     },
     "Home": {
-        "heroBadge": "AI Automatizácia",
+        "heroBadge": "AI editor fotiek",
         "heroTitle": "Automatizujte úpravu realitných fotografií",
         "heroSubtitle": "AI HDR zlúčenie, výmena oblohy a vytiahnutie okien v priebehu sekúnd.",
         "heroDescription": "Prestaňte strácať hodiny manuálnou úpravou. Získajte konzistentné, profesionálne výsledky okamžite a ušetrite až 90% nákladov.",
@@ -36,7 +36,7 @@
             }
         },
         "usedBy": "Spoľahlivá kvalita pre profesionálne výsledky",
-        "featuresTitle": "Úspech Obrazu s AI Úpravou",
+        "featuresTitle": "Čo dokážete s naším AI",
         "featuresSubtitle": "Aurix upraví vaše realitné fotografie do najmenšieho detailu. Plne optimalizované pre realitný priemysel.",
         "features": {
             "hdr": {
@@ -305,7 +305,7 @@
         "demo": "Pozrieť demo"
     },
     "Footer": {
-        "description": "AI foto editor, ktorý vylepší váš pracovný tok.",
+        "description": "AI foto editor, ktorý vylepší vaše realitné fotografie a zníži náklady na profi fotografov.",
         "handyLinks": "Užitočné odkazy",
         "company": "Spoločnosť",
         "features": "Funkcie",
