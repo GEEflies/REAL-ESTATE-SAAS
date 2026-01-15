@@ -326,7 +326,8 @@
             },
             "portal": {
                 "loading": "Otváram portál Stripe...",
-                "error": "Nepodarilo sa otvoriť portál. Skúste to prosím znova."
+                "error": "Nepodarilo sa otvoriť portál. Skúste to prosím znova.",
+                "noSubscription": "Nemáte aktívne predplatné na spravovanie."
             }
         },
         "security": {

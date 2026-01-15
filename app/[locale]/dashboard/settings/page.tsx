@@ -129,6 +129,12 @@ export default function DashboardSettingsPage() {
     }
 
     const handleManageSubscription = async () => {
+        // Check if user has a Stripe subscription first
+        if (!user || user.tier === 'starter' || user.tier === 'free') {
+            toast.info(t('subscription.portal.noSubscription'))
+            return
+        }
+
         setIsLoading(true)
         try {
             const response = await fetch('/api/stripe/portal', {
@@ -140,6 +146,13 @@ export default function DashboardSettingsPage() {
                     locale: locale === 'sk' ? 'sk' : 'en'
                 }),
             })
+
+            if (response.status === 404) {
+                // No Stripe customer found - show friendly message
+                toast.info(t('subscription.portal.noSubscription'))
+                setIsLoading(false)
+                return
+            }
 
             if (!response.ok) throw new Error('Failed to create portal session')
 
@@ -194,7 +207,7 @@ export default function DashboardSettingsPage() {
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id as 'account' | 'subscription' | 'security')}
-                            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${activeTab === tab.id
+                            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all cursor-pointer ${activeTab === tab.id
                                 ? 'bg-gray-900 text-white'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
@@ -231,7 +244,7 @@ export default function DashboardSettingsPage() {
                                                     router.push(newPath)
                                                 }
                                             }}
-                                            className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${locale === 'en'
+                                            className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors cursor-pointer ${locale === 'en'
                                                 ? 'bg-blue-50 border-blue-200 text-blue-700'
                                                 : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                                                 }`}
@@ -245,7 +258,7 @@ export default function DashboardSettingsPage() {
                                                     router.push(newPath)
                                                 }
                                             }}
-                                            className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${locale === 'sk'
+                                            className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors cursor-pointer ${locale === 'sk'
                                                 ? 'bg-blue-50 border-blue-200 text-blue-700'
                                                 : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                                                 }`}

@@ -750,7 +750,8 @@
             },
             "portal": {
                 "loading": "Opening Stripe Portal...",
-                "error": "Failed to open portal. Please try again."
+                "error": "Failed to open portal. Please try again.",
+                "noSubscription": "You don't have an active subscription to manage."
             }
         },
         "security": {

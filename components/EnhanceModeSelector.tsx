@@ -107,7 +107,7 @@ export function EnhanceModeSelector({
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-blue-100 rounded-2xl shadow-xl overflow-hidden z-50 max-h-[500px] overflow-y-auto"
+                                className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-blue-100 rounded-2xl shadow-xl z-50 max-h-96 overflow-y-auto"
                             >
                                 <div className="p-2">
                                     {modes.map((mode) => (

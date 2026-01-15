@@ -53,27 +53,44 @@ ${message || 'No additional message provided'}
         `.trim()
 
         // Send email using Resend or fallback to console log
-        if (process.env.RESEND_API_KEY) {
-            const resendResponse = await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    from: 'Aurix Feedback <onboarding@resend.dev>',
-                    to: ['karol@billik.sk'],
-                    subject: `Aurix Feedback: ${satisfactionEmoji} ${satisfaction}/5 from ${userEmail}`,
-                    text: emailBody,
-                }),
-            })
+        // Send email using Resend or fallback to console log
+        const resendApiKey = process.env.RESEND_API_KEY
+        if (resendApiKey) {
+            console.log('Attempting to send email via Resend...')
+            // Use configured emails or defaults
+            // Note: 'from' must be a verified domain or the resend testing domain
+            const fromEmail = process.env.FEEDBACK_FROM_EMAIL || 'Aurix Feedback <onboarding@resend.dev>'
+            const toEmail = process.env.FEEDBACK_TO_EMAIL || 'karol@billik.sk'
 
-            if (!resendResponse.ok) {
-                console.error('Resend API error:', await resendResponse.text())
-                // Don't fail - log the feedback anyway
+            try {
+                const resendResponse = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${resendApiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        from: fromEmail,
+                        to: [toEmail],
+                        subject: `Aurix Feedback: ${satisfactionEmoji} ${satisfaction}/5 from ${userEmail}`,
+                        text: emailBody,
+                    }),
+                })
+
+                if (!resendResponse.ok) {
+                    const errorText = await resendResponse.text()
+                    console.error('❌ Resend API error:', errorText)
+                    console.error('Request details:', { from: fromEmail, to: toEmail })
+                } else {
+                    const data = await resendResponse.json()
+                    console.log('✅ Email sent successfully via Resend:', data.id)
+                }
+            } catch (networkError) {
+                console.error('❌ Network error calling Resend:', networkError)
             }
         } else {
             // Fallback: Log to console (will appear in Vercel logs)
+            console.warn('⚠️ RESEND_API_KEY is missing. Email will NOT be sent.')
             console.log('━━━━ FEEDBACK RECEIVED ━━━━')
             console.log(emailBody)
             console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━')

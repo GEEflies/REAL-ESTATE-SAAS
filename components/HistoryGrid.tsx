@@ -175,7 +175,9 @@ export function HistoryGrid({ initialImages }: { initialImages: HistoryItem[] })
             <div className="flex justify-end mb-4">
                 <button
                     onClick={() => setIsSelectionMode(!isSelectionMode)}
-                    className={`text-sm font-medium px-4 py-2 rounded-lg transition-colors ${isSelectionMode ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
+                    className={`text-sm font-medium px-6 py-2.5 rounded-xl transition-all shadow-sm border ${isSelectionMode
+                        ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
+                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                         }`}
                 >
                     {isSelectionMode ? t('actions.cancel') : t('actions.select')}
@@ -237,7 +239,7 @@ export function HistoryGrid({ initialImages }: { initialImages: HistoryItem[] })
                                         e.stopPropagation()
                                         handleSingleDownload(img.enhanced_url, `enhanced-${img.id}.jpg`)
                                     }}
-                                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-all text-sm font-medium border border-gray-200 active:scale-95"
+                                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-lg hover:from-black hover:to-gray-900 transition-all text-sm font-medium shadow-sm active:scale-95 border border-gray-800"
                                 >
                                     <Download className="w-4 h-4" />
                                     {t('actions.downloadImage')}

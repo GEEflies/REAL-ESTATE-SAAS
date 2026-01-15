@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Download, Loader2, Sparkles, RotateCcw, Check, ChevronDown, X, Layers, AppWindow, CloudSun, Scale, Ruler, Lightbulb, Camera, Lock, Palette, Trash2, ArrowRight } from 'lucide-react'
+import { Download, Loader2, Sparkles, RotateCcw, Check, ChevronDown, X, Layers, AppWindow, CloudSun, Scale, Ruler, Lightbulb, Camera, Lock, Palette, Trash2, ArrowRight, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -124,6 +124,13 @@ export default function DashboardEnhancePage() {
         setQueue(prev => [...prev, ...newItems])
     }
 
+    const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            handleImagesSelect(Array.from(e.target.files))
+            e.target.value = ''
+        }
+    }
+
     const [showPaywall, setShowPaywall] = useState(false)
 
     // ... (existing effects)
@@ -207,7 +214,7 @@ export default function DashboardEnhancePage() {
     if (!isLoaded) return null
 
     return (
-        <div className="p-4 lg:p-8 overflow-x-hidden">
+        <div className="p-4 lg:p-8">
             <PaywallGate
                 open={showPaywall}
                 onClose={() => setShowPaywall(false)}
@@ -285,27 +292,35 @@ export default function DashboardEnhancePage() {
                             </div>
                         ))}
 
-                        {/* New Item Placeholder to Add More? */}
+                        {/* New Item Placeholder to Add More */}
                         {queue.length < 20 && !isProcessing && (
-                            <div className="border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center aspect-video cursor-pointer hover:bg-gray-50 hover:border-blue-300 transition-colors">
-                                {/* Hidden input hack or specific component */}
-                                <div className="text-center">
-                                    <Layers className="w-6 h-6 mx-auto text-gray-300 mb-2" />
-                                    <span className="text-xs text-gray-400">{t('batch.addMore')}</span>
+                            <div className="relative border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center aspect-video cursor-pointer hover:bg-gray-50 hover:border-blue-300 transition-colors group">
+                                <input
+                                    type="file"
+                                    multiple
+                                    accept="image/jpeg,image/png,image/webp"
+                                    onChange={handleFileInput}
+                                    className="absolute inset-0 opacity-0 z-10 w-full h-full cursor-pointer"
+                                    disabled={isProcessing}
+                                />
+                                <div className="text-center pointer-events-none">
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                        <Plus className="w-5 h-5" />
+                                    </div>
+                                    <span className="text-sm font-medium text-gray-500 group-hover:text-blue-600 transition-colors">{t('batch.addMore')}</span>
                                 </div>
-                                {/* Actually better to use ImageDropzone condensed, or just allow drop on main area? For now, simplistic. */}
                             </div>
                         )}
                     </div>
 
-                    <div className="flex justify-end gap-4 sticky bottom-6 bg-white/80 p-4 backdrop-blur-md rounded-xl shadow-lg border border-gray-100">
-                        <Button variant="ghost" onClick={clearQueue} disabled={isProcessing}>
+                    <div className="flex justify-end gap-4 sticky bottom-6 bg-white/80 p-4 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 z-40">
+                        <Button variant="ghost" onClick={clearQueue} disabled={isProcessing} className="w-32">
                             {t('batch.clearAll')}
                         </Button>
                         <Button
                             onClick={processQueue}
                             disabled={isProcessing || queue.filter(i => i.status === 'pending').length === 0}
-                            className="bg-gradient-to-r from-blue-600 to-indigo-600"
+                            className="bg-gradient-to-r from-blue-600 to-indigo-600 w-48"
                         >
                             {isProcessing ? (
                                 <>
