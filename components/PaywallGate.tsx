@@ -401,9 +401,14 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                                             €{tier.per}/{t('payPerImage.perImage')}
                                                         </span>
                                                     </div>
-                                                    <span className={cn("text-lg font-bold", selectedProTier === tier.count ? "text-orange-600" : "text-gray-900")}>
-                                                        €{tier.price}
-                                                    </span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-gray-400 line-through decoration-gray-400">
+                                                            €{tier.originalPrice}
+                                                        </span>
+                                                        <span className={cn("text-lg font-bold", selectedProTier === tier.count ? "text-orange-600" : "text-gray-900")}>
+                                                            €{tier.price}
+                                                        </span>
+                                                    </div>
                                                 </button>
                                             ))}
                                         </div>
