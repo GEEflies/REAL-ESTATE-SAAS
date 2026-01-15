@@ -294,8 +294,8 @@
         "loading": "Načítavam..."
     },
     "Gates": {
-        "emailTitle": "Odomknite svoje vylepšenie",
-        "emailSubtitle": "Zadajte svoj e-mail pre získanie výsledku. Sľubujeme, že ho nikomu neposkytneme.",
+        "emailTitle": "Dajte nám e-mail, my Vám dáme fotku zdarma",
+        "emailSubtitle": "Zadajte Váš e-mail pre zdarma fotku.",
         "emailPlaceholder": "vas@email.com",
         "emailButton": "Pokračovať a odomknúť",
         "promise": "Váš e-mail je u nás v bezpečí.",

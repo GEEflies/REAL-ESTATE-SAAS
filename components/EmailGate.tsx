@@ -43,18 +43,18 @@ export function EmailGate({ open, onSuccess }: EmailGateProps) {
 
     return (
         <Dialog open={open}>
-            <DialogContent className="sm:max-w-md [&>button]:hidden overflow-hidden p-0 border-0 shadow-2xl">
-                <div className="bg-gradient-to-b from-blue-50 to-white px-6 pt-10 pb-6 text-center">
-                    <div className="mx-auto w-16 h-16 rounded-full bg-white shadow-sm border border-blue-100 flex items-center justify-center mb-6">
-                        <Sparkles className="w-8 h-8 text-blue-600" />
+            <DialogContent className="sm:max-w-md w-[95vw] max-w-[400px] overflow-hidden p-0 border-0 shadow-2xl rounded-2xl">
+                <div className="bg-gradient-to-b from-blue-50 to-white px-6 pt-8 pb-6 text-center">
+                    <div className="mx-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white shadow-sm border border-blue-100 flex items-center justify-center mb-4 sm:mb-6">
+                        <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600" />
                     </div>
-                    <DialogTitle className="text-2xl font-bold text-gray-900 mb-2">{t('emailTitle')}</DialogTitle>
-                    <DialogDescription className="text-gray-600 text-base max-w-xs mx-auto">
+                    <DialogTitle className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 leading-tight">{t('emailTitle')}</DialogTitle>
+                    <DialogDescription className="text-gray-600 text-sm sm:text-base max-w-[280px] mx-auto">
                         {t('emailSubtitle')}
                     </DialogDescription>
                 </div>
 
-                <div className="px-6 pb-8">
+                <div className="px-6 pb-6 sm:pb-8">
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-2">
                             <Input
@@ -63,12 +63,12 @@ export function EmailGate({ open, onSuccess }: EmailGateProps) {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="h-14 text-lg px-4 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
+                                className="h-12 sm:h-14 text-base sm:text-lg px-4 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
                             />
                         </div>
                         <Button
                             type="submit"
-                            className="w-full h-14 text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/20 transition-all duration-300 transform hover:scale-[1.02]"
+                            className="w-full h-12 sm:h-14 text-base sm:text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/20 transition-all duration-300 transform hover:scale-[1.02]"
                             disabled={loading}
                         >
                             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('emailButton')}

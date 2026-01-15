@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, Loader2, Sparkles, RotateCcw, Check, ChevronDown, X, Layers, AppWindow, CloudSun, Scale, Ruler, Lightbulb, Camera, Lock, Palette, Image as LucideImage } from 'lucide-react'
 import { toast } from 'sonner'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { ImageDropzone } from '@/components/ImageDropzone'
@@ -32,6 +32,7 @@ interface ModeOption {
 export default function EnhancePage() {
     const t = useTranslations('Enhance')
     const tToast = useTranslations('Toasts')
+    const locale = useLocale()
     const [originalImage, setOriginalImage] = useState<string | null>(null)
     const [originalFile, setOriginalFile] = useState<File | null>(null)
     const [enhancedImage, setEnhancedImage] = useState<string | null>(null)
@@ -378,7 +379,7 @@ export default function EnhancePage() {
                                             className="w-full sm:w-auto gap-2 px-6 py-4 md:px-8 md:py-6 text-base md:text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 cursor-pointer"
                                         >
                                             <Sparkles className="w-5 h-5" />
-                                            {t('enhanceButton')} {selectedModeInfo?.label}
+                                            {t('enhanceButton')} {locale === 'sk' ? '' : selectedModeInfo?.label}
                                         </Button>
                                     </motion.div>
                                 )}
