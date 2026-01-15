@@ -1,46 +1,38 @@
 import createMiddleware from 'next-intl/middleware';
 import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Routes that require authentication
 const protectedRoutes = ['/dashboard', '/en/dashboard', '/sk/dashboard'];
 
-// Create Supabase client for middleware (using anon key is fine for verification)
-function createSupabaseClient() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-            auth: {
-                autoRefreshToken: false,
-                persistSession: false,
-            },
-        }
-    );
-}
-
 // Check if user is authenticated via Supabase session cookie
 async function isAuthenticated(request: NextRequest): Promise<boolean> {
-    const cookies = request.headers.get('cookie');
-    if (!cookies) return false;
-
-    // Look for Supabase auth token in cookies
-    const sessionMatch = cookies.match(/sb-[^=]+-auth-token=([^;]+)/);
-    if (!sessionMatch) return false;
-
     try {
-        const sessionData = JSON.parse(decodeURIComponent(sessionMatch[1]));
-        const accessToken = sessionData?.[0]?.access_token;
+        // Create a Supabase client configured to use cookies
+        const supabase = createServerClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+            {
+                cookies: {
+                    getAll() {
+                        return request.cookies.getAll()
+                    },
+                    setAll(cookiesToSet) {
+                        // In middleware we primarily read. 
+                        // Token modification usually happens in route handlers or client.
+                    },
+                },
+            }
+        )
 
-        if (!accessToken) return false;
+        // getUser() validates the token against Supabase Auth
+        const { data: { user }, error } = await supabase.auth.getUser()
 
-        // Verify the token with Supabase
-        const supabase = createSupabaseClient();
-        const { data: { user }, error } = await supabase.auth.getUser(accessToken);
-
-        return !error && !!user;
-    } catch {
-        return false;
+        return !error && !!user
+    } catch (error) {
+        console.error('Middleware Auth Check Error:', error)
+        return false
     }
 }
 

@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from 'sonner'
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server'; // Correct import for Next.js 14+
-import { Navbar } from '@/components/Navbar'
+import { LayoutWrapper } from '@/components/LayoutWrapper'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -54,10 +54,9 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <main className="pt-16 min-h-screen">
+          <LayoutWrapper>
             {children}
-          </main>
+          </LayoutWrapper>
           <Toaster
             position="top-right"
             richColors
