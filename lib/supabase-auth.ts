@@ -31,9 +31,14 @@ const customCookieStorage = {
         if (typeof document === 'undefined') return
         const hostname = window.location.hostname
         const isProd = hostname.includes('aurix.pics')
-        const domainProp = isProd ? '; domain=.aurix.pics' : ''
 
-        document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT${domainProp}`
+        // Clear for shared domain
+        if (isProd) {
+            document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.aurix.pics`
+        }
+
+        // Also clear for current host (just in case)
+        document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
     }
 }
 

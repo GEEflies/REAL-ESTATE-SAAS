@@ -347,7 +347,7 @@ export function PaywallGate({ open, onClose, defaultTab = 'limitedOffer', showOn
 
                                         <div className="space-y-2">
                                             {/* Features list ... same as before but tighter spacing */}
-                                            <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Features</div>
+                                            <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">{t('featuresLabel')}</div>
                                             <div className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-green-500 shrink-0" />
                                                 <span className="text-gray-700 text-sm font-medium">50 {t('limitedOffer.images').toLowerCase()}</span>
@@ -390,7 +390,7 @@ export function PaywallGate({ open, onClose, defaultTab = 'limitedOffer', showOn
                                         </Button>
 
                                         <div className="space-y-2">
-                                            <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Features</div>
+                                            <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">{t('featuresLabel')}</div>
                                             {/* Dropdown in features */}
                                             <div className="flex items-center gap-2">
                                                 <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-orange-600">

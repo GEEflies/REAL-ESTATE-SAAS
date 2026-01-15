@@ -18,7 +18,10 @@ const tierColors = {
     PRO: 'success',
 } as const
 
+import { useTranslations } from 'next-intl'
+
 export function QuotaBar({ used, limit, tier, showUpgrade = true }: QuotaBarProps) {
+    const t = useTranslations('quota')
     const percentage = (used / limit) * 100
     const isNearLimit = percentage >= 80
     const isAtLimit = used >= limit
@@ -27,7 +30,7 @@ export function QuotaBar({ used, limit, tier, showUpgrade = true }: QuotaBarProp
         <div className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100">
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-700">Monthly Usage</span>
+                    <span className="text-sm font-medium text-gray-700">{t('monthlyUsage')}</span>
                     <Badge variant={tierColors[tier]}>{tier}</Badge>
                 </div>
                 <span className="text-sm text-gray-500">
@@ -44,14 +47,14 @@ export function QuotaBar({ used, limit, tier, showUpgrade = true }: QuotaBarProp
             {isAtLimit && (
                 <div className="flex items-center gap-2 text-red-500 text-sm mb-3">
                     <AlertCircle className="w-4 h-4" />
-                    <span>You&apos;ve reached your monthly limit</span>
+                    <span>{t('reachedLimit')}</span>
                 </div>
             )}
 
             {isNearLimit && !isAtLimit && (
                 <div className="flex items-center gap-2 text-amber-500 text-sm mb-3">
                     <AlertCircle className="w-4 h-4" />
-                    <span>You&apos;re running low on credits</span>
+                    <span>{t('nearLimit')}</span>
                 </div>
             )}
 
@@ -61,7 +64,7 @@ export function QuotaBar({ used, limit, tier, showUpgrade = true }: QuotaBarProp
                     className="flex items-center gap-2 text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors"
                 >
                     <TrendingUp className="w-4 h-4" />
-                    <span>Upgrade for more images</span>
+                    <span>{t('upgrade')}</span>
                 </Link>
             )}
         </div>

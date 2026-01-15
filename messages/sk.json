@@ -94,7 +94,11 @@
     },
     "quota": {
         "signIn": "Login",
-        "authDisabled": "Auth Vypnuté"
+        "authDisabled": "Auth Vypnuté",
+        "monthlyUsage": "Mesačné využitie",
+        "reachedLimit": "Dosiahli ste mesačný limit",
+        "nearLimit": "Dochádzajú vám kredity",
+        "upgrade": "Inovovať pre viac obrázkov"
     },
     "Home": {
         "heroBadge": "AI editor fotiek",
@@ -491,7 +495,8 @@
                 "3": "Objemové cenové zľavy"
             },
             "contact": "Kontaktovať predaj"
-        }
+        },
+        "featuresLabel": "Funkcie"
     },
     "PreFooter": {
         "title": "Pripravení začať?",

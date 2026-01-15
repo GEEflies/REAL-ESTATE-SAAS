@@ -77,14 +77,22 @@ export default function LoginPage() {
     const handleGoogleLogin = async () => {
         try {
             const redirectParams = searchParams.get('redirect') || '/dashboard'
-            let redirectBase = window.location.origin
 
-            // In production, use app subdomain for Google redirect
-            if (process.env.NODE_ENV === 'production' && !window.location.hostname.includes('app.')) {
-                redirectBase = 'https://app.aurix.pics'
+            // Check if redirectParams is already a full URL (happens when redirecting from app subdomain)
+            let finalRedirectUrl: string;
+
+            if (redirectParams.startsWith('http')) {
+                finalRedirectUrl = redirectParams;
+            } else {
+                let redirectBase = window.location.origin
+                // In production, use app subdomain for Google redirect if not already on it
+                if (process.env.NODE_ENV === 'production' && !window.location.hostname.includes('app.')) {
+                    redirectBase = 'https://app.aurix.pics'
+                }
+                finalRedirectUrl = `${redirectBase}${redirectParams}`
             }
 
-            await signInWithGoogle(`${redirectBase}${redirectParams}`)
+            await signInWithGoogle(finalRedirectUrl)
         } catch (error) {
             console.error('Google login error:', error)
             toast.error(t('errors.googleLogin'))

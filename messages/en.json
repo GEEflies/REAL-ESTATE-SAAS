@@ -4,7 +4,11 @@
         "enhance": "Enhance",
         "remove": "Remove",
         "signIn": "Login",
-        "authDisabled": "Auth Disabled"
+        "authDisabled": "Auth Disabled",
+        "monthlyUsage": "Monthly Usage",
+        "reachedLimit": "You've reached your monthly limit",
+        "nearLimit": "You're running low on credits",
+        "upgrade": "Upgrade for more images"
     },
     "Home": {
         "heroBadge": "AI-Powered Automation",
@@ -336,7 +340,8 @@
                 "3": "Volume pricing discounts"
             },
             "contact": "Contact Sales"
-        }
+        },
+        "featuresLabel": "Features"
     },
     "PreFooter": {
         "title": "Ready to get started?",
