@@ -162,7 +162,7 @@
         "editAnother": "Upraviť Ďalšiu"
     },
     "Dropzone": {
-        "dragDrop": "Potiahnite sem obrázok alebo kliknite pre výber",
+        "dragDrop": "Kliknite sem a vyberte obrázok",
         "supports": "Podporuje JPG a PNG do 10MB",
         "changeImage": "Zmeniť Obrázok",
         "errorFormat": "Prosím nahrajte platný obrázok (JPG, PNG, WebP)",

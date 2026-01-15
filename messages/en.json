@@ -162,7 +162,7 @@
         "editAnother": "Edit Another"
     },
     "Dropzone": {
-        "dragDrop": "Drag & drop an image here, or click to select",
+        "dragDrop": "Click here to select an image",
         "supports": "Supports JPG & PNG up to 10MB",
         "changeImage": "Change Image",
         "errorFormat": "Please upload a valid image (JPG, PNG, WebP)",

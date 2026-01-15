@@ -350,7 +350,7 @@ export default function EnhancePage() {
                 </AnimatePresence>
 
                 {/* Selected Mode Info */}
-                {selectedModeInfo && (
+                {selectedModeInfo && !isMobile && (
                     <div className="text-center mb-6">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 border border-gray-100 text-gray-700 text-sm">
                             <span className="text-lg">{selectedModeInfo.icon}</span>
