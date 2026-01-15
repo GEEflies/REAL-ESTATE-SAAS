@@ -239,19 +239,19 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                     animate={{ opacity: 1, y: 0 }}
                                     className="mb-6"
                                 >
-                                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-rose-600 p-4 shadow-lg text-white">
-                                        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-rose-600 p-3 sm:p-4 shadow-lg text-white">
+                                        <div className="flex items-center justify-between gap-2">
                                             <div className="flex items-center gap-3">
-                                                <div className="p-2 bg-white/20 rounded-full shrink-0 animate-pulse">
-                                                    <Flame className="w-5 h-5 text-yellow-300 fill-yellow-300" />
+                                                <div className="p-1.5 sm:p-2 bg-white/20 rounded-full shrink-0 animate-pulse">
+                                                    <Flame className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300 fill-yellow-300" />
                                                 </div>
-                                                <div>
-                                                    <div className="font-bold text-lg leading-tight">{t('banner.sale')}</div>
-                                                    <div className="text-xs font-medium text-orange-100 opacity-90">{t('banner.spots')}</div>
+                                                <div className="flex flex-col">
+                                                    <div className="font-bold text-sm sm:text-lg leading-tight">{t('banner.sale')}</div>
+                                                    <div className="text-[10px] sm:text-xs font-medium text-orange-100 opacity-90">{t('banner.spots')}</div>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-2 bg-black/20 rounded-lg px-4 py-2 w-full sm:w-auto justify-center">
-                                                <span className="text-xl font-mono font-bold tracking-widest">
+                                            <div className="shrink-0 bg-black/20 rounded-lg px-3 py-1.5 flex items-center justify-center">
+                                                <span className="text-lg sm:text-xl font-mono font-bold tracking-widest">
                                                     {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:
                                                     {(timeLeft % 60).toString().padStart(2, '0')}
                                                 </span>
