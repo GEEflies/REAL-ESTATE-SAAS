@@ -186,9 +186,9 @@ export default function DashboardSettingsPage() {
     }
 
     return (
-        <div className="p-6 lg:p-8 overflow-x-hidden">
+        <div className="p-4 lg:p-8 max-w-[100vw] overflow-x-hidden">
             {/* Header */}
-            <div className="mb-8">
+            <div className="mb-6 lg:mb-8">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium mb-4">
                     <Settings className="w-4 h-4" />
                     <span>{t('badge')}</span>
@@ -196,27 +196,30 @@ export default function DashboardSettingsPage() {
                 <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                     {t('title')}
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-sm lg:text-base">
                     {t('subtitle')}
                 </p>
             </div>
 
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
                 {/* Tabs */}
-                <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
-                    {tabs.map((tab) => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id as 'account' | 'subscription' | 'security')}
-                            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all cursor-pointer ${activeTab === tab.id
-                                ? 'bg-gray-900 text-white'
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                }`}
-                        >
-                            <tab.icon className="w-4 h-4" />
-                            {tab.label}
-                        </button>
-                    ))}
+                {/* Wrapper to allow scrolling without clipping shadows/borders if added later */}
+                <div className="-mx-4 px-4 lg:mx-0 lg:px-0 overflow-x-auto no-scrollbar">
+                    <div className="flex gap-2 min-w-max pb-1">
+                        {tabs.map((tab) => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id as 'account' | 'subscription' | 'security')}
+                                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all cursor-pointer border ${activeTab === tab.id
+                                    ? 'bg-gray-900 text-white border-gray-900 shadow-md'
+                                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                                    }`}
+                            >
+                                <tab.icon className="w-4 h-4" />
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Account Tab */}
@@ -227,17 +230,16 @@ export default function DashboardSettingsPage() {
                         className="space-y-6"
                     >
                         {/* Profile Card */}
-                        {/* Profile Card */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 lg:p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('account.profile.title')}</h3>
 
                             <div className="space-y-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
                                         {t('language')}
                                     </label>
                                     <p className="text-sm text-gray-500 mb-3">{t('languageDesc')}</p>
-                                    <div className="flex gap-3">
+                                    <div className="flex flex-wrap gap-3">
                                         <button
                                             onClick={() => {
                                                 if (locale !== 'en') {
@@ -245,12 +247,12 @@ export default function DashboardSettingsPage() {
                                                     router.push(newPath)
                                                 }
                                             }}
-                                            className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors cursor-pointer ${locale === 'en'
-                                                ? 'bg-blue-50 border-blue-200 text-blue-700'
+                                            className={`flex-1 min-w-[140px] px-4 py-2.5 rounded-xl border text-sm font-medium transition-all cursor-pointer flex items-center justify-center gap-2 ${locale === 'en'
+                                                ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm'
                                                 : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                                                 }`}
                                         >
-                                            🇬🇧 English
+                                            <span className="text-lg">🇬🇧</span> English
                                         </button>
                                         <button
                                             onClick={() => {
@@ -259,38 +261,42 @@ export default function DashboardSettingsPage() {
                                                     router.push(newPath)
                                                 }
                                             }}
-                                            className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors cursor-pointer ${locale === 'sk'
-                                                ? 'bg-blue-50 border-blue-200 text-blue-700'
+                                            className={`flex-1 min-w-[140px] px-4 py-2.5 rounded-xl border text-sm font-medium transition-all cursor-pointer flex items-center justify-center gap-2 ${locale === 'sk'
+                                                ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm'
                                                 : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                                                 }`}
                                         >
-                                            🇸🇰 Slovensky
+                                            <span className="text-lg">🇸🇰</span> Slovensky
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="border-t border-gray-100 pt-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
                                         {t('account.profile.email')}
                                     </label>
-                                    <div className="flex gap-3">
+                                    <div className="flex flex-col sm:flex-row gap-3">
                                         <div className="relative flex-1">
                                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                             <input
                                                 type="email"
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
-                                                className="w-full h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                                                className="w-full h-11 lg:h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-gray-400"
                                             />
                                         </div>
-                                        <Button onClick={handleUpdateEmail} disabled={isSaving || email === user?.email}>
+                                        <Button
+                                            onClick={handleUpdateEmail}
+                                            disabled={isSaving || email === user?.email}
+                                            className="w-full sm:w-auto h-11 lg:h-12"
+                                        >
                                             {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('account.profile.update')}
                                         </Button>
                                     </div>
 
                                     {user?.emailVerified && (
-                                        <div className="flex items-center gap-1.5 mt-2 text-sm text-green-600">
-                                            <Check className="w-4 h-4" />
+                                        <div className="flex items-center gap-1.5 mt-3 text-sm text-green-600 bg-green-50 w-fit px-3 py-1 rounded-lg">
+                                            <Check className="w-3.5 h-3.5" />
                                             {t('account.profile.verified')}
                                         </div>
                                     )}
@@ -299,10 +305,10 @@ export default function DashboardSettingsPage() {
                         </div>
 
                         {/* Danger Zone */}
-                        <div className="bg-red-50 rounded-2xl border border-red-200 p-6">
+                        <div className="bg-red-50 rounded-2xl border border-red-200 p-4 lg:p-6">
                             <h3 className="text-lg font-semibold text-red-900 mb-2">{t('account.danger.title')}</h3>
-                            <p className="text-sm text-red-700 mb-4">{t('account.danger.description')}</p>
-                            <Button variant="outline" className="border-red-300 text-red-700 hover:bg-red-100">
+                            <p className="text-sm text-red-700/80 mb-4 leading-relaxed">{t('account.danger.description')}</p>
+                            <Button variant="outline" className="w-full sm:w-auto border-red-200 text-red-700 hover:bg-red-100 hover:text-red-800 hover:border-red-300 bg-white">
                                 {t('account.danger.delete')}
                             </Button>
                         </div>
@@ -317,14 +323,24 @@ export default function DashboardSettingsPage() {
                         className="space-y-6"
                     >
                         {/* Current Plan */}
-                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white">
-                            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-5 lg:p-6 text-white shadow-lg overflow-hidden relative">
+                            {/* Decorative circles */}
+                            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+                            <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+
+                            <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                                 <div>
-                                    <p className="text-blue-200 text-sm font-medium mb-1">{t('subscription.current.label')}</p>
-                                    <h3 className="text-2xl font-bold">{subscription?.plan || 'Starter'}</h3>
+                                    <p className="text-blue-100 text-sm font-medium mb-1 flex items-center gap-2">
+                                        <Shield className="w-4 h-4" />
+                                        {t('subscription.current.label')}
+                                    </p>
+                                    <h3 className="text-2xl lg:text-3xl font-bold tracking-tight">{subscription?.plan || 'Starter'}</h3>
+                                    <div className="mt-2 inline-flex px-2.5 py-1 rounded-md bg-white/20 text-xs font-medium border border-white/20">
+                                        Active
+                                    </div>
                                 </div>
-                                <div className="flex gap-3">
-                                    <Button onClick={handleManageSubscription} variant="secondary" className="bg-white text-blue-600 hover:bg-blue-50">
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <Button onClick={handleManageSubscription} variant="secondary" className="bg-white text-blue-600 hover:bg-blue-50 shadow-sm border-0 w-full sm:w-auto">
                                         {t('subscription.current.manage')}
                                     </Button>
                                 </div>
@@ -332,36 +348,38 @@ export default function DashboardSettingsPage() {
                         </div>
 
                         {/* Usage */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 lg:p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('subscription.usage.title')}</h3>
 
-                            <div className="mb-4">
+                            <div className="mb-6">
                                 <div className="flex items-center justify-between text-sm mb-2">
                                     <span className="text-gray-600">{t('subscription.usage.images')}</span>
-                                    <span className="font-medium text-gray-900">
+                                    <span className="font-semibold text-gray-900 bg-gray-100 px-2 py-0.5 rounded text-xs">
                                         {subscription?.imagesUsed || 0} / {subscription?.imagesQuota || 50}
                                     </span>
                                 </div>
-                                <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                                <div className="h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-100">
                                     <div
-                                        className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all"
+                                        className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500 ease-out"
                                         style={{ width: `${Math.min(100, ((subscription?.imagesUsed || 0) / (subscription?.imagesQuota || 50)) * 100)}%` }}
                                     />
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2 p-4 bg-blue-50 rounded-xl">
-                                <AlertCircle className="w-5 h-5 text-blue-600" />
-                                <p className="text-sm text-blue-700">
+                            <div className="flex items-start gap-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                                <AlertCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+                                <p className="text-sm text-blue-700 leading-relaxed">
                                     {t('subscription.usage.remaining', { count: (subscription?.imagesQuota || 50) - (subscription?.imagesUsed || 0) })}
                                 </p>
                             </div>
                         </div>
 
                         {/* Billing History Placeholder */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 lg:p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('subscription.billing.title')}</h3>
-                            <p className="text-gray-500 text-sm">{t('subscription.billing.empty')}</p>
+                            <div className="text-center py-8 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                                <p className="text-gray-500 text-sm">{t('subscription.billing.empty')}</p>
+                            </div>
                         </div>
                     </motion.div>
                 )}
@@ -374,7 +392,7 @@ export default function DashboardSettingsPage() {
                         className="space-y-6"
                     >
                         {/* Change Password */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 lg:p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('security.password.title')}</h3>
 
                             <div className="space-y-4">
@@ -388,7 +406,7 @@ export default function DashboardSettingsPage() {
                                             type="password"
                                             value={currentPassword}
                                             onChange={(e) => setCurrentPassword(e.target.value)}
-                                            className="w-full h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                                            className="w-full h-11 lg:h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-gray-400"
                                         />
                                     </div>
                                 </div>
@@ -402,7 +420,7 @@ export default function DashboardSettingsPage() {
                                             type="password"
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
-                                            className="w-full h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                                            className="w-full h-11 lg:h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-gray-400"
                                         />
                                     </div>
                                 </div>
@@ -416,24 +434,27 @@ export default function DashboardSettingsPage() {
                                             type="password"
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
-                                            className="w-full h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                                            className="w-full h-11 lg:h-12 pl-10 pr-4 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-gray-400"
                                         />
                                     </div>
                                 </div>
-                                <Button
-                                    onClick={handleUpdatePassword}
-                                    disabled={isSaving || !currentPassword || !newPassword || !confirmPassword}
-                                >
-                                    {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('security.password.update')}
-                                </Button>
+                                <div className="pt-2">
+                                    <Button
+                                        onClick={handleUpdatePassword}
+                                        disabled={isSaving || !currentPassword || !newPassword || !confirmPassword}
+                                        className="w-full sm:w-auto h-11 lg:h-12"
+                                    >
+                                        {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('security.password.update')}
+                                    </Button>
+                                </div>
                             </div>
                         </div>
 
                         {/* Sessions */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                        <div className="bg-white rounded-2xl border border-gray-200 p-4 lg:p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('security.sessions.title')}</h3>
-                            <p className="text-gray-500 text-sm mb-4">{t('security.sessions.description')}</p>
-                            <Button onClick={handleLogout} variant="outline" className="gap-2">
+                            <p className="text-gray-500 text-sm mb-6 leading-relaxed">{t('security.sessions.description')}</p>
+                            <Button onClick={handleLogout} variant="outline" className="w-full sm:w-auto gap-2 border-gray-200 hover:bg-gray-50 h-11 lg:h-12">
                                 <LogOut className="w-4 h-4" />
                                 {t('security.sessions.logout')}
                             </Button>
