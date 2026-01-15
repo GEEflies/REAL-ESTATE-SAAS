@@ -112,29 +112,40 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
-            {/* Sidebar - Desktop */}
-            <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 fixed h-full">
+            {/* Sidebar - Desktop (ChatGPT Style) */}
+            <aside className="hidden lg:flex flex-col w-64 bg-slate-900 border-r border-slate-800 fixed h-full text-gray-300">
                 {/* Logo */}
-                <div className="p-6 border-b border-gray-100">
-                    <Link href="/" className="flex items-center gap-3">
-                        <Image src="/aurix-logo.png" alt="Aurix" width={36} height={36} className="rounded-lg" />
-                        <span className="text-xl font-bold text-gray-900">Aurix</span>
+                <div className="p-4 mb-2">
+                    <Link href="/" className="flex items-center gap-3 px-2">
+                        <Image src="/aurix-logo.png" alt="Aurix" width={32} height={32} className="rounded-lg" />
+                        <span className="text-xl font-bold text-white tracking-tight">Aurix</span>
+                    </Link>
+                </div>
+
+                {/* Primary Action Button (New Chat style) */}
+                <div className="px-4 mb-6">
+                    <Link href="/dashboard/enhance">
+                        <button className="w-full flex items-center gap-3 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all shadow-lg shadow-blue-900/20 group">
+                            <Sparkles className="w-5 h-5 transition-transform group-hover:scale-110" />
+                            <span className="font-medium">New Enhancement</span>
+                        </button>
                     </Link>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4">
+                <nav className="flex-1 px-4">
+                    <div className="mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">Menu</div>
                     <ul className="space-y-1">
                         {navItems.map((item) => (
                             <li key={item.href}>
                                 <Link
                                     href={item.href}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive(item.href)
-                                            ? 'bg-blue-50 text-blue-700 font-medium'
-                                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                    className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${isActive(item.href)
+                                        ? 'bg-slate-800 text-white font-medium'
+                                        : 'text-gray-400 hover:text-white hover:bg-slate-800/50'
                                         }`}
                                 >
-                                    <item.icon className={`w-5 h-5 ${isActive(item.href) ? 'text-blue-600' : 'text-gray-400'}`} />
+                                    <item.icon className={`w-4 h-4 ${isActive(item.href) ? 'text-blue-400' : 'text-gray-500 group-hover:text-white'}`} />
                                     {item.label}
                                 </Link>
                             </li>
@@ -142,46 +153,31 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     </ul>
                 </nav>
 
-                {/* User Info & Quota */}
-                <div className="p-4 border-t border-gray-100">
-                    {/* Quota Progress */}
-                    {user && (
-                        <div className="mb-4 p-4 bg-gray-50 rounded-xl">
-                            <div className="flex items-center justify-between text-sm mb-2">
-                                <span className="text-gray-600">{t('quota.title')}</span>
-                                <span className="font-medium text-gray-900">
-                                    {user.imagesUsed}/{user.imagesQuota}
-                                </span>
-                            </div>
-                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                                <div
-                                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all"
-                                    style={{ width: `${Math.min(100, (user.imagesUsed / user.imagesQuota) * 100)}%` }}
-                                />
-                            </div>
-                            <p className="text-xs text-gray-500 mt-2">{user.tierName} Plan</p>
-                        </div>
-                    )}
-
+                {/* User Info & Quota (Bottom) */}
+                <div className="p-4 mt-auto border-t border-slate-800 bg-slate-900">
                     {/* User Profile */}
-                    <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 cursor-pointer">
-                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <User className="w-5 h-5 text-blue-600" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 cursor-pointer transition-colors group">
+                        <div className="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center border border-slate-600 group-hover:border-slate-500">
+                            <User className="w-4 h-4 text-gray-300" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
+                            <p className="text-sm font-medium text-white truncate">
                                 {user?.email || 'User'}
                             </p>
-                            <p className="text-xs text-gray-500">{user?.tierName || 'Free'}</p>
+                            <div className="flex items-center gap-2">
+                                <span className="text-xs text-blue-400 font-medium">{user?.tierName || 'Free'}</span>
+                                <span className="text-[10px] text-slate-500">•</span>
+                                <span className="text-[10px] text-slate-500">{user?.imagesUsed}/{user?.imagesQuota} used</span>
+                            </div>
                         </div>
                     </div>
 
                     {/* Logout Button */}
                     <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-4 py-3 mt-2 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all"
+                        className="w-full flex items-center gap-3 px-4 py-2 mt-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all text-sm"
                     >
-                        <LogOut className="w-5 h-5" />
+                        <LogOut className="w-4 h-4" />
                         {t('nav.logout')}
                     </button>
                 </div>
@@ -242,8 +238,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                                                 href={item.href}
                                                 onClick={() => setSidebarOpen(false)}
                                                 className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all ${isActive(item.href)
-                                                        ? 'bg-blue-50 text-blue-700 font-medium'
-                                                        : 'text-gray-600 hover:bg-gray-50'
+                                                    ? 'bg-blue-50 text-blue-700 font-medium'
+                                                    : 'text-gray-600 hover:bg-gray-50'
                                                     }`}
                                             >
                                                 <div className="flex items-center gap-3">

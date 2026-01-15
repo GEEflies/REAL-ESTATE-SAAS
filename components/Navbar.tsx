@@ -102,24 +102,13 @@ export function Navbar() {
 
                     {/* Auth + Mobile Menu */}
                     <div className="flex items-center gap-3">
-                        {/* Login/Dashboard Button */}
-                        {!isLoading && (
-                            isLoggedIn ? (
-                                <a href={dashboardHref}>
-                                    <Button size="sm" className="gap-2">
-                                        <User className="w-4 h-4" />
-                                        <span className="hidden sm:inline">Dashboard</span>
-                                    </Button>
-                                </a>
-                            ) : (
-                                <Link href="/login">
-                                    <Button size="sm" className="gap-2">
-                                        <LogIn className="w-4 h-4" />
-                                        <span className="hidden sm:inline">{t('signIn')}</span>
-                                    </Button>
-                                </Link>
-                            )
-                        )}
+                        {/* Login Button (Always Login, handles redirect) */}
+                        <Link href="/login">
+                            <Button size="sm" className="gap-2">
+                                <LogIn className="w-4 h-4" />
+                                <span className="hidden sm:inline">{t('signIn')}</span>
+                            </Button>
+                        </Link>
 
                         {/* Mobile Menu Button */}
                         <button
@@ -167,28 +156,15 @@ export function Navbar() {
                                 )
                             })}
 
-                            {/* Mobile Login/Dashboard Link */}
-                            {!isLoading && (
-                                isLoggedIn ? (
-                                    <a
-                                        href={dashboardHref}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50 bg-blue-50/50"
-                                    >
-                                        <User className="w-5 h-5 text-blue-600" />
-                                        <span className="font-medium text-blue-600">Dashboard</span>
-                                    </a>
-                                ) : (
-                                    <Link
-                                        href="/login"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50"
-                                    >
-                                        <LogIn className="w-5 h-5" />
-                                        <span className="font-medium">{t('signIn')}</span>
-                                    </Link>
-                                )
-                            )}
+                            {/* Mobile Login Button */}
+                            <Link
+                                href="/login"
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50"
+                            >
+                                <LogIn className="w-5 h-5" />
+                                <span className="font-medium">{t('signIn')}</span>
+                            </Link>
                         </div>
                     </motion.div>
                 )}
