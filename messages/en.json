@@ -159,7 +159,24 @@
         "removing": "Removing",
         "timeEstimate": "This usually takes 20-30 seconds",
         "download": "Download Image",
-        "editAnother": "Edit Another"
+        "editAnother": "Edit Another",
+        "upload": {
+            "title": "Drop your image here",
+            "subtitle": "or click to browse"
+        },
+        "prompt": {
+            "label": "What would you like to remove?",
+            "placeholder": "e.g., trash can in the corner, power lines in the sky",
+            "hint": "Be specific about the object and its location for best results."
+        },
+        "removeButton": "Remove Object",
+        "processing": "Removing object...",
+        "processingHint": "This may take 15-30 seconds",
+        "result": {
+            "title": "Object Removed",
+            "download": "Download Result",
+            "removeAnother": "Remove Another Object"
+        }
     },
     "Dropzone": {
         "dragDrop": "Click here to select an image",
@@ -539,6 +556,172 @@
         "terms": {
             "title": "Terms of Service",
             "content": "Please read our terms carefully."
+        }
+    },
+    "Success": {
+        "verifying": {
+            "title": "Verifying Payment",
+            "subtitle": "Please wait while we confirm your payment..."
+        },
+        "success": {
+            "title": "Payment Successful!",
+            "subtitle": "Your payment has been processed successfully.",
+            "images": "Images",
+            "price": "Price Paid",
+            "continueButton": "Continue to Sign Up",
+            "note": "You'll create your account in the next step."
+        },
+        "error": {
+            "title": "Payment Verification Failed",
+            "subtitle": "We couldn't verify your payment session.",
+            "retryButton": "Try Again"
+        }
+    },
+    "Signup": {
+        "title": "Create Your Account",
+        "verifying": "Verifying payment...",
+        "email": "Email Address",
+        "emailPlaceholder": "name@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "At least 8 characters",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Repeat your password",
+        "createAccount": "Create Account",
+        "or": "or",
+        "googleSignup": "Continue with Google",
+        "terms": "By signing up, you agree to our Terms of Service and Privacy Policy.",
+        "haveAccount": "Already have an account?",
+        "login": "Log in",
+        "error": {
+            "title": "Access Denied",
+            "goToPricing": "View Pricing Plans"
+        }
+    },
+    "VerifyEmail": {
+        "pending": {
+            "title": "Check Your Email",
+            "subtitle": "We've sent a verification link to",
+            "instruction": "Click the link in your email to verify your account and access the dashboard.",
+            "resend": "Resend Verification Email"
+        },
+        "verifying": {
+            "title": "Verifying Email",
+            "subtitle": "Please wait..."
+        },
+        "verified": {
+            "title": "Email Verified!",
+            "subtitle": "Your account is ready. Let's start enhancing your photos.",
+            "continueButton": "Go to Dashboard"
+        },
+        "error": {
+            "title": "Verification Failed",
+            "subtitle": "The verification link may have expired or is invalid.",
+            "resend": "Send New Verification Email"
+        }
+    },
+    "Login": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your Aurix account",
+        "email": "Email Address",
+        "emailPlaceholder": "name@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "forgotPassword": "Forgot password?",
+        "loginButton": "Sign In",
+        "or": "or",
+        "googleLogin": "Continue with Google",
+        "noAccount": "Don't have an account?",
+        "getStarted": "Get Started"
+    },
+    "Dashboard": {
+        "nav": {
+            "home": "Home",
+            "enhance": "Enhance",
+            "remove": "Remove",
+            "settings": "Settings",
+            "logout": "Log Out"
+        },
+        "quota": {
+            "title": "Image Quota"
+        },
+        "home": {
+            "welcome": "Welcome to Aurix",
+            "subtitle": "Start enhancing your real estate photos with AI",
+            "quickActions": "Quick Actions",
+            "enhance": {
+                "title": "Enhance Photo",
+                "description": "AI-powered HDR, sky replacement, and more"
+            },
+            "remove": {
+                "title": "Remove Objects",
+                "description": "Erase unwanted items from your photos"
+            },
+            "stats": {
+                "enhanced": "Photos Enhanced",
+                "removed": "Objects Removed",
+                "remaining": "Images Remaining",
+                "total": "Total Used"
+            },
+            "quota": {
+                "title": "Your Image Quota",
+                "description": "You've used {used} of {total} images this month.",
+                "upgrade": "Upgrade Plan"
+            },
+            "recentActivity": "Recent Activity",
+            "noActivity": "No activity yet",
+            "startEnhancing": "Start by enhancing your first photo"
+        }
+    },
+    "Settings": {
+        "badge": "Settings",
+        "title": "Account Settings",
+        "subtitle": "Manage your account, subscription, and security settings",
+        "tabs": {
+            "account": "Account",
+            "subscription": "Subscription",
+            "security": "Security"
+        },
+        "account": {
+            "profile": {
+                "title": "Profile",
+                "email": "Email Address",
+                "update": "Update",
+                "verified": "Email verified"
+            },
+            "danger": {
+                "title": "Danger Zone",
+                "description": "Permanently delete your account and all associated data.",
+                "delete": "Delete Account"
+            }
+        },
+        "subscription": {
+            "current": {
+                "label": "Current Plan",
+                "manage": "Manage Plan"
+            },
+            "usage": {
+                "title": "Usage",
+                "images": "Images",
+                "remaining": "You have {count} images remaining this month."
+            },
+            "billing": {
+                "title": "Billing History",
+                "empty": "No billing history available yet."
+            }
+        },
+        "security": {
+            "password": {
+                "title": "Change Password",
+                "current": "Current Password",
+                "new": "New Password",
+                "confirm": "Confirm New Password",
+                "update": "Update Password"
+            },
+            "sessions": {
+                "title": "Sessions",
+                "description": "Manage your active sessions and sign out from other devices.",
+                "logout": "Sign Out of All Devices"
+            }
         }
     }
 }

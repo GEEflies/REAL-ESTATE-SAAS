@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import prisma from '@/lib/db'
 
 // Server-side Supabase client with service role key
 const supabaseAdmin = createClient(
@@ -30,13 +29,6 @@ function decryptSessionData(encrypted: string): object | null {
     } catch {
         return null
     }
-}
-
-// Get tier enum value from tier key
-function getTierFromKey(tierKey: string): 'FREE' | 'STARTER' | 'PRO' {
-    if (tierKey === 'starter') return 'STARTER'
-    if (tierKey.startsWith('pro_') || tierKey === 'pay_per_image') return 'PRO'
-    return 'FREE'
 }
 
 export async function POST(request: NextRequest) {
@@ -100,7 +92,8 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Create Supabase Auth user
+        // Create Supabase Auth user with tier/quota in metadata
+        // This avoids needing database migration - all user data is in Supabase Auth
         const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
             email,
             password,
@@ -109,6 +102,9 @@ export async function POST(request: NextRequest) {
                 tier: sessionData.tier,
                 tierName: sessionData.tierName,
                 imagesQuota: sessionData.images,
+                imagesUsed: 0,
+                stripeSessionId: sessionData.sessionId,
+                paymentStatus: 'paid',
             },
         })
 
@@ -136,36 +132,14 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Create user in database
+        // Send verification email using invite link
+        // Since user is already created, we'll use inviteUserByEmail to trigger email
+        // Note: In production, you may want to use a custom email service instead
         try {
-            await prisma.user.create({
-                data: {
-                    supabaseId: authData.user.id,
-                    email: email,
-                    emailVerified: false,
-                    tier: getTierFromKey(sessionData.tier),
-                    imagesQuota: sessionData.images,
-                    imagesUsed: 0,
-                    stripeSessionId: sessionData.sessionId,
-                    paymentStatus: 'PAID',
-                },
-            })
-        } catch (dbError) {
-            console.error('Database error:', dbError)
-            // User was created in Supabase but not in DB - we should still continue
-            // The user can still use the app, we'll sync the data later
-        }
-
-        // Send verification email
-        const { error: emailError } = await supabaseAdmin.auth.admin.generateLink({
-            type: 'signup',
-            email,
-            options: {
+            await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
                 redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/verify-email`,
-            },
-        })
-
-        if (emailError) {
+            })
+        } catch (emailError) {
             console.error('Email verification error:', emailError)
             // Don't fail the request, user can request new verification email
         }
