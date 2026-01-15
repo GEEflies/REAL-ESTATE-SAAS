@@ -147,7 +147,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <aside className="hidden lg:flex flex-col w-64 bg-slate-900 border-r border-slate-800 fixed h-full text-gray-300">
                 {/* Logo */}
                 <div className="p-4 mb-2">
-                    <Link href="/" className="flex items-center gap-3 px-2">
+                    <Link href="/dashboard" className="flex items-center gap-3 px-2">
                         <Image src="/aurix-logo.png" alt="Aurix" width={32} height={32} className="rounded-lg" />
                         <span className="text-xl font-bold text-white tracking-tight">Aurix</span>
                     </Link>
@@ -253,16 +253,16 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </AnimatePresence>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between">
+                <Link href="/dashboard" className="flex items-center gap-2">
                     <Image src="/aurix-logo.png" alt="Aurix" width={32} height={32} className="rounded-lg" />
-                    <span className="text-lg font-bold text-gray-900">Aurix</span>
+                    <span className="text-lg font-bold text-white">Aurix</span>
                 </Link>
                 <button
                     onClick={() => setSidebarOpen(true)}
-                    className="p-2 rounded-lg hover:bg-gray-100"
+                    className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
                 >
-                    <Menu className="w-6 h-6 text-gray-600" />
+                    <Menu className="w-6 h-6 text-gray-300" />
                 </button>
             </div>
 
@@ -282,40 +282,38 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                             animate={{ x: 0 }}
                             exit={{ x: '-100%' }}
                             transition={{ type: 'tween', duration: 0.3 }}
-                            className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-72 bg-white shadow-xl flex flex-col"
+                            className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-72 bg-slate-900 shadow-xl flex flex-col text-gray-300"
                         >
                             {/* Close Button */}
-                            <div className="p-4 flex items-center justify-between border-b border-gray-100">
-                                <Link href="/" className="flex items-center gap-2">
+                            <div className="p-4 flex items-center justify-between border-b border-slate-800">
+                                <Link href="/dashboard" className="flex items-center gap-2" onClick={() => setSidebarOpen(false)}>
                                     <Image src="/aurix-logo.png" alt="Aurix" width={32} height={32} className="rounded-lg" />
-                                    <span className="text-lg font-bold text-gray-900">Aurix</span>
+                                    <span className="text-lg font-bold text-white">Aurix</span>
                                 </Link>
                                 <button
                                     onClick={() => setSidebarOpen(false)}
-                                    className="p-2 rounded-lg hover:bg-gray-100"
+                                    className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
                                 >
-                                    <X className="w-5 h-5 text-gray-600" />
+                                    <X className="w-5 h-5 text-gray-400" />
                                 </button>
                             </div>
 
                             {/* Mobile Navigation */}
                             <nav className="flex-1 p-4">
+                                <div className="mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">Menu</div>
                                 <ul className="space-y-1">
                                     {navItems.map((item) => (
                                         <li key={item.href}>
                                             <Link
                                                 href={item.href}
                                                 onClick={() => setSidebarOpen(false)}
-                                                className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all ${isActive(item.href)
-                                                    ? 'bg-blue-50 text-blue-700 font-medium'
-                                                    : 'text-gray-600 hover:bg-gray-50'
+                                                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${isActive(item.href)
+                                                    ? 'bg-slate-800 text-white font-medium'
+                                                    : 'text-gray-400 hover:text-white hover:bg-slate-800/50'
                                                     }`}
                                             >
-                                                <div className="flex items-center gap-3">
-                                                    <item.icon className={`w-5 h-5 ${isActive(item.href) ? 'text-blue-600' : 'text-gray-400'}`} />
-                                                    {item.label}
-                                                </div>
-                                                <ChevronRight className="w-4 h-4 text-gray-400" />
+                                                <item.icon className={`w-5 h-5 ${isActive(item.href) ? 'text-blue-400' : 'text-gray-500'}`} />
+                                                {item.label}
                                             </Link>
                                         </li>
                                     ))}
@@ -323,16 +321,16 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                             </nav>
 
                             {/* Mobile User Info */}
-                            <div className="p-4 border-t border-gray-100">
+                            <div className="p-4 border-t border-slate-800">
                                 {user && (
-                                    <div className="mb-4 p-4 bg-gray-50 rounded-xl">
+                                    <div className="mb-4 p-4 bg-slate-800 rounded-xl">
                                         <div className="flex items-center justify-between text-sm mb-2">
-                                            <span className="text-gray-600">{t('quota.title')}</span>
-                                            <span className="font-medium text-gray-900">
+                                            <span className="text-gray-400">{t('quota.title')}</span>
+                                            <span className="font-medium text-white">
                                                 {user.imagesUsed}/{user.imagesQuota}
                                             </span>
                                         </div>
-                                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                                             <div
                                                 className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
                                                 style={{ width: `${Math.min(100, (user.imagesUsed / user.imagesQuota) * 100)}%` }}
@@ -341,8 +339,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                                     </div>
                                 )}
                                 <button
-                                    onClick={() => setLogoutConfirmOpen(true)}
-                                    className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                                    onClick={() => { setSidebarOpen(false); setLogoutConfirmOpen(true); }}
+                                    className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-slate-800 rounded-lg transition-all"
                                 >
                                     <LogOut className="w-5 h-5" />
                                     {t('nav.logout')}
