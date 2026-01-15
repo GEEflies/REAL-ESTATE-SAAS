@@ -6,6 +6,7 @@ import { Download, Loader2, Sparkles, RotateCcw, Check, ChevronDown, X, Layers, 
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { get, set, del } from 'idb-keyval'
 
 import { Button } from '@/components/ui/button'
 import { ImageDropzone } from '@/components/ImageDropzone'
@@ -40,6 +41,7 @@ export default function DashboardEnhancePage() {
     const [selectedMode, setSelectedMode] = useState<EnhanceMode>('full')
     const [isMobile, setIsMobile] = useState(false)
     const [modeSheetOpen, setModeSheetOpen] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     // Supabase client for insert (History logic)
     // We utilize the client-side supabaseAuth but creating a fresh client if needed or reuse
@@ -51,6 +53,44 @@ export default function DashboardEnhancePage() {
         window.addEventListener('resize', checkMobile)
         return () => window.removeEventListener('resize', checkMobile)
     }, [])
+
+    // Load queue from IndexedDB on mount
+    useEffect(() => {
+        get('enhance-queue').then((val) => {
+            if (val) {
+                // Deserialize if needed (idb handles Files/Blobs natively)
+                setQueue(val)
+                // If there were processing items, reset them to pending or error because process was interrupted
+                const hasProcessing = val.some((i: QueueItem) => i.status === 'processing')
+                if (hasProcessing) {
+                    setQueue(prev => prev.map(i => i.status === 'processing' ? { ...i, status: 'pending' } : i))
+                    toast.info("Restored previous session. Processing paused.")
+                }
+            }
+            setIsLoaded(true)
+        })
+    }, [])
+
+    // Save queue to IndexedDB on change (debounce slightly implicitly by React effect)
+    useEffect(() => {
+        if (isLoaded) {
+            set('enhance-queue', queue)
+        }
+    }, [queue, isLoaded])
+
+    // Warn on reload if processing
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (isProcessing || queue.some(i => i.status === 'pending')) {
+                e.preventDefault()
+                e.returnValue = ''
+                return ''
+            }
+        }
+        window.addEventListener('beforeunload', handleBeforeUnload)
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+    }, [isProcessing, queue])
+
 
     const ENHANCE_MODES: ModeOption[] = [
         { id: 'full', icon: Sparkles, label: t('modes.full.label'), description: t('modes.full.description') },
@@ -93,20 +133,28 @@ export default function DashboardEnhancePage() {
         setIsProcessing(true)
 
         // Process sequentially
-        for (const item of queue) {
-            if (item.status !== 'pending') continue
+        // Note: We iterate a snapshot of queue logic, but we need to reference the live queue state for cancellations? 
+        // Logic: just iterate current 'pending' items.
+        // If user clears queue mid-process, we should stop. Ref hook?
+        // simple: loop through IDs.
+
+        const idsToProcess = queue.filter(q => q.status === 'pending').map(q => q.id)
+
+        for (const id of idsToProcess) {
+            // Check if still exists and pending (in case canceled)
+            const currentItem = queue.find(q => q.id === id)
+            if (!currentItem || currentItem.status !== 'pending') continue
 
             // Update status to processing
-            setQueue(prev => prev.map(i => i.id === item.id ? { ...i, status: 'processing' } : i))
+            setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'processing' } : i))
 
             try {
                 // 1. Compress
-                const { base64, mimeType } = await compressImage(item.file, 4, 2048)
+                const { base64, mimeType } = await compressImage(currentItem.file, 4, 2048)
 
                 // 2. Auth Session
                 const { data: { session } } = await supabaseAuth.auth.getSession()
                 const token = session?.access_token
-                const userId = session?.user?.id
 
                 // 3. API Call
                 const response = await fetch('/api/enhance', {
@@ -130,35 +178,14 @@ export default function DashboardEnhancePage() {
                 const data = await response.json()
                 const enhancedUrl = data.enhanced
 
-                // 4. Save to History (Insert into Supabase 'images' table)
-                // Note: We use the existing supabaseAuth client which is initialized with anon key
-                // The RLS policy allows inserting rows where user_id = auth.uid()
-                // But wait, the API probably doesn't upload the original to storage?
-                // For now, we only store URLs if returned.
-                // Ideally, verify if 'images' table needs original_url.
-                // Base64 is too large for DB.
-                // We can skip inserting original_url if we don't have storage upload logic here.
-                // Or we upload to storage first.
-
-                // Simplication: Just update local state. History logic requires Storage integration which is complex to add now.
-                // User asked for "History function". I provided SQL.
-                // If I don't insert, history page stays empty.
-                // I will attempt insert.
-                if (userId && enhancedUrl) {
-                    await supabaseAuth.from('images').insert({
-                        original_url: 'uploaded_via_web', // Placeholder or upload to storage
-                        enhanced_url: enhancedUrl,
-                        status: 'COMPLETED',
-                        user_id: userId
-                    })
-                }
+                // API now handles History insertion. We don't need to insert here.
 
                 // Update Item
-                setQueue(prev => prev.map(i => i.id === item.id ? { ...i, status: 'completed', enhancedUrl } : i))
+                setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'completed', enhancedUrl } : i))
 
             } catch (error) {
                 console.error(error)
-                setQueue(prev => prev.map(i => i.id === item.id ? { ...i, status: 'error', error: 'Failed' } : i))
+                setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'error', error: 'Failed' } : i))
             }
         }
         setIsProcessing(false)
@@ -174,9 +201,12 @@ export default function DashboardEnhancePage() {
     const clearQueue = () => {
         setQueue([])
         setIsProcessing(false)
+        del('enhance-queue')
     }
 
     const selectedModeInfo = ENHANCE_MODES.find(m => m.id === selectedMode)
+
+    if (!isLoaded) return null // or loading spinner
 
     return (
         <div className="p-6 lg:p-8">

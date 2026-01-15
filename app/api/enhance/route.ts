@@ -134,9 +134,59 @@ export async function POST(request: NextRequest) {
             }
         }
 
+        // ... existing enhancement/upscale logic ...
+
+        // Determine final URL to save
+        // Ideally we upload the Gemini result to storage if Replicate failed or wasn't used
+        // For now, we prefer Replicate URL. If not available, we currently return base64.
+        // To save to history, we really should have a URL.
+        // We will try to upload the base64 to 'enhancements' bucket if possible, strictly for history.
+        let finalHistoryUrl = upscaledUrl
+
+        if (!finalHistoryUrl && enhancedBase64 && userId) {
+            try {
+                const fileName = `${userId}/${Date.now()}_enhanced.jpg`
+                // Convert base64 to Buffer/Blob - Node environment
+                const buffer = Buffer.from(enhancedBase64, 'base64')
+                const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+                    .from('enhancements')
+                    .upload(fileName, buffer, {
+                        contentType: 'image/jpeg',
+                        upsert: true
+                    })
+
+                if (!uploadError && uploadData) {
+                    const { data: { publicUrl } } = supabaseAdmin.storage
+                        .from('enhancements')
+                        .getPublicUrl(fileName)
+                    finalHistoryUrl = publicUrl
+                } else {
+                    console.warn('[API] Failed to upload enhanced image to storage used for history:', uploadError)
+                }
+            } catch (e) {
+                console.error('[API] Storage upload exception:', e)
+            }
+        }
+
+        // Insert into History (Images table)
+        if (userId && (finalHistoryUrl || upscaledUrl)) {
+            // We use upsert or insert
+            const { error: dbError } = await supabaseAdmin.from('images').insert({
+                user_id: userId,
+                original_url: 'Batch Upload', // We don't have original URL here yet unless we upload it too
+                enhanced_url: finalHistoryUrl || upscaledUrl,
+                status: 'COMPLETED'
+            })
+            if (dbError) {
+                console.error('[API] Failed to save history record:', dbError)
+            } else {
+                console.log('✅ [API] History record saved')
+            }
+        }
+
         return NextResponse.json({
-            enhanced: enhancedBase64,  // Original Gemini enhancement
-            upscaled: upscaledUrl,     // 4K Replicate upscale (might be null if failed)
+            enhanced: enhancedBase64,
+            upscaled: upscaledUrl,
             message: 'Image enhanced and upscaled successfully',
         })
     } catch (error) {
