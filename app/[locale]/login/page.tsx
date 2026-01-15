@@ -49,10 +49,21 @@ export default function LoginPage() {
                     // Use window.location.href to force full navigation to app subdomain
                     // This ensures cookie is readable on the target domain
                     window.location.href = decodeURIComponent(redirectParam)
+                    return
+                }
+
+                // Determine the target URL
+                const dashboardPath = redirectParam || '/dashboard'
+
+                // Check if we're in production
+                const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('aurix.pics')
+
+                if (isProduction) {
+                    // In production, always redirect to app subdomain for dashboard
+                    window.location.href = `https://app.aurix.pics${dashboardPath}`
                 } else {
-                    // Normal local redirect on same domain
-                    const redirectTo = redirectParam || '/dashboard'
-                    router.push(redirectTo)
+                    // On localhost, stay on same domain
+                    router.push(dashboardPath)
                 }
             }
         } catch (error) {
