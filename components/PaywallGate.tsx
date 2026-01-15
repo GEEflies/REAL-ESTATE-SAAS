@@ -128,7 +128,7 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                             : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent"
                                     )}
                                 >
-                                    <tab.icon className={cn("w-5 h-5", activeTab === tab.id ? "text-blue-300" : "text-gray-500")} />
+                                    <tab.icon className={cn("w-6 h-6", activeTab === tab.id ? "text-blue-300" : "text-gray-500")} />
                                     <span className="whitespace-nowrap">{tab.label}</span>
                                 </button>
                             ))}
