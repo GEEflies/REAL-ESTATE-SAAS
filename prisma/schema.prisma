@@ -9,6 +9,7 @@ generator client {
 }
 
 model User {
+  @@map("users")
   id               String        @id @default(cuid())
   clerkId          String?       @unique @map("clerk_id") // Keep for backwards compat
   supabaseId       String?       @unique @map("supabase_id") // Supabase Auth user ID
@@ -23,21 +24,22 @@ model User {
   paymentStatus    PaymentStatus @default(PENDING) @map("payment_status")
   subscriptionStatus String?     @default("none") @map("subscription_status") // active, canceled, paused, past_due, etc.
   subscriptionEndDate DateTime?  @map("subscription_end_date")
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
   images           Image[]
 }
 
 model Image {
   id          String      @id @default(cuid())
-  userId      String
+  userId      String      @map("user_id")
   user        User        @relation(fields: [userId], references: [supabaseId])
-  originalUrl String
-  enhancedUrl String?
+  originalUrl String      @map("original_url")
+  enhancedUrl String?     @map("enhanced_url")
   status      ImageStatus @default(PENDING)
-  createdAt   DateTime    @default(now())
+  createdAt   DateTime    @default(now()) @map("created_at")
 
   @@index([userId])
+  @@map("images")
 }
 
 enum ImageStatus {
