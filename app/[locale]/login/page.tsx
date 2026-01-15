@@ -98,8 +98,8 @@ export default function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-md w-full"
             >
-                {/* Logo */}
-                <div className="text-center mb-8">
+                {/* Logo - Hidden on mobile */}
+                <div className="text-center mb-8 hidden md:block">
                     <Link href="/" className="inline-flex items-center gap-2 mb-4">
                         <Image src="/aurix-logo.png" alt="Aurix" width={40} height={40} className="rounded-lg" />
                         <span className="text-2xl font-bold text-gray-900">Aurix</span>

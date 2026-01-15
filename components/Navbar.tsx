@@ -102,8 +102,8 @@ export function Navbar() {
 
                     {/* Auth + Mobile Menu */}
                     <div className="flex items-center gap-3">
-                        {/* Login Button (Always Login, handles redirect) */}
-                        <Link href="/login">
+                        {/* Login Button (Desktop only) */}
+                        <Link href="/login" className="hidden md:inline-block">
                             <Button size="sm" className="gap-2">
                                 <LogIn className="w-4 h-4" />
                                 <span className="hidden sm:inline">{t('signIn')}</span>
