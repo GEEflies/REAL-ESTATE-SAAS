@@ -62,6 +62,25 @@ export default async function middleware(request: NextRequest) {
         request = new NextRequest(url, request);
     }
 
+    // Strict App Subdomain Restriction
+    // Prevent access to public landing pages (like /remove, /enhance) on the app subdomain
+    if (hostname.startsWith('app.')) {
+        const isAllowedPath =
+            pathname === '/dashboard' ||
+            pathname.includes('/dashboard') ||
+            pathname.includes('/login') ||
+            pathname.includes('/forgot-password') ||
+            pathname.includes('/auth') ||
+            pathname.startsWith('/api') ||
+            pathname.startsWith('/_next') ||
+            pathname.includes('.'); // static files
+
+        if (!isAllowedPath) {
+            // Redirect all other traffic (e.g. /remove, /enhance) to dashboard
+            return NextResponse.redirect(new URL('/dashboard', request.url));
+        }
+    }
+
     // IP-based Localization (Auto-detect Slovak)
     // Only applies to root path '/' (landing page entry)
     if (pathname === '/') {
