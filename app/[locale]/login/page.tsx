@@ -218,14 +218,6 @@ export default function LoginPage() {
                         {t('googleLogin')}
                     </Button>
                 </div>
-
-                {/* Sign up link */}
-                <p className="text-center text-gray-600 mt-6">
-                    {t('noAccount')}{' '}
-                    <Link href="/#pricing" className="text-blue-600 font-medium hover:underline">
-                        {t('getStarted')}
-                    </Link>
-                </p>
             </motion.div>
         </div>
     )

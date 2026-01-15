@@ -654,7 +654,8 @@
             "newEnhancement": "New Enhancement",
             "logoutConfirmTitle": "Log out?",
             "logoutConfirmMessage": "Are you sure you want to sign out? You will be redirected to the home page.",
-            "logoutConfirmCancel": "Cancel"
+            "logoutConfirmCancel": "Cancel",
+            "feedback": "Feedback"
         },
         "history": {
             "title": "Enhancement History",
@@ -762,5 +763,44 @@
                 "logout": "Sign Out of All Devices"
             }
         }
+    },
+    "Feedback": {
+        "title": "We'd Love Your Feedback",
+        "welcome": {
+            "title": "Help Us Improve!",
+            "description": "We're a new company dedicated to helping real estate agents create stunning property photos. Your feedback is incredibly valuable to us - it helps us build exactly what you need.",
+            "start": "Share Feedback"
+        },
+        "satisfaction": {
+            "title": "How satisfied are you?",
+            "subtitle": "Rate your overall experience with Aurix so far."
+        },
+        "featuresStep": {
+            "title": "What features would help you most?",
+            "subtitle": "Select any features you'd like to see added."
+        },
+        "features": {
+            "hdr": "Better HDR",
+            "sky": "Sky Replacement",
+            "virtualStaging": "Virtual Staging",
+            "removeObjects": "Object Removal",
+            "floorPlans": "Floor Plans",
+            "video": "Video Editing"
+        },
+        "messageStep": {
+            "title": "Anything else?",
+            "subtitle": "Share any additional thoughts or ideas.",
+            "placeholder": "Your ideas, suggestions, or feedback..."
+        },
+        "back": "Back",
+        "next": "Next",
+        "submit": "Send Feedback",
+        "done": {
+            "title": "Thank You!",
+            "description": "Your feedback has been received. We truly appreciate you taking the time to help us improve.",
+            "close": "Close"
+        },
+        "successToast": "Feedback submitted successfully!",
+        "errorToast": "Failed to submit feedback. Please try again."
     }
 }

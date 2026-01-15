@@ -31,7 +31,8 @@
             "newEnhancement": "Nové vylepšenie",
             "logoutConfirmTitle": "Odhlásiť sa?",
             "logoutConfirmMessage": "Naozaj sa chcete odhlásiť? Budete presmerovaný na domovskú stránku.",
-            "logoutConfirmCancel": "Zrušiť"
+            "logoutConfirmCancel": "Zrušiť",
+            "feedback": "Spätná väzba"
         },
         "history": {
             "title": "História úprav",
@@ -634,5 +635,44 @@
             "subtitle": "Overovací odkaz mohol vypršať alebo je neplatný.",
             "resend": "Poslať nový overovací e-mail"
         }
+    },
+    "Feedback": {
+        "title": "Radi by sme počuli vašu spätnú väzbu",
+        "welcome": {
+            "title": "Pomôžte nám zlepšiť sa!",
+            "description": "Sme nová spoločnosť, ktorá pomáha realitným maklérom vytvárať úžasné fotografie nehnuteľností. Vaša spätná väzba je pre nás mimoriadne cenná - pomáha nám vytvoriť presne to, čo potrebujete.",
+            "start": "Zdieľať spätnú väzbu"
+        },
+        "satisfaction": {
+            "title": "Ako ste spokojní?",
+            "subtitle": "Ohodnoťte svoju celkovú skúsenosť s Aurix."
+        },
+        "featuresStep": {
+            "title": "Aké funkcie by vám najviac pomohli?",
+            "subtitle": "Vyberte funkcie, ktoré by ste chceli pridať."
+        },
+        "features": {
+            "hdr": "Lepšie HDR",
+            "sky": "Výmena oblohy",
+            "virtualStaging": "Virtuálny staging",
+            "removeObjects": "Odstránenie objektov",
+            "floorPlans": "Pôdorysy",
+            "video": "Úprava videa"
+        },
+        "messageStep": {
+            "title": "Niečo ďalšie?",
+            "subtitle": "Podeľte sa o ďalšie myšlienky alebo nápady.",
+            "placeholder": "Vaše nápady, návrhy alebo spätná väzba..."
+        },
+        "back": "Späť",
+        "next": "Ďalej",
+        "submit": "Odoslať spätnú väzbu",
+        "done": {
+            "title": "Ďakujeme!",
+            "description": "Vaša spätná väzba bola prijatá. Veľmi si vážime, že ste si našli čas a pomohli nám zlepšiť sa.",
+            "close": "Zavrieť"
+        },
+        "successToast": "Spätná väzba úspešne odoslaná!",
+        "errorToast": "Nepodarilo sa odoslať spätnú väzbu. Skúste to prosím znova."
     }
 }

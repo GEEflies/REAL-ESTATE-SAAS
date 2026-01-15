@@ -15,11 +15,13 @@ import {
     Home,
     ChevronRight,
     User,
-    Clock
+    Clock,
+    MessageSquare
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { supabaseAuth, signOut, getSession } from '@/lib/supabase-auth'
 import { toast } from 'sonner'
+import { FeedbackModal } from '@/components/FeedbackModal'
 
 interface DashboardLayoutProps {
     children: React.ReactNode
@@ -40,6 +42,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const pathname = usePathname()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false)
+    const [feedbackOpen, setFeedbackOpen] = useState(false)
     const [user, setUser] = useState<UserData | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -193,10 +196,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         </div>
                     </div>
 
+                    {/* Feedback Button */}
+                    <button
+                        onClick={() => setFeedbackOpen(true)}
+                        className="w-full flex items-center gap-3 px-4 py-2 mt-2 text-blue-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all text-sm"
+                    >
+                        <MessageSquare className="w-4 h-4" />
+                        {t('nav.feedback')}
+                    </button>
+
                     {/* Logout Button */}
                     <button
                         onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 mt-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all text-sm"
+                        className="w-full flex items-center gap-3 px-4 py-2 mt-1 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all text-sm"
                     >
                         <LogOut className="w-4 h-4" />
                         {t('nav.logout')}
@@ -338,6 +350,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                                         </div>
                                     </div>
                                 )}
+                                {/* Feedback Button */}
+                                <button
+                                    onClick={() => { setSidebarOpen(false); setFeedbackOpen(true); }}
+                                    className="w-full flex items-center gap-3 px-4 py-3 text-blue-400 hover:bg-slate-800 rounded-lg transition-all"
+                                >
+                                    <MessageSquare className="w-5 h-5" />
+                                    {t('nav.feedback')}
+                                </button>
                                 <button
                                     onClick={() => { setSidebarOpen(false); setLogoutConfirmOpen(true); }}
                                     className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-slate-800 rounded-lg transition-all"
@@ -357,6 +377,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     {children}
                 </div>
             </main>
+
+            {/* Feedback Modal */}
+            <FeedbackModal open={feedbackOpen} onClose={() => setFeedbackOpen(false)} />
         </div>
     )
 }
