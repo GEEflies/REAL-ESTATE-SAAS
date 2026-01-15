@@ -47,6 +47,21 @@ export default function EnhancePage() {
     const [usageCount, setUsageCount] = useState(0)
     const [isPro, setIsPro] = useState(false)
 
+    // Save state to localStorage when paywall opens (before going to Stripe)
+    useEffect(() => {
+        if (paywallGateOpen && originalImage && selectedMode) {
+            try {
+                localStorage.setItem('aurix_enhance_state', JSON.stringify({
+                    originalImage,
+                    selectedMode,
+                    timestamp: Date.now(),
+                }))
+            } catch (e) {
+                console.warn('Could not save enhance state:', e)
+            }
+        }
+    }, [paywallGateOpen, originalImage, selectedMode])
+
     useEffect(() => {
         checkUsage()
         const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -59,6 +74,23 @@ export default function EnhancePage() {
             setPaywallGateOpen(true)
             // Clean up the URL without reloading the page
             window.history.replaceState({}, '', window.location.pathname)
+
+            // Restore saved state from localStorage
+            try {
+                const savedState = localStorage.getItem('aurix_enhance_state')
+                if (savedState) {
+                    const { originalImage: savedImage, selectedMode: savedMode, timestamp } = JSON.parse(savedState)
+                    // Only restore if saved within last 30 minutes
+                    if (timestamp && Date.now() - timestamp < 30 * 60 * 1000) {
+                        if (savedImage) setOriginalImage(savedImage)
+                        if (savedMode) setSelectedMode(savedMode)
+                    }
+                    // Clean up localStorage after restoring
+                    localStorage.removeItem('aurix_enhance_state')
+                }
+            } catch (e) {
+                console.warn('Could not restore enhance state:', e)
+            }
         }
 
         return () => window.removeEventListener('resize', checkMobile)

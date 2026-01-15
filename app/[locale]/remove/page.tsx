@@ -33,6 +33,21 @@ export default function RemovePage() {
     const [usageCount, setUsageCount] = useState(0)
     const [isPro, setIsPro] = useState(false)
 
+    // Save state to localStorage when paywall opens (before going to Stripe)
+    useEffect(() => {
+        if (paywallGateOpen && originalImage) {
+            try {
+                localStorage.setItem('aurix_remove_state', JSON.stringify({
+                    originalImage,
+                    objectToRemove,
+                    timestamp: Date.now(),
+                }))
+            } catch (e) {
+                console.warn('Could not save remove state:', e)
+            }
+        }
+    }, [paywallGateOpen, originalImage, objectToRemove])
+
     useEffect(() => {
         checkUsage()
 
@@ -42,6 +57,23 @@ export default function RemovePage() {
             setPaywallGateOpen(true)
             // Clean up the URL without reloading the page
             window.history.replaceState({}, '', window.location.pathname)
+
+            // Restore saved state from localStorage
+            try {
+                const savedState = localStorage.getItem('aurix_remove_state')
+                if (savedState) {
+                    const { originalImage: savedImage, objectToRemove: savedObject, timestamp } = JSON.parse(savedState)
+                    // Only restore if saved within last 30 minutes
+                    if (timestamp && Date.now() - timestamp < 30 * 60 * 1000) {
+                        if (savedImage) setOriginalImage(savedImage)
+                        if (savedObject) setObjectToRemove(savedObject)
+                    }
+                    // Clean up localStorage after restoring
+                    localStorage.removeItem('aurix_remove_state')
+                }
+            } catch (e) {
+                console.warn('Could not restore remove state:', e)
+            }
         }
     }, [])
 

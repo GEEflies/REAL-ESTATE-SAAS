@@ -84,6 +84,18 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
             const currentUrl = window.location.href.split('?')[0] // Get base URL without query params
             const returnUrl = `${currentUrl}?showPaywall=true`
 
+            // Save current page state to localStorage before redirecting
+            // This preserves the user's uploaded image and selected feature
+            try {
+                const pageState = {
+                    timestamp: Date.now(),
+                    url: currentUrl,
+                }
+                localStorage.setItem('aurix_checkout_state', JSON.stringify(pageState))
+            } catch (e) {
+                console.warn('Could not save checkout state:', e)
+            }
+
             const response = await fetch('/api/checkout/stripe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
