@@ -57,7 +57,18 @@ const intlMiddleware = createMiddleware({
 });
 
 export default async function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    let { pathname } = request.nextUrl;
+    const hostname = request.headers.get('host') || '';
+
+    // Handle 'app' subdomain: Rewrite root '/' to '/dashboard'
+    // This ensures app.aurix.pics loads the dashboard by default
+    if (hostname.startsWith('app.') && pathname === '/') {
+        pathname = '/dashboard';
+        const url = request.nextUrl.clone();
+        url.pathname = '/dashboard';
+        // Update request object to be used by subsequent logic and intlMiddleware
+        request = new NextRequest(url, request);
+    }
 
     // Check if route requires authentication
     const isProtectedRoute = protectedRoutes.some(route =>
