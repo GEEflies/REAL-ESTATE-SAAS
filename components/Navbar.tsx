@@ -2,26 +2,52 @@
 
 import { usePathname } from '@/navigation'
 import { Link } from '@/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     Sparkles,
     Eraser,
     Menu,
     X,
-    Home
+    Home,
+    LogIn,
+    User
 } from 'lucide-react'
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { supabaseAuth } from '@/lib/supabase-auth'
 
 
 export function Navbar() {
     const t = useTranslations('Navbar')
     const pathname = usePathname()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    // Check if user is logged in
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const { data: { session } } = await supabaseAuth.auth.getSession()
+                setIsLoggedIn(!!session)
+            } catch (error) {
+                console.error('Auth check error:', error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        checkAuth()
+
+        // Listen for auth changes
+        const { data: { subscription } } = supabaseAuth.auth.onAuthStateChange((_event, session) => {
+            setIsLoggedIn(!!session)
+        })
+
+        return () => subscription.unsubscribe()
+    }, [])
 
     const navItems = [
         { href: '/', label: t('home'), icon: Home },
@@ -72,25 +98,24 @@ export function Navbar() {
 
                     {/* Auth + Mobile Menu */}
                     <div className="flex items-center gap-3">
-                        {process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
-                            <>
-                                <SignedOut>
-                                    <SignInButton mode="modal">
-                                        <Button size="sm">{t('signIn')}</Button>
-                                    </SignInButton>
-                                </SignedOut>
-                                <SignedIn>
-                                    <UserButton
-                                        afterSignOutUrl="/"
-                                        appearance={{
-                                            elements: {
-                                                avatarBox: 'w-9 h-9'
-                                            }
-                                        }}
-                                    />
-                                </SignedIn>
-                            </>
-                        ) : null}
+                        {/* Login/Dashboard Button */}
+                        {!isLoading && (
+                            isLoggedIn ? (
+                                <Link href="/dashboard">
+                                    <Button size="sm" className="gap-2">
+                                        <User className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Dashboard</span>
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Link href="/login">
+                                    <Button size="sm" className="gap-2">
+                                        <LogIn className="w-4 h-4" />
+                                        <span className="hidden sm:inline">{t('signIn')}</span>
+                                    </Button>
+                                </Link>
+                            )
+                        )}
 
                         {/* Mobile Menu Button */}
                         <button
@@ -137,6 +162,27 @@ export function Navbar() {
                                     </Link>
                                 )
                             })}
+
+                            {/* Mobile Login/Dashboard Link */}
+                            {!isLoading && (
+                                <Link
+                                    href={isLoggedIn ? '/dashboard' : '/login'}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50"
+                                >
+                                    {isLoggedIn ? (
+                                        <>
+                                            <User className="w-5 h-5" />
+                                            <span className="font-medium">Dashboard</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <LogIn className="w-5 h-5" />
+                                            <span className="font-medium">{t('signIn')}</span>
+                                        </>
+                                    )}
+                                </Link>
+                            )}
                         </div>
                     </motion.div>
                 )}
