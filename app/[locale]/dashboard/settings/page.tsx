@@ -186,7 +186,7 @@ export default function DashboardSettingsPage() {
     }
 
     return (
-        <div className="p-6 lg:p-8">
+        <div className="p-6 lg:p-8 overflow-x-hidden">
             {/* Header */}
             <div className="mb-8">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium mb-4">

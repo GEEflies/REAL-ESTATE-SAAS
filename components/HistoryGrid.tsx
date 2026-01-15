@@ -135,47 +135,56 @@ export function HistoryGrid({ initialImages }: { initialImages: HistoryItem[] })
     return (
         <div className="relative">
             {/* Batch Action Bar */}
-            <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${selectedIds.size > 0 ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
+            <div className={`fixed bottom-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 transition-all duration-300 ${selectedIds.size > 0 ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
                 }`}>
-                <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl px-6 py-3 flex items-center gap-4 border border-gray-200/50">
-                    <span className="font-medium text-gray-700">{t('actions.selected', { count: selectedIds.size })}</span>
-                    <div className="h-6 w-px bg-gray-200" />
-                    <button
-                        onClick={selectAll}
-                        className="text-sm font-medium text-gray-600 hover:text-gray-900"
-                    >
-                        {selectedIds.size === images.length ? t('actions.deselectAll') : t('actions.selectAll')}
-                    </button>
-                    <button
-                        onClick={handleBatchDownload}
-                        disabled={isDownloading}
-                        className="bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 disabled:opacity-50"
-                    >
-                        {isDownloading ? (
-                            <>Preparing...</>
-                        ) : (
-                            <>
+                <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-4 md:px-6 md:py-3 flex items-center justify-between md:justify-center gap-4 border border-gray-200/50">
+                    <div className="flex items-center gap-4">
+                        <span className="font-medium text-gray-700 text-sm whitespace-nowrap">{t('actions.selected', { count: selectedIds.size })}</span>
+                        <div className="h-4 w-px bg-gray-200 hidden md:block" />
+                        <button
+                            onClick={selectAll}
+                            className="text-sm font-medium text-gray-600 hover:text-gray-900 whitespace-nowrap"
+                        >
+                            {selectedIds.size === images.length ? t('actions.deselectAll') : t('actions.selectAll')}
+                        </button>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={handleBatchDownload}
+                            disabled={isDownloading}
+                            className="bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 disabled:opacity-50 whitespace-nowrap"
+                        >
+                            {isDownloading ? (
+                                <span className="md:hidden">...</span>
+                            ) : (
                                 <Download className="w-4 h-4" />
-                                {t('actions.downloadZip')}
-                            </>
-                        )}
-                    </button>
-                    <button
-                        onClick={() => {
-                            setSelectedIds(new Set())
-                            setIsSelectionMode(false)
-                        }}
-                        className="p-1 hover:bg-gray-100 rounded-full transition-colors ml-2"
-                    >
-                        <X className="w-5 h-5 text-gray-500" />
-                    </button>
+                            )}
+                            <span className="hidden md:inline">
+                                {isDownloading ? 'Preparing...' : t('actions.downloadZip')}
+                            </span>
+                            <span className="md:hidden">
+                                {isDownloading ? '...' : 'ZIP'}
+                            </span>
+                        </button>
+                        <button
+                            onClick={() => {
+                                setSelectedIds(new Set())
+                                setIsSelectionMode(false)
+                            }}
+                            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                        >
+                            <X className="w-5 h-5 text-gray-500" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="flex justify-end mb-4">
+            <div className="flex items-center justify-between mb-6">
+                <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
                 <button
                     onClick={() => setIsSelectionMode(!isSelectionMode)}
-                    className={`text-sm font-medium px-6 py-2.5 rounded-xl transition-all shadow-sm border ${isSelectionMode
+                    className={`text-sm font-medium px-4 py-2 rounded-xl transition-all shadow-sm border ${isSelectionMode
                         ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
                         : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                         }`}

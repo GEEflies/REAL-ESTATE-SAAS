@@ -788,10 +788,11 @@
         }
     },
     "Feedback": {
-        "title": "We'd Love Your Feedback",
+        "title": "We'd love to hear from you",
         "welcome": {
-            "title": "Help Us Improve!",
-            "description": "We're a new company dedicated to helping real estate agents create stunning property photos. Your feedback is incredibly valuable to us - it helps us build exactly what you need.",
+            "title": "Help us improve!",
+            "description": "We are a new company helping real estate agents create amazing property photos. Your feedback is incredibly valuable to us - it helps us build exactly what you need.",
+            "description_short": "Help us build exactly what you need by sharing your feedback!",
             "start": "Share Feedback"
         },
         "satisfaction": {

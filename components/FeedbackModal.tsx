@@ -121,7 +121,8 @@ export function FeedbackModal({ open, onClose }: FeedbackModalProps) {
                                 </div>
                                 <h4 className="text-xl font-bold text-gray-900 mb-2">{t('welcome.title')}</h4>
                                 <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                                    {t('welcome.description')}
+                                    <span className="md:hidden">{t('welcome.description_short')}</span>
+                                    <span className="hidden md:inline">{t('welcome.description')}</span>
                                 </p>
                                 <Button onClick={() => setStep('satisfaction')} className="w-full gap-2">
                                     {t('welcome.start')} <ChevronRight className="w-4 h-4" />

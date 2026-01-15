@@ -757,6 +757,7 @@
         "welcome": {
             "title": "Pomôžte nám zlepšiť sa!",
             "description": "Sme nová spoločnosť, ktorá pomáha realitným maklérom vytvárať úžasné fotografie nehnuteľností. Vaša spätná väzba je pre nás mimoriadne cenná - pomáha nám vytvoriť presne to, čo potrebujete.",
+            "description_short": "Pomôžte nám vytvoriť presne to, čo potrebujete!",
             "start": "Zdieľať spätnú väzbu"
         },
         "satisfaction": {
