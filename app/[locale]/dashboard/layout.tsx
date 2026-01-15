@@ -267,10 +267,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </AnimatePresence>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between transition-transform duration-300">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-start gap-4 transition-transform duration-300">
                 <button
                     onClick={() => setSidebarOpen(true)}
                     className="p-2 -ml-2 rounded-lg hover:bg-slate-800 transition-colors"
+                    aria-label={t('nav.menu')}
                 >
                     <Menu className="w-6 h-6 text-gray-300" />
                 </button>
@@ -278,15 +279,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <Image src="/aurix-logo.png" alt="Aurix" width={32} height={32} className="rounded-lg" />
                     <span className="text-lg font-bold text-white">Aurix</span>
                 </Link>
-                {/* Spacer to balance the center logo if needed, or just flex-start/end. 
-                    Actually justify-between puts them at ends. 
-                    If user wants logo in center? "to the left of the app logo". 
-                    If I swap, Menu is Left, Logo is Right? 
-                    "menu icon will be on the left, so to the left of the app logo". 
-                    This implies Menu -> Logo.
-                    If I use justify-start gap-4, then Menu, then Logo.
-                */}
-                <div className="w-8" /> {/* Placeholder for balance if needed, or remove if just left aligned */}
             </div>
 
             {/* Mobile Sidebar Overlay */}
