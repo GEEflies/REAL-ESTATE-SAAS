@@ -22,6 +22,8 @@
     },
     "Dashboard": {
         "nav": {
+            "menu": "Menu",
+            "used": "použitých",
             "home": "Domov",
             "enhance": "Vylepšiť",
             "remove": "Odstrániť",
@@ -59,11 +61,13 @@
             "quickActions": "Rýchle akcie",
             "enhance": {
                 "title": "Vylepšiť fotku",
-                "description": "AI HDR, výmena oblohy a ďalšie"
+                "description": "AI HDR, výmena oblohy a ďalšie",
+                "cta": "Začať vylepšovať"
             },
             "remove": {
                 "title": "Odstrániť objekty",
-                "description": "Vymažte nechcené prvky z vašich fotiek"
+                "description": "Vymažte nechcené prvky z vašich fotiek",
+                "cta": "Začať odstraňovať"
             },
             "stats": {
                 "enhanced": "Vylepšených fotiek",
@@ -78,7 +82,8 @@
             },
             "recentActivity": "Nedávna aktivita",
             "noActivity": "Zatiaľ žiadna aktivita",
-            "startEnhancing": "Začnite vylepšením vašej prvej fotky"
+            "startEnhancing": "Začnite vylepšením vašej prvej fotky",
+            "tagline": "Umelá inteligencia pre reality"
         }
     },
     "quota": {
@@ -274,7 +279,8 @@
     },
     "Common": {
         "before": "Predtým",
-        "after": "Potom"
+        "after": "Potom",
+        "loading": "Načítavam..."
     },
     "Gates": {
         "emailTitle": "Získajte bezplatné vylepšenie",
@@ -295,7 +301,19 @@
         "specifyRemove": "Prosím uveďte, čo sa má odstrániť",
         "removeSuccess": "Objekt úspešne odstránený!",
         "removeError": "Odstránenie zlyhalo. Skúste to prosím znova.",
-        "limitReached": "Dosiahli ste limit 3 obrázkov zdarma. Pre viac upgradujte."
+        "limitReached": "Dosiahli ste limit 3 obrázkov zdarma. Pre viac upgradujte.",
+        "restoreSession": "Obnovená predchádzajúca relácia. Spracovanie pozastavené.",
+        "limitExceeded": "Prekročený limit 20 obrázkov",
+        "emailFeature": "Funkcia aktualizácie e-mailu čoskoro!",
+        "emailError": "Nepodarilo sa aktualizovať e-mail",
+        "passwordMatch": "Heslá sa nezhodujú",
+        "passwordLength": "Heslo musí mať aspoň 8 znakov",
+        "passwordFeature": "Funkcia aktualizácie hesla čoskoro!",
+        "passwordError": "Nepodarilo sa aktualizovať heslo",
+        "logoutError": "Nepodarilo sa odhlásiť",
+        "logoutSuccess": "Úspešne odhlásený",
+        "portalError": "Nepodarilo sa vytvoriť reláciu portálu",
+        "loginRequired": "Pre zobrazenie histórie sa prosím prihláste"
     },
     "SocialModal": {
         "title": "Čoskoro!",

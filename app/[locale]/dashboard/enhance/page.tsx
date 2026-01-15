@@ -59,7 +59,7 @@ export default function DashboardEnhancePage() {
                 const hasProcessing = val.some((i: QueueItem) => i.status === 'processing')
                 if (hasProcessing) {
                     setQueue(prev => prev.map(i => i.status === 'processing' ? { ...i, status: 'pending' } : i))
-                    toast.info("Restored previous session. Processing paused.")
+                    toast.info(tToast('restoreSession'))
                 }
             }
             setIsLoaded(true)
@@ -102,7 +102,7 @@ export default function DashboardEnhancePage() {
 
     const handleImagesSelect = async (files: File[]) => {
         if (queue.length + files.length > 20) {
-            toast.error("Maximum 20 images limit exceeded")
+            toast.error(tToast('limitExceeded'))
             return
         }
 

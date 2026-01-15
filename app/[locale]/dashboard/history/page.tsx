@@ -7,6 +7,7 @@ import { HistoryGrid } from '@/components/HistoryGrid'
 
 export default async function HistoryPage() {
     const t = await getTranslations('Dashboard.history')
+    const tToasts = await getTranslations('Toasts')
     const cookieStore = await cookies()
 
     const supabase = createServerClient(
@@ -35,7 +36,7 @@ export default async function HistoryPage() {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-        return <div className="p-8 text-center">Please log in to view history</div>
+        return <div className="p-8 text-center">{tToasts('loginRequired')}</div>
     }
 
     const { data: images } = await supabase

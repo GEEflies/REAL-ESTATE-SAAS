@@ -31,6 +31,7 @@ interface SubscriptionInfo {
 
 export default function DashboardSettingsPage() {
     const t = useTranslations('Settings')
+    const tToasts = useTranslations('Toasts')
     const router = useRouter()
     const pathname = usePathname()
     const locale = useLocale()
@@ -85,9 +86,9 @@ export default function DashboardSettingsPage() {
         setIsSaving(true)
         try {
             // TODO: Implement email update via Supabase
-            toast.success('Email update feature coming soon!')
+            toast.success(tToasts('emailFeature'))
         } catch (error) {
-            toast.error('Failed to update email')
+            toast.error(tToasts('emailError'))
         } finally {
             setIsSaving(false)
         }
@@ -95,24 +96,24 @@ export default function DashboardSettingsPage() {
 
     const handleUpdatePassword = async () => {
         if (newPassword !== confirmPassword) {
-            toast.error('Passwords do not match')
+            toast.error(tToasts('passwordMatch'))
             return
         }
 
         if (newPassword.length < 8) {
-            toast.error('Password must be at least 8 characters')
+            toast.error(tToasts('passwordLength'))
             return
         }
 
         setIsSaving(true)
         try {
             // TODO: Implement password update via Supabase
-            toast.success('Password update feature coming soon!')
+            toast.success(tToasts('passwordFeature'))
             setCurrentPassword('')
             setNewPassword('')
             setConfirmPassword('')
         } catch (error) {
-            toast.error('Failed to update password')
+            toast.error(tToasts('passwordError'))
         } finally {
             setIsSaving(false)
         }
@@ -121,9 +122,9 @@ export default function DashboardSettingsPage() {
     const handleLogout = async () => {
         const { error } = await signOut()
         if (error) {
-            toast.error('Failed to log out')
+            toast.error(tToasts('logoutError'))
         } else {
-            toast.success('Logged out successfully')
+            toast.success(tToasts('logoutSuccess'))
             router.push('/')
         }
     }
@@ -154,7 +155,7 @@ export default function DashboardSettingsPage() {
                 return
             }
 
-            if (!response.ok) throw new Error('Failed to create portal session')
+            if (!response.ok) throw new Error(tToasts('portalError'))
 
             const { url } = await response.json()
 

@@ -195,7 +195,8 @@
     },
     "Common": {
         "before": "Before",
-        "after": "After"
+        "after": "After",
+        "loading": "Loading..."
     },
     "Gates": {
         "emailTitle": "Unlock Your Free Enhancement",
@@ -216,7 +217,19 @@
         "specifyRemove": "Please specify what to remove",
         "removeSuccess": "Object removed successfully!",
         "removeError": "Removal failed. Please try again.",
-        "limitReached": "Maximum 3 free images allowed. Upgrade for more."
+        "limitReached": "Maximum 3 free images allowed. Upgrade for more.",
+        "restoreSession": "Restored previous session. Processing paused.",
+        "limitExceeded": "Maximum 20 images limit exceeded",
+        "emailFeature": "Email update feature coming soon!",
+        "emailError": "Failed to update email",
+        "passwordMatch": "Passwords do not match",
+        "passwordLength": "Password must be at least 8 characters",
+        "passwordFeature": "Password update feature coming soon!",
+        "passwordError": "Failed to update password",
+        "logoutError": "Failed to log out",
+        "logoutSuccess": "Logged out successfully",
+        "portalError": "Failed to create portal session",
+        "loginRequired": "Please log in to view history"
     },
     "Pricing": {
         "title": "Simple, Transparent Pricing",
@@ -645,6 +658,8 @@
     },
     "Dashboard": {
         "nav": {
+            "menu": "Menu",
+            "used": "used",
             "home": "Home",
             "enhance": "Enhance",
             "remove": "Remove",
@@ -682,11 +697,13 @@
             "quickActions": "Quick Actions",
             "enhance": {
                 "title": "Enhance Photo",
-                "description": "AI-powered HDR, sky replacement, and more"
+                "description": "AI-powered HDR, sky replacement, and more",
+                "cta": "Start Enhancing"
             },
             "remove": {
                 "title": "Remove Objects",
-                "description": "Erase unwanted items from your photos"
+                "description": "Erase unwanted items from your photos",
+                "cta": "Start Removing"
             },
             "stats": {
                 "enhanced": "Photos Enhanced",
@@ -701,7 +718,8 @@
             },
             "recentActivity": "Recent Activity",
             "noActivity": "No activity yet",
-            "startEnhancing": "Start by enhancing your first photo"
+            "startEnhancing": "Start by enhancing your first photo",
+            "tagline": "AI Powering Real Estate"
         }
     },
     "SocialModal": {

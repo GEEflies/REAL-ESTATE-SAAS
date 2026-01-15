@@ -38,6 +38,8 @@ interface UserData {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const t = useTranslations('Dashboard')
+    const tCommon = useTranslations('Common')
+    const tToasts = useTranslations('Toasts')
     const router = useRouter()
     const pathname = usePathname()
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -106,7 +108,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const handleLogout = async () => {
         const { error } = await signOut()
         if (error) {
-            toast.error('Failed to log out')
+            toast.error(tToasts('logoutError'))
         } else {
             // Determine redirect URL (Landing Page)
             let redirectUrl = 'https://www.aurix.pics'
@@ -116,7 +118,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 }
             }
 
-            toast.success('Logged out successfully')
+            toast.success(tToasts('logoutSuccess'))
             // Force full page navigation to remove 'app' subdomain if present
             window.location.href = redirectUrl
         }
@@ -139,7 +141,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="animate-pulse text-gray-400">Loading...</div>
+                <div className="animate-pulse text-gray-400">{tCommon('loading')}</div>
             </div>
         )
     }
@@ -158,7 +160,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
                 {/* Navigation */}
                 <nav className="flex-1 px-4">
-                    <div className="mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">Menu</div>
+                    <div className="mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">{t('nav.menu')}</div>
                     <ul className="space-y-1">
                         {navItems.map((item) => (
                             <li key={item.href}>
@@ -191,7 +193,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                             <div className="flex items-center gap-2">
                                 <span className="text-xs text-blue-400 font-medium">{user?.tierName || 'Free'}</span>
                                 <span className="text-[10px] text-slate-500">•</span>
-                                <span className="text-[10px] text-slate-500">{user?.imagesUsed}/{user?.imagesQuota} used</span>
+                                <span className="text-[10px] text-slate-500">{user?.imagesUsed}/{user?.imagesQuota} {t('nav.used')}</span>
                             </div>
                         </div>
                     </div>
@@ -312,7 +314,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
                             {/* Mobile Navigation */}
                             <nav className="flex-1 p-4">
-                                <div className="mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">Menu</div>
+                                <div className="mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">{t('nav.menu')}</div>
                                 <ul className="space-y-1">
                                     {navItems.map((item) => (
                                         <li key={item.href}>

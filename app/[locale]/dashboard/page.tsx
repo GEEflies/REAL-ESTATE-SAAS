@@ -42,7 +42,7 @@ export default function DashboardHomePage() {
                         <h3 className="text-xl font-bold text-gray-900 mb-2">{t('home.enhance.title')}</h3>
                         <p className="text-gray-500 leading-relaxed mb-4">{t('home.enhance.description')}</p>
                         <div className="flex items-center text-blue-600 font-medium text-sm group-hover:gap-2 transition-all">
-                            Start Enhancing <ArrowRight className="w-4 h-4 ml-1" />
+                            {t('home.enhance.cta')} <ArrowRight className="w-4 h-4 ml-1" />
                         </div>
                     </motion.div>
                 </Link>
@@ -60,21 +60,16 @@ export default function DashboardHomePage() {
                         <h3 className="text-xl font-bold text-gray-900 mb-2">{t('home.remove.title')}</h3>
                         <p className="text-gray-500 leading-relaxed mb-4">{t('home.remove.description')}</p>
                         <div className="flex items-center text-purple-600 font-medium text-sm group-hover:gap-2 transition-all">
-                            Start Removing <ArrowRight className="w-4 h-4 ml-1" />
+                            {t('home.remove.cta')} <ArrowRight className="w-4 h-4 ml-1" />
                         </div>
                     </motion.div>
                 </Link>
             </div>
 
             {/* Footer / Quote */}
-            <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="mt-12 text-sm text-gray-400"
-            >
-                AI Powering Real Estate • Aurix v1.0
-            </motion.p>
+            <footer className="mt-12 text-center text-sm text-gray-400 py-8 border-t border-gray-100">
+                {t('home.tagline')} • Aurix v1.0
+            </footer>
         </div>
     )
 }
