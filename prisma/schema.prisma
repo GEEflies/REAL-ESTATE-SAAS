@@ -9,18 +9,30 @@ generator client {
 }
 
 model User {
-  id               String   @id @default(cuid())
-  clerkId          String   @unique
+  id               String        @id @default(cuid())
+  clerkId          String?       @unique // Keep for backwards compat
+  supabaseId       String?       @unique // Supabase Auth user ID
   email            String?
-  imagesUsed       Int      @default(0)
-  tier             Tier     @default(FREE)
+  emailVerified    Boolean       @default(false)
+  imagesUsed       Int           @default(0)
+  imagesQuota      Int           @default(0) // Max images for their plan
+  tier             Tier          @default(FREE)
   stripeCustomerId String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  stripeSessionId  String?       // Track checkout session for verification
+  paymentStatus    PaymentStatus @default(PENDING)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 }
 
 enum Tier {
   FREE
   STARTER
   PRO
+  ENTERPRISE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
 }

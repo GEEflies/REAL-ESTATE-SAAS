@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Check, Flame, X, Sparkles, Building2, Crown, Zap, ChevronDown } from 'lucide-react'
+import { Check, Flame, X, Sparkles, Building2, Zap, ChevronDown, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
 
 interface PaywallGateProps {
     open: boolean
@@ -17,11 +19,13 @@ type PricingTab = 'payPerImage' | 'limitedOffer' | 'enterprise'
 
 export function PaywallGate({ open, onClose }: PaywallGateProps) {
     const t = useTranslations('Paywall')
+    const router = useRouter()
     const [activeTab, setActiveTab] = useState<PricingTab>('limitedOffer')
     const [timeLeft, setTimeLeft] = useState(300) // 5 minutes in seconds
     const [selectedProTier, setSelectedProTier] = useState(100)
     const [proDropdownOpen, setProDropdownOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     // Pro tier pricing tiers
     const starterTier = { count: 50, price: '16.99', originalPrice: '42.49', per: '0.34' }
@@ -70,6 +74,42 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
 
     const handleClose = () => {
         if (onClose) onClose()
+    }
+
+    // Handle plan selection - triggers simulated or real Stripe checkout
+    const handleSelectPlan = async (tier: string) => {
+        setIsLoading(true)
+        try {
+            const response = await fetch('/api/checkout/simulate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tier }),
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to create checkout session')
+            }
+
+            const data = await response.json()
+
+            if (data.url) {
+                // Redirect to success page with session
+                router.push(data.url)
+            } else {
+                throw new Error('No checkout URL returned')
+            }
+        } catch (error) {
+            console.error('Checkout error:', error)
+            toast.error('Failed to start checkout. Please try again.')
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    // Map image count to tier key
+    const getTierKey = (count: number): string => {
+        if (count === 50) return 'starter'
+        return `pro_${count}`
     }
 
     return (
@@ -175,8 +215,13 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                         ))}
                                     </div>
 
-                                    <Button size="lg" className="w-full h-11 text-lg bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-lg hover:shadow-xl transition-all">
-                                        {t('getStarted')}
+                                    <Button
+                                        size="lg"
+                                        className="w-full h-11 text-lg bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                                        onClick={() => handleSelectPlan('pay_per_image')}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('getStarted')}
                                     </Button>
 
                                     <p className="text-center text-xs text-gray-400">
@@ -270,8 +315,12 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                             <span>(€0.34/{t('payPerImage.perImage')})</span>
                                         </div>
 
-                                        <Button className="w-full h-10 text-sm mb-4 rounded-lg bg-gray-900 hover:bg-gray-800">
-                                            {t('selectPlan')}
+                                        <Button
+                                            className="w-full h-10 text-sm mb-4 rounded-lg bg-gray-900 hover:bg-gray-800"
+                                            onClick={() => handleSelectPlan('starter')}
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('selectPlan')}
                                         </Button>
 
                                         <div className="space-y-2">
@@ -310,8 +359,12 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                             <span>(€{selectedProPricing.per}/{t('payPerImage.perImage')})</span>
                                         </div>
 
-                                        <Button className="w-full h-10 text-sm mb-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-md">
-                                            {t('selectPlan')}
+                                        <Button
+                                            className="w-full h-10 text-sm mb-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-md"
+                                            onClick={() => handleSelectPlan(getTierKey(selectedProTier))}
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('selectPlan')}
                                         </Button>
 
                                         <div className="space-y-2">
@@ -442,7 +495,11 @@ export function PaywallGate({ open, onClose }: PaywallGateProps) {
                                         ))}
                                     </div>
 
-                                    <Button size="lg" className="w-full h-11 text-base bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-lg hover:shadow-xl transition-all">
+                                    <Button
+                                        size="lg"
+                                        className="w-full h-11 text-base bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                                        onClick={() => window.location.href = 'mailto:enterprise@aurix.pics?subject=Enterprise%20Inquiry'}
+                                    >
                                         {t('enterprise.contact')}
                                     </Button>
                                 </div>
