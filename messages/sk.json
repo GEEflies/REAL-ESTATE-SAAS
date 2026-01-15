@@ -93,7 +93,7 @@
         "modes": {
             "full": {
                 "label": "Kompletné Vylepšenie",
-                "description": "Použije všetky vylepšenia naraz pre profi výsledky"
+                "description": "Použije všetko naraz pre profi výsledky"
             },
             "hdr": {
                 "label": "HDR Zlúčenie",
