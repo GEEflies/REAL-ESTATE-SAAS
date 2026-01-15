@@ -316,8 +316,8 @@
         "loginRequired": "Pre zobrazenie histórie sa prosím prihláste"
     },
     "SocialModal": {
-        "title": "Čoskoro!",
-        "message": "Práve sme nedávno spustili túto službu a zatiaľ nemáme nastavené naše účty na sociálnych sieťach. Ale ak máte nejaké otázky, rád vám pomôžem na",
+        "title": "Už čoskoro!",
+        "message": "Túto aplikáciu sme spustili len nedávno a naše účty na sociálnych sieťach sú práve v príprave. Ak máte akékoľvek otázky, neváhajte ma kontaktovať na <email>karol.jr@billik.sk</email> – rád vám pomôžem!",
         "email": "karol.jr@billik.sk",
         "close": "Zavrieť"
     },

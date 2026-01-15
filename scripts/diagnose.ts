@@ -34,24 +34,22 @@ async function main() {
 
     // 1. Check DB Connection and Users
     try {
-        console.log('Checking Users and Table Structure...');
+        console.log('Checking Users...');
 
-        // Select * to see column names (keys)
+        // Select specific fields that we know exist
         const { data: users, error } = await db
             .from('users')
-            .select('*')
-            .limit(1);
+            .select('email, id, images_used, images_quota, payment_status')
+            .order('created_at', { ascending: false })
+            .limit(5);
 
         if (error) {
             console.error('❌ DB Error fetching users:', error);
         } else {
-            if (users && users.length > 0) {
-                console.log('✅ User record keys (columns):', Object.keys(users[0]));
-                // Log the first user for reference
-                console.log('Sample User:', users[0]);
-            } else {
-                console.log('✅ Users table accessible but empty.');
-            }
+            console.log('✅ Users found:', users?.length);
+            users?.forEach((u: any) => {
+                console.log(`- User: ${u.email} | Used: ${u.images_used}/${u.images_quota} | Status: ${u.payment_status}`);
+            });
         }
     } catch (e) {
         console.error('❌ DB Exception:', e);
@@ -60,10 +58,10 @@ async function main() {
     // 2. Check Gemini API
     try {
         console.log('\nChecking Gemini API (enhanceImageWithMode)...');
-        // A tiny white 1x1 pixel base64 jpeg
-        const dummyImage = "/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9ALAAAAAABAAEAAAICT/8AAgABAA=="
+        // Valid 1x1 PNG Base64 (black pixel)
+        const dummyImage = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgDNjd8qAAAAAElFTkSuQmCC";
 
-        const result = await enhanceImageWithMode(dummyImage, 'full', 'image/jpeg');
+        const result = await enhanceImageWithMode(dummyImage, 'full', 'image/png');
 
         if (result && result.startsWith('data:image')) {
             console.log('✅ Gemini API Success: Returned image data');
@@ -71,11 +69,15 @@ async function main() {
         } else {
             console.log('❓ Gemini API Unexpected Result:', result ? result.substring(0, 50) : 'null');
         }
-    } catch (e) {
-        console.error('❌ Gemini API Failed:', e);
+    } catch (e: any) {
+        console.error('❌ Gemini API Failed:', e.message || e);
+        if (e.message && e.message.includes('400')) {
+            console.log('⚠️  Hint: 400 error often means Invalid API Key, Invalid Project, or Invalid Image Format.');
+        }
     }
 
     console.log('--- DIAGNOSTIC END ---');
 }
+
 
 main().catch(console.error);

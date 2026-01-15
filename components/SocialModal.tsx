@@ -38,13 +38,16 @@ export function SocialModal({ isOpen, onClose }: SocialModalProps) {
                         {t('title')}
                     </h2>
                     <p className="text-gray-600 leading-relaxed">
-                        {t('message')}{' '}
-                        <a
-                            href={`mailto:${t('email')}`}
-                            className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
-                        >
-                            {t('email')}
-                        </a>
+                        {t.rich('message', {
+                            email: (chunks) => (
+                                <a
+                                    href={`mailto:${t('email')}`}
+                                    className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+                                >
+                                    {chunks}
+                                </a>
+                            )
+                        })}
                     </p>
                     <button
                         onClick={onClose}

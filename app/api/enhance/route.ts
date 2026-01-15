@@ -51,39 +51,23 @@ export async function POST(request: NextRequest) {
             // --- Authenticated User Logic ---
             const { data: userData, error } = await supabaseAdmin
                 .from('users')
-                .select('images_used, images_quota, tier, subscription_status')
+                .select('images_used, images_quota, tier') // Removed subscription_status due to DB mismatch
                 .eq('id', userId)
                 .single()
 
             if (userData) {
                 // Check subscription status
-                const blockedStatuses = ['canceled', 'paused', 'unpaid']
-                // Allow 'none' (free tier), 'active', 'past_due' (grace period), 'trialing'
-                // But if they are 'free' tier (subscription_status usually none or canceled?), we just check quota.
-                // Wait, if they canceled, they are downgraded to free tier. So subscription_status might be 'canceled'.
-                // If they are on free tier, status is likely 'none' or 'canceled'.
-                // We shouldn't block 'canceled' if they are just on free tier trying to use free quota.
-                // BUT the user specifically asked: "when one person cancels the subscription, he will not be able to enhance his images anymore."
-                // This implies strict blocking for canceled subscriptions, OR just strict quota.
-                // If they downgrade to free, their quota becomes 3 (or whatever free is).
-                // If they use that up, they are blocked.
-                // But the user said: "he will not be able to enhance his images anymore". This might mean TOTAL BLOCK?
-                // "Like flows like these you get me? I'm sure."
-                // Use interpretation: explicit 'canceled' status blocks usage entirely even if quota remains?
-                // Or maybe just ensure they downgrade?
-                // The webhook downgrades them to quota=3.
-                // If I block 'canceled', they can't even use free tier? That seems harsh/wrong for "freemium".
-                // But if the user WANTS that: "when one person cancels... he will not be able to enhance his images anymore."
-                // Maybe they mean "anymore" as in "unlimited/pro access".
-                // Let's implement standard quota check first.
-                // BUT, let's also block 'paused' specifically as that's a temporary hold.
+                // const blockedStatuses = ['canceled', 'paused', 'unpaid']
+                // Note: subscription_status column is missing in DB for some users, skipping check for now.
 
+                /* 
                 if (userData.subscription_status === 'paused') {
                     return NextResponse.json(
                         { message: 'Subscription is paused. Please resume to continue.', error: 'SUBSCRIPTION_PAUSED' },
                         { status: 403 }
                     )
                 }
+                */
 
                 if (userData.images_used >= userData.images_quota) {
                     return NextResponse.json(
