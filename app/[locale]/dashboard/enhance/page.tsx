@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { ImageDropzone } from '@/components/ImageDropzone'
 import { compressImage, cn } from '@/lib/utils'
 import { supabaseAuth } from '@/lib/supabase-auth'
+import { PaywallGate } from '@/components/PaywallGate'
 import { createClient } from '@supabase/supabase-js'
 
 type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color'
@@ -129,34 +130,25 @@ export default function DashboardEnhancePage() {
         setQueue(prev => [...prev, ...newItems])
     }
 
+    const [showPaywall, setShowPaywall] = useState(false)
+
+    // ... (existing effects)
+
     const processQueue = async () => {
         setIsProcessing(true)
-
-        // Process sequentially
-        // Note: We iterate a snapshot of queue logic, but we need to reference the live queue state for cancellations? 
-        // Logic: just iterate current 'pending' items.
-        // If user clears queue mid-process, we should stop. Ref hook?
-        // simple: loop through IDs.
-
         const idsToProcess = queue.filter(q => q.status === 'pending').map(q => q.id)
 
         for (const id of idsToProcess) {
-            // Check if still exists and pending (in case canceled)
             const currentItem = queue.find(q => q.id === id)
             if (!currentItem || currentItem.status !== 'pending') continue
 
-            // Update status to processing
             setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'processing' } : i))
 
             try {
-                // 1. Compress
                 const { base64, mimeType } = await compressImage(currentItem.file, 4, 2048)
-
-                // 2. Auth Session
                 const { data: { session } } = await supabaseAuth.auth.getSession()
                 const token = session?.access_token
 
-                // 3. API Call
                 const response = await fetch('/api/enhance', {
                     method: 'POST',
                     headers: {
@@ -172,16 +164,27 @@ export default function DashboardEnhancePage() {
 
                 if (!response.ok) {
                     const errorJson = await response.json()
+
+                    // Check for Quota Exceeded
+                    if (response.status === 403 && errorJson.error === 'QUOTA_EXCEEDED') {
+                        setIsProcessing(false) // Stop processing immediately
+                        setShowPaywall(true) // Show Paywall
+
+                        // Mark current as pending again so they can retry after paying? 
+                        // Or error it? Let's leave it processing/pending state or reset it.
+                        // Better to reset this item to pending so they can click start again.
+                        setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'pending' } : i))
+
+                        toast.error(errorJson.message || "Quota exceeded")
+                        return // Exit function completely
+                    }
+
                     throw new Error(errorJson.message || tToast('enhanceError'))
                 }
 
                 const data = await response.json()
-                // Use upscaled URL if available (4K), otherwise fallback to enhanced (Gemini)
                 const enhancedUrl = data.upscaled || data.enhanced
 
-                // API now handles History insertion. We don't need to insert here.
-
-                // Update Item
                 setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'completed', enhancedUrl } : i))
 
             } catch (error) {
@@ -207,12 +210,15 @@ export default function DashboardEnhancePage() {
 
     const selectedModeInfo = ENHANCE_MODES.find(m => m.id === selectedMode)
 
-    if (!isLoaded) return null // or loading spinner
+    if (!isLoaded) return null
 
     return (
         <div className="p-6 lg:p-8">
+            <PaywallGate open={showPaywall} onClose={() => setShowPaywall(false)} />
+
             {/* Header */}
             <div className="mb-8">
+                {/* ... rest of existing render ... */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
                     <Sparkles className="w-4 h-4" />
                     <span>{t('badge')}</span>
