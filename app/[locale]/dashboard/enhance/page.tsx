@@ -313,7 +313,7 @@ export default function DashboardEnhancePage() {
                         )}
                     </div>
 
-                    <div className="flex justify-end gap-4 sticky bottom-6 bg-white/80 p-4 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 z-40">
+                    <div className="flex justify-end gap-4 sticky bottom-6 ml-auto w-fit bg-white/80 p-4 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 z-40">
                         <Button variant="ghost" onClick={clearQueue} disabled={isProcessing} className="w-32">
                             {t('batch.clearAll')}
                         </Button>

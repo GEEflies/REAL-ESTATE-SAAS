@@ -222,7 +222,7 @@
             "title": "Hromadné spracovanie (Max 20 obrázkov)",
             "addMore": "Pridať ďalšie",
             "clearAll": "Vymazať všetko",
-            "start": "Spustiť hromadné vylepšenie",
+            "start": "Spustiť vylepšenie",
             "processing": "Spracováva sa..."
         },
         "replicateCard": {
@@ -246,7 +246,24 @@
         "removing": "Odstraňuje sa",
         "timeEstimate": "Zvyčajne to trvá 20-30 sekúnd",
         "download": "Stiahnuť Obrázok",
-        "editAnother": "Upraviť Ďalšiu"
+        "editAnother": "Upraviť Ďalšiu",
+        "upload": {
+            "title": "Sem vložte váš obrázok",
+            "subtitle": "alebo kliknite pre výber"
+        },
+        "prompt": {
+            "label": "Čo by ste chceli odstrániť?",
+            "placeholder": "napr. odpadkový kôš v rohu, elektrické vedenie na oblohe",
+            "hint": "Pre najlepšie výsledky buďte konkrétni o objekte a jeho umiestnení."
+        },
+        "removeButton": "Odstrániť objekt",
+        "processing": "Odstraňujem objekt...",
+        "processingHint": "Môže to trvať 15-30 sekúnd",
+        "result": {
+            "title": "Objekt odstránený",
+            "download": "Stiahnuť výsledok",
+            "removeAnother": "Odstrániť ďalší objekt"
+        }
     },
     "Dropzone": {
         "dragDrop": "Kliknite sem a vyberte obrázok",
