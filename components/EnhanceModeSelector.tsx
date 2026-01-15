@@ -77,7 +77,7 @@ export function EnhanceModeSelector({
                         onClick={() => !disabled && setIsOpen(!isOpen)}
                         disabled={disabled}
                         className={cn(
-                            "w-full bg-white border-2 rounded-2xl p-5 flex items-center justify-between shadow-sm transition-all",
+                            "w-full bg-white border-2 rounded-2xl p-5 flex items-center justify-between shadow-sm transition-all cursor-pointer",
                             isOpen ? "border-blue-500 ring-2 ring-blue-100" : "border-blue-100 hover:border-blue-200",
                             disabled && "opacity-50 cursor-not-allowed"
                         )}
@@ -115,7 +115,7 @@ export function EnhanceModeSelector({
                                             key={mode.id}
                                             onClick={() => handleModeSelect(mode.id)}
                                             className={cn(
-                                                "w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all",
+                                                "w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all cursor-pointer",
                                                 selectedMode === mode.id
                                                     ? "bg-blue-50 border-2 border-blue-500"
                                                     : "hover:bg-gray-50 border-2 border-transparent"
@@ -161,7 +161,7 @@ export function EnhanceModeSelector({
                             onClick={() => !disabled && setIsOpen(true)}
                             disabled={disabled}
                             className={cn(
-                                "w-full bg-white border-2 border-blue-100 rounded-2xl p-4 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all",
+                                "w-full bg-white border-2 border-blue-100 rounded-2xl p-4 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all cursor-pointer",
                                 disabled && "opacity-50 cursor-not-allowed"
                             )}
                         >
@@ -207,7 +207,7 @@ export function EnhanceModeSelector({
                                                 key={mode.id}
                                                 onClick={() => handleModeSelect(mode.id)}
                                                 className={cn(
-                                                    "w-full flex items-center justify-between p-4 rounded-xl mb-1 text-left transition-all",
+                                                    "w-full flex items-center justify-between p-4 rounded-xl mb-1 text-left transition-all cursor-pointer",
                                                     selectedMode === mode.id
                                                         ? "bg-blue-50 border-2 border-blue-500 shadow-sm"
                                                         : "hover:bg-gray-50 border-2 border-transparent"
