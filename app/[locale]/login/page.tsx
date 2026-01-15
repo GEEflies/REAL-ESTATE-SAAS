@@ -42,8 +42,20 @@ export default function LoginPage() {
                 toast.success('Logged in successfully!')
 
                 // Check if there's a redirect URL
-                const redirectTo = searchParams.get('redirect') || '/dashboard'
-                router.push(redirectTo)
+                let redirectTo = searchParams.get('redirect') || '/dashboard'
+
+                // In production, ensure dashboard redirects go to the app subdomain
+                if (process.env.NODE_ENV === 'production' &&
+                    (redirectTo === '/dashboard' || redirectTo.startsWith('/dashboard/')) &&
+                    !window.location.hostname.includes('app.')) {
+                    redirectTo = `https://app.aurix.pics${redirectTo}`
+                }
+
+                if (redirectTo.startsWith('http')) {
+                    window.location.href = redirectTo
+                } else {
+                    router.push(redirectTo)
+                }
             }
         } catch (error) {
             console.error('Login error:', error)
@@ -55,8 +67,15 @@ export default function LoginPage() {
 
     const handleGoogleLogin = async () => {
         try {
-            const redirectTo = searchParams.get('redirect') || '/dashboard'
-            await signInWithGoogle(`${window.location.origin}${redirectTo}`)
+            const redirectParams = searchParams.get('redirect') || '/dashboard'
+            let redirectBase = window.location.origin
+
+            // In production, use app subdomain for Google redirect
+            if (process.env.NODE_ENV === 'production' && !window.location.hostname.includes('app.')) {
+                redirectBase = 'https://app.aurix.pics'
+            }
+
+            await signInWithGoogle(`${redirectBase}${redirectParams}`)
         } catch (error) {
             console.error('Google login error:', error)
             toast.error('Failed to initiate Google login')

@@ -9,6 +9,34 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.warn('Missing Supabase environment variables for auth - some features will be limited')
 }
 
+// Custom storage provider to share session between subdomains (www and app)
+const customCookieStorage = {
+    getItem: (key: string) => {
+        if (typeof document === 'undefined') return null
+        const match = document.cookie.match(new RegExp('(^| )' + key + '=([^;]+)'))
+        return match ? decodeURIComponent(match[2]) : null
+    },
+    setItem: (key: string, value: string) => {
+        if (typeof document === 'undefined') return
+        // In production, share cookie across all subdomains (.aurix.pics)
+        // In development (localhost), use the exact hostname
+        const hostname = window.location.hostname
+        const isProd = hostname.includes('aurix.pics')
+        const domainProp = isProd ? '; domain=.aurix.pics' : ''
+        const secureProp = window.location.protocol === 'https:' ? '; Secure' : ''
+
+        document.cookie = `${key}=${encodeURIComponent(value)}${domainProp}; path=/; max-age=31536000; SameSite=Lax${secureProp}`
+    },
+    removeItem: (key: string) => {
+        if (typeof document === 'undefined') return
+        const hostname = window.location.hostname
+        const isProd = hostname.includes('aurix.pics')
+        const domainProp = isProd ? '; domain=.aurix.pics' : ''
+
+        document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT${domainProp}`
+    }
+}
+
 export const supabaseAuth = createClient(
     supabaseUrl || 'https://placeholder.supabase.co',
     supabaseAnonKey || 'placeholder',
@@ -17,6 +45,7 @@ export const supabaseAuth = createClient(
             autoRefreshToken: true,
             persistSession: true,
             detectSessionInUrl: true,
+            storage: customCookieStorage,
         },
     }
 )

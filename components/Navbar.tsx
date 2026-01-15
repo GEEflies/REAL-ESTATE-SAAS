@@ -55,6 +55,10 @@ export function Navbar() {
         { href: '/remove', label: t('remove'), icon: Eraser },
     ]
 
+    const dashboardHref = process.env.NODE_ENV === 'production'
+        ? 'https://app.aurix.pics'
+        : '/dashboard'
+
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,12 +105,12 @@ export function Navbar() {
                         {/* Login/Dashboard Button */}
                         {!isLoading && (
                             isLoggedIn ? (
-                                <Link href="/dashboard">
+                                <a href={dashboardHref}>
                                     <Button size="sm" className="gap-2">
                                         <User className="w-4 h-4" />
                                         <span className="hidden sm:inline">Dashboard</span>
                                     </Button>
-                                </Link>
+                                </a>
                             ) : (
                                 <Link href="/login">
                                     <Button size="sm" className="gap-2">
@@ -165,23 +169,25 @@ export function Navbar() {
 
                             {/* Mobile Login/Dashboard Link */}
                             {!isLoading && (
-                                <Link
-                                    href={isLoggedIn ? '/dashboard' : '/login'}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50"
-                                >
-                                    {isLoggedIn ? (
-                                        <>
-                                            <User className="w-5 h-5" />
-                                            <span className="font-medium">Dashboard</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <LogIn className="w-5 h-5" />
-                                            <span className="font-medium">{t('signIn')}</span>
-                                        </>
-                                    )}
-                                </Link>
+                                isLoggedIn ? (
+                                    <a
+                                        href={dashboardHref}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50 bg-blue-50/50"
+                                    >
+                                        <User className="w-5 h-5 text-blue-600" />
+                                        <span className="font-medium text-blue-600">Dashboard</span>
+                                    </a>
+                                ) : (
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer text-gray-600 hover:bg-gray-50"
+                                    >
+                                        <LogIn className="w-5 h-5" />
+                                        <span className="font-medium">{t('signIn')}</span>
+                                    </Link>
+                                )
                             )}
                         </div>
                     </motion.div>
