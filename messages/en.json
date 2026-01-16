@@ -205,7 +205,7 @@
     },
     "Gates": {
         "emailTitle": "Unlock Your Enhancement",
-        "emailSubtitle": "Enter your email to get your result. We promise not to share it.",
+        "emailSubtitle": "Enter your email to get your result.",
         "emailPlaceholder": "name@example.com",
         "emailButton": "Continue & Unlock",
         "promise": "Your email is safe with us.",

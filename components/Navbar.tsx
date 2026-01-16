@@ -70,6 +70,7 @@ export function Navbar() {
                                 src="/aurix-logo.png"
                                 alt="Aurix Logo"
                                 fill
+                                sizes="48px"
                                 className="object-contain"
                             />
                         </div>

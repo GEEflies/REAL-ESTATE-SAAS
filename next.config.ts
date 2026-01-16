@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '30mb',
     },
   },
+  images: {
+    qualities: [100],
+  },
 };
 
 export default withNextIntl(nextConfig);

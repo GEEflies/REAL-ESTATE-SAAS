@@ -10,6 +10,7 @@ import '../globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   title: 'Aurix | AI Real Estate Photo Editor',
   description: 'Enhance photos & remove objects in seconds with AI-powered real estate photo editing.',
   keywords: ['real estate', 'photo editing', 'AI', 'HDR', 'property photos'],
@@ -51,7 +52,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   const content = (
-    <html lang={locale}>
+    <html lang={locale} data-scroll-behavior="smooth">
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <LayoutWrapper>
