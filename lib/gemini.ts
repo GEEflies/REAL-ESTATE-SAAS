@@ -28,6 +28,9 @@ export type EnhanceMode =
     | 'privacy'
     | 'color'
 
+// Addon enhancement types for checkbox features
+export type EnhanceAddon = 'window' | 'sky' | 'white_balance' | 'perspective' | 'privacy'
+
 // Mode-specific prompts - each prioritizes its feature at the TOP
 const MODE_PROMPTS: Record<EnhanceMode, string> = {
     full: `You are an expert real estate photo editor. Apply ALL of the following professional enhancements:
@@ -219,6 +222,93 @@ CRITICAL REQUIREMENTS:
 4. Maintain maximum sharpness and detail in the edited area.`
 
 
+const ADDON_PROMPTS: Record<EnhanceAddon, string> = {
+    window: `
+=== ADDON: ENHANCED WINDOW PULL ===
+PRIORITY: Make ALL exterior views through windows CRYSTAL CLEAR
+- Sky visible: bright natural blue with soft white clouds
+- Glass PERFECTLY TRANSPARENT - no haze, fog, or glare
+- Balance interior and exterior exposure equally
+- Sharp detailed exterior landscape
+- Remove any window reflections that obstruct the view`,
+
+    sky: `
+=== ADDON: SKY REPLACEMENT ===
+PRIORITY: Replace gray/overcast/white/blown-out sky
+- New sky: Natural bright blue with soft fluffy clouds
+- Photorealistic and match lighting
+- Blend seamlessly with horizon and building edges
+- Natural color temperature`,
+
+    white_balance: `
+=== ADDON: ENHANCED WHITE BALANCE ===
+PRIORITY: Perfect color temperature correction
+- Exactly 5500K neutral daylight throughout
+- PURE CLEAN WHITE walls/ceilings - NO color cast
+- AVOID: orange tint, yellow cast, blue cast, green tint
+- Wood tones: natural brown (not orange)
+- Fabrics show true colors`,
+
+    perspective: `
+=== ADDON: PRECISION PERSPECTIVE CORRECTION ===
+PRIORITY: Perfect architectural geometry
+- ALL vertical lines PERFECTLY STRAIGHT (walls, doorframes, windows)
+- ALL horizontal lines PERFECTLY LEVEL (floors, ceilings, countertops)
+- Correct ALL lens distortion (barrel/pincushion)
+- Fix any keystoning or tilting`,
+
+    privacy: `
+=== ADDON: AUTO PRIVACY PROTECTION ===
+!!!!! ABSOLUTE TOP PRIORITY !!!!!
+1. BLUR ALL LICENSE PLATES COMPLETELY
+   - Find EVERY license plate in the image
+   - Apply STRONG HEAVY BLUR (20+ pixels)
+   - The text must be 100% UNREADABLE
+   - This is MANDATORY and CRITICAL
+
+2. BLUR ALL FACES IN PHOTOS/FRAMES
+   - Any photos on walls showing faces - blur them
+   - Any people visible - blur their faces
+   - Apply STRONG HEAVY BLUR (20+ pixels)
+   - The face must be 100% UNREADABLE
+   - This is MANDATORY and CRITICAL
+
+3. BLUR PERSONAL DOCUMENTS
+   - Any visible mail, documents, screens with text
+   - Apply STRONG HEAVY BLUR (20+ pixels)`
+}
+
+// Function to build a layered prompt based on base mode and selected addons
+export function buildLayeredPrompt(baseMode: EnhanceMode, addons: EnhanceAddon[] = []): string {
+    // Get the base prompt
+    let prompt = MODE_PROMPTS[baseMode] || MODE_PROMPTS.full
+
+    // If there are addons, append them with clear separation
+    if (addons && addons.length > 0) {
+        prompt += '\n\n' + '='.repeat(20) + ' REQUESTED ADD-ON FEATURES ' + '='.repeat(20)
+
+        // Add specific instructions for each selected addon
+        // Sort to ensure consistent order if needed, or just iterate
+        for (const addon of addons) {
+            if (ADDON_PROMPTS[addon]) {
+                prompt += '\n' + ADDON_PROMPTS[addon]
+            }
+        }
+
+        // Add critical rules for valid composition
+        prompt += `\n\n=== CRITICAL RULES ===
+- DO NOT add fake outdoor elements (trees, fences, buildings) unless Sky Replace is explicitly requested
+- Windows show only authentic sky (unless Sky Replace is requested)
+- MAINTAIN THE EXACT ASPECT RATIO AND COMPOSITION OF THE ORIGINAL IMAGE
+- DO NOT CROP OR RESIZE
+- Keep the result natural and photorealistic
+
+Output a professional real estate magazine quality image.`
+    }
+
+    return prompt
+}
+
 // Legacy function for backwards compatibility
 export async function enhanceImage(imageBase64: string, mimeType: string = 'image/jpeg'): Promise<string> {
     return enhanceImageWithMode(imageBase64, 'full', mimeType)
@@ -228,11 +318,13 @@ export async function enhanceImage(imageBase64: string, mimeType: string = 'imag
 export async function enhanceImageWithMode(
     imageBase64: string,
     mode: EnhanceMode = 'full',
-    mimeType: string = 'image/jpeg'
+    mimeType: string = 'image/jpeg',
+    addons: EnhanceAddon[] = []
 ): Promise<string> {
     try {
         const client = getClient()
-        const prompt = MODE_PROMPTS[mode] || MODE_PROMPTS.full
+        // Build prompt using the improved layering system
+        const prompt = buildLayeredPrompt(mode, addons)
 
         const response = await client.models.generateContent({
             model: 'gemini-3-pro-image-preview',
@@ -261,7 +353,7 @@ export async function enhanceImageWithMode(
         })
 
         // Debug logging
-        console.log(`Gemini Enhance (${mode}) API Response:`, JSON.stringify(response, null, 2))
+        console.log(`Gemini Enhance (${mode}) with Addons (${addons.join(',')}) API Response:`, JSON.stringify(response, null, 2))
 
         // Extract image from response
         const candidate = response.candidates?.[0]

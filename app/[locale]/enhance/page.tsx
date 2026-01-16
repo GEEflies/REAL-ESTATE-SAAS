@@ -19,6 +19,7 @@ type ProcessingState = 'idle' | 'processing' | 'done' | 'error'
 
 // Enhancement modes
 type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color' | 'coming_soon'
+type EnhanceAddon = 'window' | 'sky' | 'white_balance' | 'perspective' | 'privacy'
 
 interface ModeOption {
     id: EnhanceMode
@@ -39,6 +40,7 @@ export default function EnhancePage() {
     const [upscaledImage, setUpscaledImage] = useState<string | null>(null)
     const [processingState, setProcessingState] = useState<ProcessingState>('idle')
     const [selectedMode, setSelectedMode] = useState<EnhanceMode>('hdr')
+    const [selectedAddons, setSelectedAddons] = useState<EnhanceAddon[]>([])
 
     // Gate States
     const [emailGateOpen, setEmailGateOpen] = useState(false)
@@ -54,6 +56,7 @@ export default function EnhancePage() {
                 localStorage.setItem('aurix_enhance_state', JSON.stringify({
                     originalImage,
                     selectedMode,
+                    selectedAddons,
                     timestamp: Date.now(),
                 }))
             } catch (e) {
@@ -76,11 +79,12 @@ export default function EnhancePage() {
             try {
                 const savedState = localStorage.getItem('aurix_enhance_state')
                 if (savedState) {
-                    const { originalImage: savedImage, selectedMode: savedMode, timestamp } = JSON.parse(savedState)
+                    const { originalImage: savedImage, selectedMode: savedMode, selectedAddons: savedAddons, timestamp } = JSON.parse(savedState)
                     // Only restore if saved within last 30 minutes
                     if (timestamp && Date.now() - timestamp < 30 * 60 * 1000) {
                         if (savedImage) setOriginalImage(savedImage)
                         if (savedMode) setSelectedMode(savedMode)
+                        if (savedAddons) setSelectedAddons(savedAddons)
                     }
                     // Clean up localStorage after restoring
                     localStorage.removeItem('aurix_enhance_state')
@@ -113,20 +117,19 @@ export default function EnhancePage() {
     }
 
     const ENHANCE_MODES: ModeOption[] = [
-        // HIDDEN FEATURES - Commented out for MVP launch
-        // { id: 'full', icon: Sparkles, label: t('modes.full.label'), description: t('modes.full.description'), bgGradient: 'from-purple-50 to-indigo-50', borderColor: 'border-purple-200' },
+        // Base Mode (Fix Everything)
         { id: 'hdr', icon: Layers, label: t('modes.hdr.label'), description: t('modes.hdr.description'), bgGradient: 'from-amber-50 to-orange-50', borderColor: 'border-amber-100' },
-        { id: 'window', icon: AppWindow, label: t('modes.window.label'), description: t('modes.window.description'), bgGradient: 'from-sky-50 to-blue-50', borderColor: 'border-sky-100' },
-        { id: 'sky', icon: CloudSun, label: t('modes.sky.label'), description: t('modes.sky.description'), bgGradient: 'from-cyan-50 to-sky-50', borderColor: 'border-cyan-100' },
-        { id: 'white_balance', icon: Scale, label: t('modes.white_balance.label'), description: t('modes.white_balance.description'), bgGradient: 'from-gray-50 to-slate-50', borderColor: 'border-gray-100' },
-        { id: 'perspective', icon: Ruler, label: t('modes.perspective.label'), description: t('modes.perspective.description'), bgGradient: 'from-indigo-50 to-purple-50', borderColor: 'border-indigo-100' },
-        // { id: 'relighting', icon: Lightbulb, label: t('modes.relighting.label'), description: t('modes.relighting.description'), bgGradient: 'from-yellow-50 to-amber-50', borderColor: 'border-yellow-100' },
-        // { id: 'raw_quality', icon: Camera, label: t('modes.raw_quality.label'), description: t('modes.raw_quality.description'), bgGradient: 'from-emerald-50 to-green-50', borderColor: 'border-emerald-100' },
-        { id: 'privacy', icon: Lock, label: t('modes.privacy.label'), description: t('modes.privacy.description'), bgGradient: 'from-rose-50 to-pink-50', borderColor: 'border-rose-100' },
-        // { id: 'color', icon: Palette, label: t('modes.color.label'), description: t('modes.color.description'), bgGradient: 'from-violet-50 to-purple-50', borderColor: 'border-violet-100' },
-        // Coming Soon placeholder
+        // Future Placeholders
         { id: 'coming_soon' as EnhanceMode, icon: Sparkles, label: t('modes.coming_soon.label'), description: t('modes.coming_soon.description'), bgGradient: 'from-gray-50 to-gray-100', borderColor: 'border-gray-200' },
     ]
+
+    const handleToggleAddon = (addon: EnhanceAddon) => {
+        setSelectedAddons(prev =>
+            prev.includes(addon)
+                ? prev.filter(a => a !== addon)
+                : [...prev, addon]
+        )
+    }
 
     const handleImageSelect = async (file: File, preview: string) => {
         setOriginalImage(preview)
@@ -167,6 +170,7 @@ export default function EnhancePage() {
                     image: base64,
                     mimeType: mimeType,
                     mode: selectedMode,
+                    addons: selectedAddons,
                 }),
             })
 
@@ -298,7 +302,8 @@ export default function EnhancePage() {
         setEnhancedImage(null)
         setUpscaledImage(null)
         setProcessingState('idle')
-        setSelectedMode('full')
+        setSelectedMode('hdr')
+        setSelectedAddons([])
     }
 
     const selectedModeInfo = ENHANCE_MODES.find(m => m.id === selectedMode)
@@ -326,6 +331,8 @@ export default function EnhancePage() {
                 <EnhanceModeSelector
                     selectedMode={selectedMode}
                     onSelectMode={setSelectedMode}
+                    selectedAddons={selectedAddons}
+                    onToggleAddon={handleToggleAddon}
                     modes={ENHANCE_MODES}
                     disabled={processingState === 'processing'}
                     modeTitle={t('modeTitle')}

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     try {
         // Parse request body
         const body = await request.json()
-        const { image, mimeType, mode } = body
+        const { image, mimeType, mode, addons } = body
 
         if (!image) {
             return NextResponse.json(
@@ -104,8 +104,9 @@ export async function POST(request: NextRequest) {
 
         // Process image with Gemini using specified mode (defaults to 'full')
         const enhanceMode: EnhanceMode = mode || 'full'
-        console.log('🎨 [API] Starting Gemini enhancement with mode:', enhanceMode)
-        const enhancedBase64 = await enhanceImageWithMode(image, enhanceMode, mimeType || 'image/jpeg')
+        const selectedAddons: any[] = addons || []
+        console.log(`🎨 [API] Starting Gemini enhancement with mode: ${enhanceMode}, addons: ${selectedAddons.length}`)
+        const enhancedBase64 = await enhanceImageWithMode(image, enhanceMode, mimeType || 'image/jpeg', selectedAddons)
         console.log('✅ [API] Gemini enhancement complete, image size:', enhancedBase64.length, 'bytes')
 
         // Step 2: Upscale with Replicate (Real-ESRGAN) to 4K

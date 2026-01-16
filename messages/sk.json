@@ -186,6 +186,9 @@
         "subtitle": "Vyberte režim vylepšenia nižšie a potom nahrajte svoj obrázok.",
         "modeTitle": "Vyberte režim vylepšenia",
         "selected": "Vybrané",
+        "addons": {
+            "title": "Voliteľné vylepšenia"
+        },
         "modes": {
             "full": {
                 "label": "Kompletné Vylepšenie",

@@ -17,6 +17,7 @@ import { createClient } from '@supabase/supabase-js'
 import { EnhanceModeSelector } from '@/components/EnhanceModeSelector'
 
 type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color' | 'coming_soon'
+type EnhanceAddon = 'window' | 'sky' | 'white_balance' | 'perspective' | 'privacy'
 
 interface ModeOption {
     id: EnhanceMode
@@ -41,6 +42,7 @@ export default function DashboardEnhancePage() {
     const [queue, setQueue] = useState<QueueItem[]>([])
     const [isProcessing, setIsProcessing] = useState(false)
     const [selectedMode, setSelectedMode] = useState<EnhanceMode>('hdr')
+    const [selectedAddons, setSelectedAddons] = useState<EnhanceAddon[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
 
     // Supabase client for insert (History logic)
@@ -88,20 +90,19 @@ export default function DashboardEnhancePage() {
 
 
     const ENHANCE_MODES: ModeOption[] = [
-        // HIDDEN FEATURES - Commented out for MVP launch
-        // { id: 'full', icon: Sparkles, label: t('modes.full.label'), description: t('modes.full.description') },
+        // Base Mode (Fix Everything)
         { id: 'hdr', icon: Layers, label: t('modes.hdr.label'), description: t('modes.hdr.description') },
-        { id: 'window', icon: AppWindow, label: t('modes.window.label'), description: t('modes.window.description') },
-        { id: 'sky', icon: CloudSun, label: t('modes.sky.label'), description: t('modes.sky.description') },
-        { id: 'white_balance', icon: Scale, label: t('modes.white_balance.label'), description: t('modes.white_balance.description') },
-        { id: 'perspective', icon: Ruler, label: t('modes.perspective.label'), description: t('modes.perspective.description') },
-        // { id: 'relighting', icon: Lightbulb, label: t('modes.relighting.label'), description: t('modes.relighting.description') },
-        // { id: 'raw_quality', icon: Camera, label: t('modes.raw_quality.label'), description: t('modes.raw_quality.description') },
-        { id: 'privacy', icon: Lock, label: t('modes.privacy.label'), description: t('modes.privacy.description') },
-        // { id: 'color', icon: Palette, label: t('modes.color.label'), description: t('modes.color.description') },
-        // Coming Soon placeholder
+        // Future Placeholders
         { id: 'coming_soon' as EnhanceMode, icon: Sparkles, label: t('modes.coming_soon.label'), description: t('modes.coming_soon.description') },
     ]
+
+    const handleToggleAddon = (addon: EnhanceAddon) => {
+        setSelectedAddons(prev =>
+            prev.includes(addon)
+                ? prev.filter(a => a !== addon)
+                : [...prev, addon]
+        )
+    }
 
     const handleImagesSelect = async (files: File[]) => {
         if (queue.length + files.length > 20) {
@@ -163,6 +164,7 @@ export default function DashboardEnhancePage() {
                         image: base64,
                         mimeType: mimeType,
                         mode: selectedMode,
+                        addons: selectedAddons,
                     }),
                 })
 
@@ -247,6 +249,8 @@ export default function DashboardEnhancePage() {
             <EnhanceModeSelector
                 selectedMode={selectedMode}
                 onSelectMode={setSelectedMode}
+                selectedAddons={selectedAddons}
+                onToggleAddon={handleToggleAddon}
                 modes={ENHANCE_MODES}
                 disabled={isProcessing || queue.some(i => i.status !== 'pending')}
                 modeTitle={t('modeTitle')}

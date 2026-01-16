@@ -95,6 +95,9 @@
         "subtitle": "Select an enhancement mode below, then upload your image.",
         "modeTitle": "Choose Enhancement Mode",
         "selected": "Selected",
+        "addons": {
+            "title": "Optional Add-on Features"
+        },
         "modes": {
             "full": {
                 "label": "Full Enhance",
