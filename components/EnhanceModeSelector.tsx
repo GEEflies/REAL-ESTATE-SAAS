@@ -5,7 +5,7 @@ import { Check, ChevronDown, X } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 
-type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color'
+type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color' | 'coming_soon'
 
 interface ModeOption {
     id: EnhanceMode
@@ -113,12 +113,15 @@ export function EnhanceModeSelector({
                                     {modes.map((mode) => (
                                         <button
                                             key={mode.id}
-                                            onClick={() => handleModeSelect(mode.id)}
+                                            onClick={() => mode.id !== 'coming_soon' && handleModeSelect(mode.id)}
+                                            disabled={mode.id === 'coming_soon'}
                                             className={cn(
-                                                "w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all cursor-pointer",
-                                                selectedMode === mode.id
-                                                    ? "bg-blue-50 border-2 border-blue-500"
-                                                    : "hover:bg-gray-50 border-2 border-transparent"
+                                                "w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all",
+                                                mode.id === 'coming_soon'
+                                                    ? "opacity-50 cursor-not-allowed bg-gray-50 border-2 border-dashed border-gray-200"
+                                                    : selectedMode === mode.id
+                                                        ? "bg-blue-50 border-2 border-blue-500 cursor-pointer"
+                                                        : "hover:bg-gray-50 border-2 border-transparent cursor-pointer"
                                             )}
                                         >
                                             <div className={cn(
@@ -205,12 +208,15 @@ export function EnhanceModeSelector({
                                         {modes.map((mode) => (
                                             <button
                                                 key={mode.id}
-                                                onClick={() => handleModeSelect(mode.id)}
+                                                onClick={() => mode.id !== 'coming_soon' && handleModeSelect(mode.id)}
+                                                disabled={mode.id === 'coming_soon'}
                                                 className={cn(
-                                                    "w-full flex items-center justify-between p-4 rounded-xl mb-1 text-left transition-all cursor-pointer",
-                                                    selectedMode === mode.id
-                                                        ? "bg-blue-50 border-2 border-blue-500 shadow-sm"
-                                                        : "hover:bg-gray-50 border-2 border-transparent"
+                                                    "w-full flex items-center justify-between p-4 rounded-xl mb-1 text-left transition-all",
+                                                    mode.id === 'coming_soon'
+                                                        ? "opacity-50 cursor-not-allowed bg-gray-50 border-2 border-dashed border-gray-200"
+                                                        : selectedMode === mode.id
+                                                            ? "bg-blue-50 border-2 border-blue-500 shadow-sm cursor-pointer"
+                                                            : "hover:bg-gray-50 border-2 border-transparent cursor-pointer"
                                                 )}
                                             >
                                                 <div className="flex items-center gap-3">

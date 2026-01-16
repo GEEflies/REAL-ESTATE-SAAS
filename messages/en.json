@@ -135,6 +135,10 @@
             "color": {
                 "label": "Color Fix",
                 "description": "Make colors pop and look more vibrant and appealing"
+            },
+            "coming_soon": {
+                "label": "More Coming Soon",
+                "description": "Additional features will be added in the future"
             }
         },
         "geminiCard": {

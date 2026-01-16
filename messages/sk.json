@@ -226,6 +226,10 @@
             "color": {
                 "label": "Oprava Farieb",
                 "description": "Zvýrazní farby pre živší a príťažlivejší vzhľad"
+            },
+            "coming_soon": {
+                "label": "Ďalšie funkcie čoskoro",
+                "description": "Ďalšie funkcie budú pridané v budúcnosti"
             }
         },
         "geminiCard": {

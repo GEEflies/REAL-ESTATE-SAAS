@@ -40,26 +40,27 @@ export default function HomePage() {
       before: '/landing/perspective correction/prsp-before.jpeg',
       after: '/landing/perspective correction/prsp-after.jpeg',
     },
-    {
-      key: 'relighting',
-      before: '/landing/relighting/religh-before.jpg',
-      after: '/landing/relighting/religh-after.jpg',
-    },
-    {
-      key: 'raw',
-      before: '/landing/raw/raw-before.jpg',
-      after: '/landing/raw/raw-after.jpg',
-    },
+    // HIDDEN FEATURES - Commented out for MVP launch, will be enabled later
+    // {
+    //   key: 'relighting',
+    //   before: '/landing/relighting/religh-before.jpg',
+    //   after: '/landing/relighting/religh-after.jpg',
+    // },
+    // {
+    //   key: 'raw',
+    //   before: '/landing/raw/raw-before.jpg',
+    //   after: '/landing/raw/raw-after.jpg',
+    // },
     {
       key: 'privacy',
       before: '/landing/privacy/privacy-before.jpeg',
       after: '/landing/privacy/privacy-after.jpeg',
     },
-    {
-      key: 'colorCorrection',
-      before: '/landing/color correction/cc-before.jpg',
-      after: '/landing/color correction/cc-after.jpg',
-    },
+    // {
+    //   key: 'colorCorrection',
+    //   before: '/landing/color correction/cc-before.jpg',
+    //   after: '/landing/color correction/cc-after.jpg',
+    // },
   ]
 
   // Custom smooth scroll for mobile performance

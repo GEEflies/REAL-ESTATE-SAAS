@@ -16,7 +16,7 @@ import { PaywallGate } from '@/components/PaywallGate'
 import { createClient } from '@supabase/supabase-js'
 import { EnhanceModeSelector } from '@/components/EnhanceModeSelector'
 
-type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color'
+type EnhanceMode = 'full' | 'hdr' | 'window' | 'sky' | 'white_balance' | 'perspective' | 'relighting' | 'raw_quality' | 'privacy' | 'color' | 'coming_soon'
 
 interface ModeOption {
     id: EnhanceMode
@@ -40,7 +40,7 @@ export default function DashboardEnhancePage() {
 
     const [queue, setQueue] = useState<QueueItem[]>([])
     const [isProcessing, setIsProcessing] = useState(false)
-    const [selectedMode, setSelectedMode] = useState<EnhanceMode>('full')
+    const [selectedMode, setSelectedMode] = useState<EnhanceMode>('hdr')
     const [isLoaded, setIsLoaded] = useState(false)
 
     // Supabase client for insert (History logic)
@@ -88,16 +88,19 @@ export default function DashboardEnhancePage() {
 
 
     const ENHANCE_MODES: ModeOption[] = [
-        { id: 'full', icon: Sparkles, label: t('modes.full.label'), description: t('modes.full.description') },
+        // HIDDEN FEATURES - Commented out for MVP launch
+        // { id: 'full', icon: Sparkles, label: t('modes.full.label'), description: t('modes.full.description') },
         { id: 'hdr', icon: Layers, label: t('modes.hdr.label'), description: t('modes.hdr.description') },
         { id: 'window', icon: AppWindow, label: t('modes.window.label'), description: t('modes.window.description') },
         { id: 'sky', icon: CloudSun, label: t('modes.sky.label'), description: t('modes.sky.description') },
         { id: 'white_balance', icon: Scale, label: t('modes.white_balance.label'), description: t('modes.white_balance.description') },
         { id: 'perspective', icon: Ruler, label: t('modes.perspective.label'), description: t('modes.perspective.description') },
-        { id: 'relighting', icon: Lightbulb, label: t('modes.relighting.label'), description: t('modes.relighting.description') },
-        { id: 'raw_quality', icon: Camera, label: t('modes.raw_quality.label'), description: t('modes.raw_quality.description') },
+        // { id: 'relighting', icon: Lightbulb, label: t('modes.relighting.label'), description: t('modes.relighting.description') },
+        // { id: 'raw_quality', icon: Camera, label: t('modes.raw_quality.label'), description: t('modes.raw_quality.description') },
         { id: 'privacy', icon: Lock, label: t('modes.privacy.label'), description: t('modes.privacy.description') },
-        { id: 'color', icon: Palette, label: t('modes.color.label'), description: t('modes.color.description') },
+        // { id: 'color', icon: Palette, label: t('modes.color.label'), description: t('modes.color.description') },
+        // Coming Soon placeholder
+        { id: 'coming_soon' as EnhanceMode, icon: Sparkles, label: t('modes.coming_soon.label'), description: t('modes.coming_soon.description') },
     ]
 
     const handleImagesSelect = async (files: File[]) => {
