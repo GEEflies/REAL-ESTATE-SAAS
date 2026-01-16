@@ -267,15 +267,37 @@ export async function POST(request: NextRequest) {
                     }
                 } else {
                     // Regular subscription checkout
+                    const tier = session.metadata?.tier || 'starter'
+                    const tierName = session.metadata?.tierName || 'Starter'
+                    const imagesQuota = parseInt(session.metadata?.imagesQuota || '50')
+
                     await supabaseAdmin
                         .from('users')
                         .update({
                             stripe_customer_id: session.customer as string,
                             stripe_subscription_id: session.subscription as string,
                             subscription_status: 'active',
-                            payment_status: 'paid'
+                            payment_status: 'paid',
+                            tier: tier,
+                            tier_name: tierName,
+                            images_quota: imagesQuota,
+                            // Don't reset images_used here as they might upgrade mid-month? 
+                            // Actually usually good to reset or keep? Let's keep usage to be safe, 
+                            // or maybe they want a full reset on upgrade. 
+                            // For now let's just update the quota.
+                            updated_at: new Date().toISOString()
                         })
                         .eq('id', userId)
+
+                    // Also update auth metadata to stay in sync
+                    await supabaseAdmin.auth.admin.updateUserById(userId, {
+                        user_metadata: {
+                            tier: tier,
+                            tierName: tierName,
+                            imagesQuota: imagesQuota,
+                            subscriptionStatus: 'active'
+                        }
+                    })
                 }
                 break
             }

@@ -19,6 +19,8 @@ interface UserProfile {
     imagesQuota: number
     emailVerified: boolean
     createdAt: string
+    subscriptionStatus: string
+    hasStripeCustomer: boolean
 }
 
 interface SubscriptionInfo {
@@ -27,6 +29,7 @@ interface SubscriptionInfo {
     imagesUsed: number
     imagesQuota: number
     renewsAt: string | null
+    hasStripeCustomer: boolean
 }
 
 export default function DashboardSettingsPage() {
@@ -67,12 +70,15 @@ export default function DashboardSettingsPage() {
                 const userData = await userResponse.json()
                 setUser(userData)
                 setEmail(userData.email)
+                setUser(userData)
+                setEmail(userData.email)
                 setSubscription({
                     plan: userData.tierName,
-                    status: 'active',
+                    status: userData.subscriptionStatus || 'active',
                     imagesUsed: userData.imagesUsed,
                     imagesQuota: userData.imagesQuota,
                     renewsAt: null,
+                    hasStripeCustomer: userData.hasStripeCustomer,
                 })
             }
         } catch (error) {
@@ -131,7 +137,8 @@ export default function DashboardSettingsPage() {
 
     const handleManageSubscription = async () => {
         // Check if user has a Stripe subscription first
-        if (!user || user.tier === 'starter' || user.tier === 'free') {
+        // Allow if they have a stripe customer ID, even if tier is starter/free (to fix the stuck state)
+        if (!user || (!user.hasStripeCustomer && (user.tier === 'starter' || user.tier === 'free'))) {
             toast.info(t('subscription.portal.noSubscription'))
             return
         }
@@ -335,8 +342,8 @@ export default function DashboardSettingsPage() {
                                         {t('subscription.current.label')}
                                     </p>
                                     <h3 className="text-2xl lg:text-3xl font-bold tracking-tight">{subscription?.plan || 'Starter'}</h3>
-                                    <div className="mt-2 inline-flex px-2.5 py-1 rounded-md bg-white/20 text-xs font-medium border border-white/20">
-                                        Active
+                                    <div className="mt-2 inline-flex px-2.5 py-1 rounded-md bg-white/20 text-xs font-medium border border-white/20 capitalize">
+                                        {subscription?.status || 'Active'}
                                     </div>
                                 </div>
                                 <div className="flex flex-col sm:flex-row gap-3">

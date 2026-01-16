@@ -85,6 +85,8 @@ export async function GET(request: NextRequest) {
         const tierName = userData?.tier_name || supabaseUser.user_metadata?.tierName || 'Starter'
         const imagesQuota = userData?.images_quota || supabaseUser.user_metadata?.imagesQuota || 50
         const imagesUsed = userData?.images_used || supabaseUser.user_metadata?.imagesUsed || 0
+        const subscriptionStatus = userData?.subscription_status || supabaseUser.user_metadata?.subscriptionStatus || 'active'
+        const hasStripeCustomer = !!(userData?.stripe_customer_id)
 
         return NextResponse.json({
             id: supabaseUser.id,
@@ -94,6 +96,8 @@ export async function GET(request: NextRequest) {
             tierName: tierName,
             imagesUsed: imagesUsed,
             imagesQuota: imagesQuota,
+            subscriptionStatus: subscriptionStatus,
+            hasStripeCustomer: hasStripeCustomer,
             createdAt: supabaseUser.created_at,
         })
     } catch (error) {
