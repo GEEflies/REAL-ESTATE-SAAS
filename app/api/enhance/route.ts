@@ -125,10 +125,25 @@ export async function POST(request: NextRequest) {
 
         // Increment usage count based on user type
         if (userId) {
-            // Call RPC to increment user usage
-            const { error } = await supabaseAdmin.rpc('increment_image_usage', { user_id: userId })
-            if (error) {
-                console.error('Failed to increment user usage via RPC:', error)
+            // DIRECT DB UPDATE (RPC was missing)
+            // Get current usage first
+            const { data: currentUser, error: fetchError } = await supabaseAdmin
+                .from('users')
+                .select('images_used')
+                .eq('id', userId)
+                .single()
+
+            if (!fetchError && currentUser) {
+                const { error } = await supabaseAdmin
+                    .from('users')
+                    .update({ images_used: currentUser.images_used + 1 })
+                    .eq('id', userId)
+
+                if (error) {
+                    console.error('Failed to increment user usage:', error)
+                } else {
+                    console.log(`✅ [API] Incremented usage for user ${userId} to ${currentUser.images_used + 1}`)
+                }
             }
 
             // Report usage to Stripe if pay-per-image is enabled

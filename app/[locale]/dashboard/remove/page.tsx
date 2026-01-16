@@ -274,7 +274,7 @@ export default function DashboardRemovePage() {
 
                     </div>
 
-                    <div className="flex justify-end gap-4 sticky bottom-6 ml-auto w-fit bg-white/80 p-4 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 z-40">
+                    <div className="flex justify-end gap-4 sticky bottom-6 ml-auto w-fit z-40">
                         <Button
                             onClick={processQueue}
                             disabled={isProcessing || queue.filter(i => i.status === 'pending').length === 0 || !prompt.trim()}

@@ -38,10 +38,39 @@ export async function POST(request: NextRequest) {
 
         const priceId = STRIPE_PRICE_IDS[tier]
 
-        // For now, we don't require authentication to start checkout
-        // User will sign up after successful payment
-        // In production, you might want to require auth or use customer email
-        const userId = 'pending' // Will be set after signup
+        // Authenticate user
+        let userId = 'pending'
+
+        // Check for authenticated user via Supabase
+        const authHeader = request.headers.get('authorization')
+        if (authHeader?.startsWith('Bearer ')) {
+            const token = authHeader.substring(7)
+
+            // Import Supabase client dynamically to avoid circular deps if any, 
+            // or just use what we have available. We need admin checking? 
+            // Actually usually we just verify the JWT on the server.
+
+            // Let's use the createClient pattern we see in other files
+            const { createClient } = await import('@supabase/supabase-js')
+            const supabase = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.SUPABASE_SERVICE_ROLE_KEY!,
+                { auth: { autoRefreshToken: false, persistSession: false } }
+            )
+
+            const { data: { user }, error } = await supabase.auth.getUser(token)
+            if (!error && user) {
+                userId = user.id
+                console.log(`✅ [Checkout] Authenticated user: ${userId}`)
+            } else {
+                console.warn('⚠️ [Checkout] Token provided but auth failed:', error?.message)
+            }
+        } else {
+            // Attempt to get session from cookie if no header (fallback)
+            // But usually client should send it.
+            console.log('ℹ️ [Checkout] No Bearer token, userId defaulting to pending')
+        }
+
 
         // Create real Stripe checkout session
         const session = await createCheckoutSession(

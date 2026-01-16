@@ -137,11 +137,11 @@ export function BeforeAfter({
 
             {/* Watermark Overlay */}
             {watermark && (
-                <div className="absolute bottom-4 right-4 z-20 pointer-events-none opacity-40">
+                <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 z-20 pointer-events-none opacity-60 w-[15%] md:w-[10%] max-w-[120px] flex justify-end">
                     <img
                         src="/aurix-logo.png"
                         alt="Aurix"
-                        className="w-[15%] md:w-[10%] max-w-[120px] h-auto object-contain"
+                        className="w-full h-auto object-contain object-right"
                     />
                 </div>
             )}
