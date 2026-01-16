@@ -127,6 +127,9 @@ export default function DashboardRemovePage() {
             setProcessedImage(data.result)
             setProcessingState('done')
             toast.success('Object removed successfully!')
+
+            // Notify dashboard to refresh user quota
+            window.dispatchEvent(new Event('quotaUpdated'))
         } catch (error) {
             console.error('Remove error:', error)
             setProcessingState('error')

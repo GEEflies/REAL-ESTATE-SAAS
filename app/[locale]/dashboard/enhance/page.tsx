@@ -188,6 +188,9 @@ export default function DashboardEnhancePage() {
 
                 setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'completed', enhancedUrl } : i))
 
+                // Notify dashboard to refresh user quota
+                window.dispatchEvent(new Event('quotaUpdated'))
+
             } catch (error) {
                 console.error(error)
                 setQueue(prev => prev.map(i => i.id === id ? { ...i, status: 'error', error: 'Failed' } : i))

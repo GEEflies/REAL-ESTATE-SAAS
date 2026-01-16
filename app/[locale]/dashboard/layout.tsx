@@ -135,8 +135,31 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         }
     }
 
+    // Refresh user data (can be called after quota updates)
+    const refreshUserData = async () => {
+        try {
+            const response = await fetch('/api/user/me')
+            if (response.ok) {
+                const userData = await response.json()
+                setUser(userData)
+                console.log('✅ User data refreshed:', userData.imagesUsed, '/', userData.imagesQuota)
+            }
+        } catch (error) {
+            console.error('Failed to refresh user data:', error)
+        }
+    }
+
     useEffect(() => {
         checkAuth()
+
+        // Listen for quota update events from enhance/remove pages
+        const handleQuotaUpdate = () => {
+            console.log('📊 Quota update event detected, refreshing user data...')
+            refreshUserData()
+        }
+
+        window.addEventListener('quotaUpdated', handleQuotaUpdate)
+        return () => window.removeEventListener('quotaUpdated', handleQuotaUpdate)
     }, [])
 
     const handleLogout = async () => {
