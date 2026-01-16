@@ -327,16 +327,7 @@ export default function EnhancePage() {
                     </p>
                 </div>
 
-                {/* Mode Selection */}
-                <EnhanceModeSelector
-                    selectedMode={selectedMode}
-                    onSelectMode={setSelectedMode}
-                    selectedAddons={selectedAddons}
-                    onToggleAddon={handleToggleAddon}
-                    modes={ENHANCE_MODES}
-                    disabled={processingState === 'processing'}
-                    modeTitle={t('modeTitle')}
-                />
+
 
 
                 {/* Main Content */}
@@ -465,6 +456,17 @@ export default function EnhancePage() {
                         )}
                     </AnimatePresence>
                 </div>
+
+                {/* Mode Selection */}
+                <EnhanceModeSelector
+                    selectedMode={selectedMode}
+                    onSelectMode={setSelectedMode}
+                    selectedAddons={selectedAddons}
+                    onToggleAddon={handleToggleAddon}
+                    modes={ENHANCE_MODES}
+                    disabled={processingState === 'processing'}
+                    modeTitle={t('modeTitle')}
+                />
             </div>
             <Footer />
         </div>

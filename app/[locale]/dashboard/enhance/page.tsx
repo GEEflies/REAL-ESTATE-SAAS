@@ -221,6 +221,18 @@ export default function DashboardEnhancePage() {
 
     if (!isLoaded) return null
 
+    const SelectorComponent = (
+        <EnhanceModeSelector
+            selectedMode={selectedMode}
+            onSelectMode={setSelectedMode}
+            selectedAddons={selectedAddons}
+            onToggleAddon={handleToggleAddon}
+            modes={ENHANCE_MODES}
+            disabled={isProcessing || queue.some(i => i.status !== 'pending')}
+            modeTitle={t('modeTitle')}
+        />
+    )
+
     return (
         <div className="p-4 lg:p-8">
             <PaywallGate
@@ -245,25 +257,19 @@ export default function DashboardEnhancePage() {
                 </p>
             </div>
 
-            {/* Mode Selection */}
-            <EnhanceModeSelector
-                selectedMode={selectedMode}
-                onSelectMode={setSelectedMode}
-                selectedAddons={selectedAddons}
-                onToggleAddon={handleToggleAddon}
-                modes={ENHANCE_MODES}
-                disabled={isProcessing || queue.some(i => i.status !== 'pending')}
-                modeTitle={t('modeTitle')}
-            />
+
 
             {/* Queue UI */}
             {queue.length === 0 ? (
-                <ImageDropzone
-                    onImagesSelect={handleImagesSelect}
-                    multiple={true}
-                    maxFiles={20}
-                    disabled={isProcessing}
-                />
+                <div className="space-y-8">
+                    <ImageDropzone
+                        onImagesSelect={handleImagesSelect}
+                        multiple={true}
+                        maxFiles={20}
+                        disabled={isProcessing}
+                    />
+                    {SelectorComponent}
+                </div>
             ) : (
                 <div className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -322,6 +328,8 @@ export default function DashboardEnhancePage() {
                             </div>
                         )}
                     </div>
+
+                    {SelectorComponent}
 
                     <div className="flex justify-end gap-4 sticky bottom-6 ml-auto w-fit bg-white/80 p-4 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 z-40">
                         <Button variant="ghost" onClick={clearQueue} disabled={isProcessing} className="w-32">
