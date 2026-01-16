@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { removeObject } from '@/lib/gemini'
 import { db } from '@/lib/supabase'
 import { createClient } from '@supabase/supabase-js'
+import { reportImageUsage } from '@/lib/stripe'
 
 // Server-side Supabase client (Admin)
 const supabaseAdmin = createClient(
@@ -49,23 +50,24 @@ export async function POST(request: NextRequest) {
         }
 
         // Logic branching
+        let userPayPerImageItemId: string | null = null
+
         if (userId) {
             // --- Authenticated User Logic ---
             const { data: userData, error } = await supabaseAdmin
                 .from('users')
-                .select('images_used, images_quota, tier, subscription_status')
+                .select('images_used, images_quota, tier, pay_per_image_enabled, pay_per_image_item_id')
                 .eq('id', userId)
                 .single()
 
             if (userData) {
-                if (userData.subscription_status === 'paused') {
-                    return NextResponse.json(
-                        { message: 'Subscription is paused. Please resume to continue.', error: 'SUBSCRIPTION_PAUSED' },
-                        { status: 403 }
-                    )
+                // Store pay-per-image item ID for usage reporting later
+                if (userData.pay_per_image_enabled && userData.pay_per_image_item_id) {
+                    userPayPerImageItemId = userData.pay_per_image_item_id
                 }
 
-                if (userData.images_used >= userData.images_quota) {
+                // Check quota - but allow if pay-per-image is enabled
+                if (userData.images_used >= userData.images_quota && !userData.pay_per_image_enabled) {
                     return NextResponse.json(
                         { message: 'Quota exceeded. Please upgrade your plan.', error: 'QUOTA_EXCEEDED' },
                         { status: 403 }
@@ -115,6 +117,16 @@ export async function POST(request: NextRequest) {
             const { error } = await supabaseAdmin.rpc('increment_image_usage', { user_id: userId })
             if (error) {
                 console.error('Failed to increment user usage via RPC:', error)
+            }
+
+            // Report usage to Stripe if pay-per-image is enabled
+            if (userPayPerImageItemId) {
+                try {
+                    await reportImageUsage(userPayPerImageItemId, 1)
+                    console.log('📊 [API] Reported usage to Stripe for pay-per-image (remove)')
+                } catch (stripeError) {
+                    console.error('❌ [API] Failed to report usage to Stripe:', stripeError)
+                }
             }
         } else {
             // Call RPC to increment lead usage

@@ -79,3 +79,112 @@ export async function createCheckoutSession(
     return await stripe.checkout.sessions.create(checkoutSession)
 }
 
+// =====================================================
+// PAY-PER-IMAGE METERED BILLING FUNCTIONS
+// =====================================================
+
+/**
+ * Create a metered subscription for pay-per-image billing
+ * Used for existing customers who already have a payment method on file
+ */
+export async function createPayPerImageSubscription(
+    customerId: string,
+    userId: string
+) {
+    const priceId = process.env.STRIPE_PAY_PER_IMAGE_PRICE_ID
+    if (!priceId) {
+        throw new Error('STRIPE_PAY_PER_IMAGE_PRICE_ID not configured')
+    }
+
+    const subscription = await stripe.subscriptions.create({
+        customer: customerId,
+        items: [{ price: priceId }],
+        metadata: {
+            userId,
+            type: 'pay_per_image'
+        },
+    })
+
+    return {
+        subscriptionId: subscription.id,
+        subscriptionItemId: subscription.items.data[0].id,
+    }
+}
+
+/**
+ * Create a checkout session for pay-per-image (for users without payment method)
+ * This collects the card and creates a metered subscription
+ */
+export async function createPayPerImageCheckout(
+    userId: string,
+    returnUrl?: string
+) {
+    const priceId = process.env.STRIPE_PAY_PER_IMAGE_PRICE_ID
+    if (!priceId) {
+        throw new Error('STRIPE_PAY_PER_IMAGE_PRICE_ID not configured')
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.aurix.pics'
+    const cancelUrl = returnUrl || `${baseUrl}/#pricing`
+
+    const session = await stripe.checkout.sessions.create({
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        line_items: [
+            {
+                price: priceId,
+                // No quantity for metered billing
+            },
+        ],
+        metadata: {
+            userId,
+            type: 'pay_per_image',
+        },
+        subscription_data: {
+            metadata: {
+                userId,
+                type: 'pay_per_image',
+            },
+        },
+        success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&type=pay_per_image`,
+        cancel_url: cancelUrl,
+    })
+
+    return session
+}
+
+/**
+ * Report image usage to Stripe for metered billing
+ * Call this after each successful image enhancement
+ */
+export async function reportImageUsage(
+    subscriptionItemId: string,
+    quantity: number = 1
+) {
+    // Using raw API request for compatibility with newer Stripe API versions
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const stripeAny = stripe as any
+    return await stripeAny.subscriptionItems.createUsageRecord(
+        subscriptionItemId,
+        {
+            quantity,
+            timestamp: Math.floor(Date.now() / 1000),
+            action: 'increment',
+        }
+    )
+}
+
+/**
+ * Get current usage for a subscription item
+ */
+export async function getSubscriptionUsage(subscriptionItemId: string) {
+    // Using raw API request for compatibility with newer Stripe API versions
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const stripeAny = stripe as any
+    const summaries = await stripeAny.subscriptionItems.listUsageRecordSummaries(
+        subscriptionItemId,
+        { limit: 1 }
+    )
+    return summaries.data[0]?.total_usage || 0
+}
+

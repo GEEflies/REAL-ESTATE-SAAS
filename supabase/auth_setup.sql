@@ -96,3 +96,16 @@ CREATE INDEX IF NOT EXISTS idx_users_stripe_customer_id ON public.users(stripe_c
 -- =====================================================
 -- DONE! Your authentication system is ready.
 -- =====================================================
+
+-- =====================================================
+-- PAY-PER-IMAGE METERED BILLING COLUMNS
+-- Run this migration to add pay-per-image support
+-- =====================================================
+
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS pay_per_image_enabled BOOLEAN DEFAULT FALSE;
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS pay_per_image_subscription_id TEXT;
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS pay_per_image_item_id TEXT;
+
+-- Index for faster lookups
+CREATE INDEX IF NOT EXISTS idx_users_pay_per_image ON public.users(pay_per_image_enabled) WHERE pay_per_image_enabled = TRUE;
+

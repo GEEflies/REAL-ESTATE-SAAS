@@ -156,39 +156,49 @@ export async function POST(request: NextRequest) {
                 const subscription = event.data.object as Stripe.Subscription
                 const userId = await getUserId(subscription.customer as string, subscription.id)
 
-                if (userId) {
-                    console.log(`Downgrading user ${userId} to Starter (Subscription Deleted)`)
+                if (!userId) break
 
-                    // Downgrade to starter
-                    // NOTE: 'starter' seems to be the free tier in this app context based on previous code
-                    // or is 'free' the free tier?
-                    // Looking at schema: tier enum has FREE, STARTER, PRO...
-                    // Previous code used 'starter' for 50 images quota?
-                    // Let's use 'free' for cancellation.
+                // Check if this was a pay-per-image subscription
+                if (subscription.metadata?.type === 'pay_per_image') {
+                    console.log(`[Webhook] Pay-per-image subscription canceled for user ${userId}`)
 
-                    const { error } = await supabaseAdmin
+                    await supabaseAdmin
                         .from('users')
                         .update({
-                            tier: 'free',
-                            tier_name: 'Free',
-                            images_quota: 3, // Free tier quota
-                            subscription_status: 'canceled',
+                            pay_per_image_enabled: false,
+                            pay_per_image_subscription_id: null,
+                            pay_per_image_item_id: null,
                             updated_at: new Date().toISOString()
                         })
                         .eq('id', userId)
-
-                    // Also update auth metadata
-                    await supabaseAdmin.auth.admin.updateUserById(userId, {
-                        user_metadata: {
-                            tier: 'free',
-                            tierName: 'Free',
-                            imagesQuota: 3,
-                            subscriptionStatus: 'canceled'
-                        }
-                    })
-
-                    if (error) console.error('Failed to downgrade user:', error)
+                    break
                 }
+
+                // Regular subscription cancellation - downgrade to free
+                console.log(`Downgrading user ${userId} to Free (Subscription Deleted)`)
+
+                const { error } = await supabaseAdmin
+                    .from('users')
+                    .update({
+                        tier: 'free',
+                        tier_name: 'Free',
+                        images_quota: 3, // Free tier quota
+                        subscription_status: 'canceled',
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', userId)
+
+                // Also update auth metadata
+                await supabaseAdmin.auth.admin.updateUserById(userId, {
+                    user_metadata: {
+                        tier: 'free',
+                        tierName: 'Free',
+                        imagesQuota: 3,
+                        subscriptionStatus: 'canceled'
+                    }
+                })
+
+                if (error) console.error('Failed to downgrade user:', error)
                 break
             }
 
@@ -228,10 +238,35 @@ export async function POST(request: NextRequest) {
 
             case 'checkout.session.completed': {
                 const session = event.data.object as Stripe.Checkout.Session
-                // Handled in signup flow usually, but we can capture it here if needed
-                // for existing users upgrading
-                if (session.metadata?.userId) {
-                    const userId = session.metadata.userId
+                const userId = session.metadata?.userId
+
+                if (!userId) break
+
+                // Check if this is a pay-per-image checkout
+                if (session.metadata?.type === 'pay_per_image') {
+                    console.log(`[Webhook] Pay-per-image checkout completed for user ${userId}`)
+
+                    // Get the subscription and subscription item ID
+                    const subscriptionId = session.subscription as string
+                    if (subscriptionId) {
+                        const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+                        const subscriptionItemId = subscription.items.data[0]?.id
+
+                        await supabaseAdmin
+                            .from('users')
+                            .update({
+                                stripe_customer_id: session.customer as string,
+                                pay_per_image_enabled: true,
+                                pay_per_image_subscription_id: subscriptionId,
+                                pay_per_image_item_id: subscriptionItemId,
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', userId)
+
+                        console.log(`[Webhook] Pay-per-image enabled for user ${userId}`)
+                    }
+                } else {
+                    // Regular subscription checkout
                     await supabaseAdmin
                         .from('users')
                         .update({
@@ -242,6 +277,32 @@ export async function POST(request: NextRequest) {
                         })
                         .eq('id', userId)
                 }
+                break
+            }
+
+            // Handle pay-per-image subscription created (for existing customers)
+            case 'customer.subscription.created': {
+                const subscription = event.data.object as Stripe.Subscription
+
+                // Only handle pay-per-image subscriptions
+                if (subscription.metadata?.type !== 'pay_per_image') break
+
+                const userId = subscription.metadata?.userId
+                if (!userId) break
+
+                const subscriptionItemId = subscription.items.data[0]?.id
+
+                await supabaseAdmin
+                    .from('users')
+                    .update({
+                        pay_per_image_enabled: true,
+                        pay_per_image_subscription_id: subscription.id,
+                        pay_per_image_item_id: subscriptionItemId,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', userId)
+
+                console.log(`[Webhook] Pay-per-image subscription created for user ${userId}`)
                 break
             }
         }

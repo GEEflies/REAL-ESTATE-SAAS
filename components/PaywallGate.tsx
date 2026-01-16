@@ -98,26 +98,69 @@ export function PaywallGate({ open, onClose, defaultTab = 'limitedOffer', showOn
                 console.warn('Could not save checkout state:', e)
             }
 
-            const response = await fetch('/api/checkout/stripe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    tier,
-                    returnUrl // Pass the return URL for cancel button
-                }),
-            })
+            // For pay-per-image, use the dedicated endpoint
+            if (tier === 'pay_per_image') {
+                // Get auth token from session storage
+                const tokenData = sessionStorage.getItem('sb-access-token') ||
+                    localStorage.getItem('sb-access-token')
 
-            if (!response.ok) {
-                throw new Error('Failed to create checkout session')
-            }
+                const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+                if (tokenData) {
+                    headers['Authorization'] = `Bearer ${tokenData}`
+                }
 
-            const data = await response.json()
+                const response = await fetch('/api/checkout/pay-per-image', {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ returnUrl }),
+                })
 
-            if (data.url) {
-                // Redirect to Stripe checkout
-                router.push(data.url)
+                if (!response.ok) {
+                    throw new Error('Failed to enable pay-per-image')
+                }
+
+                const data = await response.json()
+
+                if (data.alreadyEnabled) {
+                    toast.success('Pay-per-image is already enabled!')
+                    handleClose()
+                    return
+                }
+
+                if (data.requiresCheckout && data.url) {
+                    // New user - redirect to Stripe checkout
+                    router.push(data.url)
+                } else if (data.success) {
+                    // Existing customer - enabled instantly
+                    toast.success('Pay-per-image enabled! You can now enhance images.')
+                    handleClose()
+                    // Refresh the page to update quota status
+                    router.refresh()
+                    return
+                }
             } else {
-                throw new Error('No checkout URL returned')
+                // Regular subscription checkout
+                const response = await fetch('/api/checkout/stripe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tier,
+                        returnUrl // Pass the return URL for cancel button
+                    }),
+                })
+
+                if (!response.ok) {
+                    throw new Error('Failed to create checkout session')
+                }
+
+                const data = await response.json()
+
+                if (data.url) {
+                    // Redirect to Stripe checkout
+                    router.push(data.url)
+                } else {
+                    throw new Error('No checkout URL returned')
+                }
             }
         } catch (error) {
             console.error('Checkout error:', error)

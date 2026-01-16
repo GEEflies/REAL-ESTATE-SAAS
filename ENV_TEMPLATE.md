@@ -22,6 +22,7 @@ STRIPE_PRO_400_PRICE_ID=price_pro400_id
 STRIPE_PRO_500_PRICE_ID=price_pro500_id
 STRIPE_PRO_1000_PRICE_ID=price_pro1000_id
 STRIPE_SINGLE_PRICE_ID=price_single_id
+STRIPE_PAY_PER_IMAGE_PRICE_ID=price_metered_id  # Metered pricing for pay-per-image
 
 # Database (Optional - for Prisma ORM if using database)
 # DATABASE_URL=postgresql://user:password@localhost:5432/aurix
