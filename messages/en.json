@@ -145,7 +145,7 @@
             }
         },
         "geminiCard": {
-            "title": "AI Enhanced (Gemini)",
+            "title": "AI Enhanced",
             "badge": "Standard Quality",
             "slider": "Slider: Original vs Enhanced",
             "download": "Download Standard Enhanced"
@@ -158,7 +158,7 @@
             "processing": "Processing..."
         },
         "replicateCard": {
-            "title": "4K Upscaled (Replicate)",
+            "title": "4K Upscaled",
             "badge": "Ultra HD",
             "slider": "Slider: Enhanced vs 4K Upscaled",
             "download": "Download 4K Ultra HD Version"

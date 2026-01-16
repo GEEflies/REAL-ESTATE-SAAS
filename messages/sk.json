@@ -236,7 +236,7 @@
             }
         },
         "geminiCard": {
-            "title": "AI Vylepšené (Gemini)",
+            "title": "AI Vylepšené",
             "badge": "Štandardná Kvalita",
             "slider": "Posuvník: Pôvodná vs. Vylepšená",
             "download": "Stiahnuť Štandardnú Verziu"
@@ -249,7 +249,7 @@
             "clearAll": "Vymazať všetko"
         },
         "replicateCard": {
-            "title": "4K Upscaled (Replicate)",
+            "title": "4K Upscaled",
             "badge": "Ultra HD",
             "slider": "Posuvník: Vylepšená vs. 4K Ultra HD",
             "download": "Stiahnuť 4K Ultra HD Verziu"
@@ -302,7 +302,7 @@
         "loading": "Načítavam..."
     },
     "Gates": {
-        "emailTitle": "Dajte nám e-mail, my Vám dáme fotku zdarma",
+        "emailTitle": "Dajte nám e-mail a my Vám dáme fotku zdarma :)",
         "emailSubtitle": "Zadajte Váš e-mail pre zdarma fotku.",
         "emailPlaceholder": "vas@email.com",
         "emailButton": "Pokračovať a odomknúť",
