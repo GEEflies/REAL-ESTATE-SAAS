@@ -41,7 +41,8 @@ export function EnhanceModeSelector({
     modeTitle
 }: EnhanceModeSelectorProps) {
     const t = useTranslations('Enhance')
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false) // Mobile Sheet State
+    const [isExpanded, setIsExpanded] = useState(true) // Desktop Collapsible State
     const [isMobile, setIsMobile] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -56,11 +57,12 @@ export function EnhanceModeSelector({
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false)
+                // Only close mobile sheet on click outside
+                if (isMobile) setIsOpen(false)
             }
         }
 
-        if (isOpen && !isMobile) {
+        if (isOpen && isMobile) {
             document.addEventListener('mousedown', handleClickOutside)
             return () => document.removeEventListener('mousedown', handleClickOutside)
         }
@@ -76,7 +78,6 @@ export function EnhanceModeSelector({
     const ADDONS: { id: EnhanceAddon; icon: any; labelKey: string; descKey: string }[] = [
         { id: 'window', icon: AppWindow, labelKey: 'modes.window.label', descKey: 'modes.window.description' },
         { id: 'sky', icon: CloudSun, labelKey: 'modes.sky.label', descKey: 'modes.sky.description' },
-        { id: 'white_balance', icon: Scale, labelKey: 'modes.white_balance.label', descKey: 'modes.white_balance.description' },
         { id: 'perspective', icon: Ruler, labelKey: 'modes.perspective.label', descKey: 'modes.perspective.description' },
         { id: 'privacy', icon: Lock, labelKey: 'modes.privacy.label', descKey: 'modes.privacy.description' },
     ]
@@ -89,14 +90,21 @@ export function EnhanceModeSelector({
                     {modeTitle}
                 </h2>
 
-                {/* Desktop Dropdown Trigger */}
+                {/* Desktop Toggle or Mobile Sheet Trigger */}
                 <div className="relative" ref={dropdownRef}>
                     <button
-                        onClick={() => !disabled && setIsOpen(!isOpen)}
+                        onClick={() => {
+                            if (disabled) return
+                            if (isMobile) {
+                                setIsOpen(true)
+                            } else {
+                                setIsExpanded(!isExpanded)
+                            }
+                        }}
                         disabled={disabled}
                         className={cn(
                             "w-full bg-white border-2 rounded-2xl p-4 flex items-center justify-between shadow-sm transition-all cursor-pointer group",
-                            isOpen ? "border-blue-500 ring-4 ring-blue-50" : "border-blue-100 hover:border-blue-300",
+                            (isMobile ? isOpen : isExpanded) ? "border-blue-500 ring-4 ring-blue-50" : "border-blue-100 hover:border-blue-300",
                             disabled && "opacity-50 cursor-not-allowed"
                         )}
                     >
@@ -116,60 +124,39 @@ export function EnhanceModeSelector({
                         )}
                         <ChevronDown className={cn(
                             "w-5 h-5 text-gray-400 transition-transform duration-200",
-                            isOpen && "rotate-180"
+                            (isMobile ? isOpen : isExpanded) && "rotate-180"
                         )} />
                     </button>
 
-                    {/* Desktop Dropdown Menu */}
+                    {/* Desktop Collapsible Addons Layout */}
                     <AnimatePresence>
-                        {isOpen && !isMobile && (
+                        {isExpanded && !isMobile && (
                             <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.15 }}
-                                className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-blue-100 rounded-2xl shadow-xl z-50 overflow-hidden"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                className="overflow-hidden"
                             >
-                                <div className="p-2 space-y-1">
-                                    {modes.map((mode) => (
-                                        <button
-                                            key={mode.id}
-                                            onClick={() => mode.id !== 'coming_soon' && handleModeSelect(mode.id)}
-                                            disabled={mode.id === 'coming_soon'}
-                                            className={cn(
-                                                "w-full flex items-center gap-4 p-3 rounded-xl text-left transition-all",
-                                                mode.id === 'coming_soon'
-                                                    ? "opacity-60 cursor-not-allowed bg-gray-50 border border-dashed border-gray-200"
-                                                    : selectedMode === mode.id
-                                                        ? "bg-blue-50 border border-blue-200 cursor-pointer"
-                                                        : "hover:bg-gray-50 border border-transparent cursor-pointer"
-                                            )}
-                                        >
-                                            <div className={cn(
-                                                "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
-                                                mode.id === 'coming_soon' ? "bg-gray-100" : (selectedMode === mode.id ? "bg-blue-100" : "bg-gray-100")
-                                            )}>
-                                                <mode.icon className={cn(
-                                                    "w-5 h-5",
-                                                    mode.id === 'coming_soon' ? "text-gray-400" : (selectedMode === mode.id ? "text-blue-600" : "text-gray-500")
-                                                )} />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className={cn(
-                                                    "font-bold text-sm",
-                                                    selectedMode === mode.id ? "text-blue-700" : "text-gray-900"
-                                                )}>
-                                                    {mode.id === 'coming_soon' ? t('modes.coming_soon.label') : mode.label}
-                                                </div>
-                                                <div className="text-xs text-gray-500 truncate">
-                                                    {mode.id === 'coming_soon' ? t('modes.coming_soon.description') : mode.description}
-                                                </div>
-                                            </div>
-                                            {selectedMode === mode.id && (
-                                                <Check className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                                            )}
-                                        </button>
-                                    ))}
+                                <div className="pt-6">
+                                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2 px-1">
+                                        <Sparkles className="w-3 h-3" />
+                                        {t('addons.title') || "Optional Add-ons"}
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 p-1">
+                                        {ADDONS.map(addon => (
+                                            <EnhanceAddonCheckbox
+                                                key={addon.id}
+                                                id={addon.id}
+                                                label={t(addon.labelKey)}
+                                                description={t(addon.descKey)}
+                                                icon={addon.icon}
+                                                checked={selectedAddons.includes(addon.id)}
+                                                onChange={() => onToggleAddon(addon.id)}
+                                                disabled={disabled}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </motion.div>
                         )}
@@ -234,28 +221,30 @@ export function EnhanceModeSelector({
                 )}
             </AnimatePresence>
 
-            {/* Addon Checkboxes Section */}
-            <div>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <Sparkles className="w-3 h-3" />
-                    {t('addons.title') || "Optional Add-ons"}
-                </h3>
+            {/* Mobile Addon Checkboxes Section (Always visible below sheet) */}
+            {isMobile && (
+                <div>
+                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <Sparkles className="w-3 h-3" />
+                        {t('addons.title') || "Optional Add-ons"}
+                    </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                    {ADDONS.map(addon => (
-                        <EnhanceAddonCheckbox
-                            key={addon.id}
-                            id={addon.id}
-                            label={t(addon.labelKey)}
-                            description={t(addon.descKey)}
-                            icon={addon.icon}
-                            checked={selectedAddons.includes(addon.id)}
-                            onChange={() => onToggleAddon(addon.id)}
-                            disabled={disabled}
-                        />
-                    ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        {ADDONS.map(addon => (
+                            <EnhanceAddonCheckbox
+                                key={addon.id}
+                                id={addon.id}
+                                label={t(addon.labelKey)}
+                                description={t(addon.descKey)}
+                                icon={addon.icon}
+                                checked={selectedAddons.includes(addon.id)}
+                                onChange={() => onToggleAddon(addon.id)}
+                                disabled={disabled}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }
