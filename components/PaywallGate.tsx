@@ -100,13 +100,12 @@ export function PaywallGate({ open, onClose, defaultTab = 'limitedOffer', showOn
 
             // For pay-per-image, use the dedicated endpoint
             if (tier === 'pay_per_image') {
-                // Get auth token from session storage
-                const tokenData = sessionStorage.getItem('sb-access-token') ||
-                    localStorage.getItem('sb-access-token')
+                // Get auth token from Supabase session
+                const { data: { session } } = await (await import('@/lib/supabase-auth')).supabaseAuth.auth.getSession()
 
                 const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-                if (tokenData) {
-                    headers['Authorization'] = `Bearer ${tokenData}`
+                if (session?.access_token) {
+                    headers['Authorization'] = `Bearer ${session.access_token}`
                 }
 
                 const response = await fetch('/api/checkout/pay-per-image', {
