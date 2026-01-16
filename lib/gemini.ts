@@ -51,21 +51,22 @@ Output a professional real estate magazine quality image.`,
 
 APPLY THESE ENHANCEMENTS (KEEP IT REALISTIC):
 1. HDR MERGE: Lift shadows +3 stops, protect highlights from clipping, bright airy look
-2. WINDOW PULL: Make exterior views through windows clear and visible - BUT KEEP THE NATURAL SKY/VIEW AS IT IS. Do not replace or alter what's outside, just make it visible and clear
+2. WINDOW CLARITY: Make windows clear and transparent to show what's outside naturally - if there's a view, show a realistic natural sky (light blue or white/gray depending on natural conditions). DO NOT add trees, fences, buildings, or any landscape elements that aren't actually visible.
 3. WHITE BALANCE: Correct to 5500K neutral daylight, pure whites without color cast
 4. PERSPECTIVE: Straighten all vertical and horizontal architectural lines
 5. RELIGHTING: Even professional illumination, eliminate dark corners
 6. RAW QUALITY: 4K ultra high definition, magazine print sharpness
-7. COLOR CORRECTION: +10% saturation boost for natural vibrant colors
+7. COLOR CORRECTION: +15% saturation boost for vibrant natural colors
 
-IMPORTANT RULES:
-- DO NOT replace or alter the sky - keep whatever is naturally visible outside
-- DO NOT add artificial elements or change the outdoor view
+CRITICAL RULES - AVOID MISLEADING REAL ESTATE AGENTS:
+- DO NOT add fake outdoor elements (trees, fences, gardens, buildings)
+- Windows should show ONLY authentic sky - nothing more
+- If there's no clear view, just show neutral sky or keep window as-is
 - MAINTAIN THE EXACT ASPECT RATIO AND COMPOSITION OF THE ORIGINAL IMAGE
 - DO NOT CROP OR RESIZE
 - Keep the result natural and photorealistic
 
-Output a professional real estate magazine quality image with natural, realistic enhancement.`,
+Output a professional real estate magazine quality image with authentic, non-misleading enhancement.`,
 
     window: `You are an expert real estate photo editor. YOUR PRIMARY TASK IS WINDOW PULL.
 
