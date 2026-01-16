@@ -263,14 +263,14 @@ PRIORITY: Perfect architectural geometry and symmetry
 !!!!! ABSOLUTE TOP PRIORITY !!!!!
 1. BLUR ALL LICENSE PLATES COMPLETELY
    - Find EVERY license plate in the image
-   - Apply STRONG HEAVY BLUR (20+ pixels)
+   - Apply STRONG HEAVY BLUR (30+ pixels)
    - The text must be 100% UNREADABLE
    - This is MANDATORY and CRITICAL
 
 2. BLUR ALL FACES IN PHOTOS/FRAMES
    - Any photos on walls showing faces - blur them
    - Any people visible - blur their faces
-   - Apply STRONG HEAVY BLUR (20+ pixels)
+   - Apply STRONG HEAVY BLUR (30+ pixels)
    - The face must be 100% UNREADABLE
    - This is MANDATORY and CRITICAL
 
