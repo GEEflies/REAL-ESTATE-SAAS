@@ -310,7 +310,7 @@
             "title": "Pay Per Image",
             "description": "Enhance images whenever you need and pay as you go",
             "perImage": "image",
-            "invoiceNote": "Downloaded images are invoiced at the end of the month",
+            "invoiceNote": "Downloaded images are invoiced at the end of the week",
             "features": {
                 "0": "Generated in 30 seconds",
                 "1": "Latest AI model",

@@ -464,7 +464,7 @@
             "title": "Platba za obrázok",
             "description": "Vylepšujte obrázky kedykoľvek a plaťte priebežne",
             "perImage": "obrázok",
-            "invoiceNote": "Stiahnuté obrázky sú fakturované na konci mesiaca",
+            "invoiceNote": "Stiahnuté obrázky sú fakturované na konci týždňa",
             "features": {
                 "0": "Vygenerované za 30s",
                 "1": "Najnovší AI model",
