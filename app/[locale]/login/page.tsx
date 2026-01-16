@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import Image from 'next/image'
-import { signInWithEmail, signInWithGoogle, setRememberMe } from '@/lib/supabase-auth'
+import { signInWithEmail, signInWithGoogle, setRememberMe, getSession } from '@/lib/supabase-auth'
 
 export default function LoginPage() {
     const t = useTranslations('Login')
@@ -21,6 +21,50 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [rememberMe, setRememberMeState] = useState(false)
+    const [checkingAuth, setCheckingAuth] = useState(true)
+
+    // Check for existing session on mount
+    useEffect(() => {
+        const checkExistingSession = async () => {
+            try {
+                const session = await getSession()
+
+                if (session) {
+                    // User is already logged in, redirect to dashboard
+                    const redirectParam = searchParams.get('redirect')
+
+                    // If redirect param contains full URL (from app subdomain), use it
+                    if (redirectParam && redirectParam.startsWith('http')) {
+                        window.location.href = decodeURIComponent(redirectParam)
+                        return
+                    }
+
+                    // Determine the target URL
+                    const dashboardPath = redirectParam || '/dashboard'
+
+                    // Check if we're in production
+                    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('aurix.pics')
+
+                    if (isProduction) {
+                        // In production, always redirect to app subdomain for dashboard
+                        window.location.href = `https://app.aurix.pics${dashboardPath}`
+                    } else {
+                        // On localhost, stay on same domain
+                        router.push(dashboardPath)
+                    }
+                } else {
+                    // No session, show login form
+                    setCheckingAuth(false)
+                }
+            } catch (error) {
+                console.error('Error checking session:', error)
+                // On error, show login form
+                setCheckingAuth(false)
+            }
+        }
+
+        checkExistingSession()
+    }, [router, searchParams])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -104,6 +148,18 @@ export default function LoginPage() {
             console.error('Google login error:', error)
             toast.error(t('errors.googleLogin'))
         }
+    }
+
+    // Show loading state while checking auth
+    if (checkingAuth) {
+        return (
+            <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
+                <div className="flex flex-col items-center gap-3">
+                    <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                    <p className="text-gray-600">Checking authentication...</p>
+                </div>
+            </div>
+        )
     }
 
     return (

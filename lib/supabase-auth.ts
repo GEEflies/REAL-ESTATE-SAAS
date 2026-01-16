@@ -47,11 +47,17 @@ const customCookieStorage = {
         const domainProp = isProd ? '; domain=.aurix.pics' : ''
         const secureProp = window.location.protocol === 'https:' ? '; Secure' : ''
 
-        // Use 2 weeks (1,209,600 seconds) if Remember Me is enabled, otherwise use 1 year as default
+        // Use 2 weeks (1,209,600 seconds) if Remember Me is enabled
+        // Otherwise use session cookie (expires when browser closes)
         const remember = getRememberMe()
-        const maxAge = remember ? 1209600 : 31536000 // 2 weeks vs 1 year
 
-        document.cookie = `${key}=${encodeURIComponent(value)}${domainProp}; path=/; max-age=${maxAge}; SameSite=Lax${secureProp}`
+        let cookieString = `${key}=${encodeURIComponent(value)}${domainProp}; path=/; SameSite=Lax${secureProp}`
+
+        if (remember) {
+            cookieString += '; max-age=1209600' // 2 weeks
+        }
+
+        document.cookie = cookieString
     },
     removeItem: (key: string) => {
         if (typeof document === 'undefined') return
