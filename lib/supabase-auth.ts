@@ -9,6 +9,28 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.warn('Missing Supabase environment variables for auth - some features will be limited')
 }
 
+// Remember Me preference storage
+let rememberMeEnabled = false
+
+// Helper functions for Remember Me
+export function setRememberMe(enabled: boolean) {
+    rememberMeEnabled = enabled
+    if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('aurix-remember-me', enabled ? 'true' : 'false')
+    }
+}
+
+export function getRememberMe(): boolean {
+    if (typeof localStorage !== 'undefined') {
+        const stored = localStorage.getItem('aurix-remember-me')
+        if (stored !== null) {
+            rememberMeEnabled = stored === 'true'
+            return rememberMeEnabled
+        }
+    }
+    return rememberMeEnabled
+}
+
 // Custom storage provider to share session between subdomains (www and app)
 const customCookieStorage = {
     getItem: (key: string) => {
@@ -25,7 +47,11 @@ const customCookieStorage = {
         const domainProp = isProd ? '; domain=.aurix.pics' : ''
         const secureProp = window.location.protocol === 'https:' ? '; Secure' : ''
 
-        document.cookie = `${key}=${encodeURIComponent(value)}${domainProp}; path=/; max-age=31536000; SameSite=Lax${secureProp}`
+        // Use 2 weeks (1,209,600 seconds) if Remember Me is enabled, otherwise use 1 year as default
+        const remember = getRememberMe()
+        const maxAge = remember ? 1209600 : 31536000 // 2 weeks vs 1 year
+
+        document.cookie = `${key}=${encodeURIComponent(value)}${domainProp}; path=/; max-age=${maxAge}; SameSite=Lax${secureProp}`
     },
     removeItem: (key: string) => {
         if (typeof document === 'undefined') return

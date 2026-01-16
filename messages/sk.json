@@ -20,6 +20,7 @@
         "noAccount": "Nemáte účet?",
         "getStarted": "Začať",
         "success": "Úspešne prihlásený!",
+        "rememberMe": "Zapamätať si ma na 2 týždne",
         "errors": {
             "fillAll": "Prosím vyplňte všetky polia",
             "googleLogin": "Nepodarilo sa spustiť prihlásenie cez Google",
@@ -782,6 +783,7 @@
         "terms": "Registráciou súhlasíte s našimi Podmienkami používania a Ochranou súkromia.",
         "haveAccount": "Máte už účet?",
         "login": "Prihlásiť sa",
+        "rememberMe": "Zapamätať si ma na 2 týždne",
         "error": {
             "title": "Prístup zamietnutý",
             "goToPricing": "Zobraziť cenník"

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import Image from 'next/image'
-import { signInWithEmail, signInWithGoogle } from '@/lib/supabase-auth'
+import { signInWithEmail, signInWithGoogle, setRememberMe } from '@/lib/supabase-auth'
 
 export default function LoginPage() {
     const t = useTranslations('Login')
@@ -20,6 +20,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [rememberMe, setRememberMeState] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -32,6 +33,9 @@ export default function LoginPage() {
         setIsLoading(true)
 
         try {
+            // Set Remember Me preference before signing in
+            setRememberMe(rememberMe)
+
             const { data, error } = await signInWithEmail(email, password)
 
             if (error) {
@@ -173,6 +177,20 @@ export default function LoginPage() {
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
+                        </div>
+
+                        {/* Remember Me Checkbox */}
+                        <div className="flex items-center">
+                            <input
+                                id="remember-me"
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMeState(e.target.checked)}
+                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+                            />
+                            <label htmlFor="remember-me" className="ml-2 text-sm text-gray-600 cursor-pointer">
+                                {t('rememberMe')}
+                            </label>
                         </div>
 
                         {/* Submit Button */}

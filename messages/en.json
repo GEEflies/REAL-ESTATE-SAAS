@@ -629,6 +629,7 @@
         "terms": "By signing up, you agree to our Terms of Service and Privacy Policy.",
         "haveAccount": "Already have an account?",
         "login": "Log in",
+        "rememberMe": "Remember me for 2 weeks",
         "error": {
             "title": "Access Denied",
             "goToPricing": "View Pricing Plans"
@@ -683,6 +684,7 @@
         "noAccount": "Don't have an account?",
         "getStarted": "Get Started",
         "success": "Logged in successfully!",
+        "rememberMe": "Remember me for 2 weeks",
         "errors": {
             "fillAll": "Please fill in all fields",
             "googleLogin": "Failed to initiate Google login",

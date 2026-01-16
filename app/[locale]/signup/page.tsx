@@ -31,6 +31,7 @@ export default function SignupPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isVerifying, setIsVerifying] = useState(true)
+    const [rememberMe, setRememberMeState] = useState(false)
 
     // Session state
     const [sessionData, setSessionData] = useState<SessionData | null>(null)
@@ -114,6 +115,10 @@ export default function SignupPage() {
         setIsLoading(true)
 
         try {
+            // Set Remember Me preference before signing up
+            const { setRememberMe } = await import('@/lib/supabase-auth')
+            setRememberMe(rememberMe)
+
             // Get session parameters (either simulated or Stripe)
             const simulatedSession = searchParams.get('session')
             const stripeSessionId = searchParams.get('session_id')
@@ -315,6 +320,20 @@ export default function SignupPage() {
                                     minLength={8}
                                 />
                             </div>
+                        </div>
+
+                        {/* Remember Me Checkbox */}
+                        <div className="flex items-center">
+                            <input
+                                id="remember-me-signup"
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMeState(e.target.checked)}
+                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+                            />
+                            <label htmlFor="remember-me-signup" className="ml-2 text-sm text-gray-600 cursor-pointer">
+                                {t('rememberMe')}
+                            </label>
                         </div>
 
                         {/* Submit Button */}
