@@ -90,10 +90,10 @@
         "footerRights": "All rights reserved."
     },
     "Enhance": {
-        "badge": "AI Enhancement",
+        "badge": "AI Enhancer",
         "title": "Enhance Your Photo",
         "subtitle": "Select an enhancement mode below, then upload your image.",
-        "modeTitle": "Choose Enhancement Mode",
+        "modeTitle": "CHOOSE ENHANCEMENT MODE",
         "selected": "Selected",
         "addons": {
             "title": "Optional Add-on Features"
@@ -151,7 +151,7 @@
             "download": "Download Standard Enhanced"
         },
         "batch": {
-            "title": "Batch Process (Max 20 images)",
+            "title": "Batch",
             "addMore": "Add More",
             "clearAll": "Clear All",
             "start": "Start Enhancement",
@@ -187,16 +187,23 @@
         "prompt": {
             "label": "What would you like to remove?",
             "placeholder": "e.g., trash can in the corner, power lines in the sky",
-            "hint": "Be specific about the object and its location for best results."
+            "hint": "Be descriptive for best results",
+            "batchHint": "Tip: This prompt applies to all images. Be specific!"
         },
         "removeButton": "Remove Object",
-        "processing": "Removing object...",
+        "processing": "Removing...",
         "processingHint": "This may take 15-30 seconds",
         "result": {
             "title": "Object Removed",
             "download": "Download Result",
             "removeAnother": "Remove Another Object"
-        }
+        },
+        "batch": {
+            "title": "Batch Object Removal",
+            "addMore": "Add More",
+            "clearAll": "Clear All"
+        },
+        "selectImage": "Please select an image first"
     },
     "Dropzone": {
         "dragDrop": "Click here to select an image",

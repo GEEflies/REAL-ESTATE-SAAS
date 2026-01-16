@@ -194,30 +194,32 @@ export default function DashboardRemovePage() {
                 <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                     {t('title')}
                 </h1>
-                <p className="text-gray-600">
-                    {t('batch.title') || 'Batch Object Removal'} - {queue.length}/20 {t('selected')}
-                </p>
+                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+                    {t('title')}
+                </h1>
             </div>
 
-            {/* Removal Prompt Input (Replaces Mode Selector) */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                    <Wand2 className="w-5 h-5 text-purple-600" />
-                    <label className="text-sm font-semibold text-gray-900">
-                        {t('prompt.label')}
-                    </label>
+            {/* Removal Prompt Input (Redesigned) */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-1 mb-8 shadow-sm">
+                <div className="relative">
+                    <div className="absolute top-4 left-4 pointer-events-none">
+                        <Wand2 className="w-5 h-5 text-gray-400" />
+                    </div>
+                    <textarea
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        placeholder={t('prompt.placeholder')}
+                        className="w-full min-h-[100px] pl-12 pr-4 py-4 rounded-xl border-none focus:ring-0 text-lg placeholder:text-gray-400 resize-none bg-transparent"
+                        disabled={isProcessing || queue.some(i => i.status === 'processing')}
+                    />
+                    <div className="px-4 pb-3 flex justify-between items-center border-t border-gray-100 pt-3">
+                        <span className="text-xs font-medium text-gray-500 flex items-center gap-1.5">
+                            <AlertCircle className="w-3.5 h-3.5" />
+                            {t('prompt.batchHint') || 'Tip: Be specific about what to remove'}
+                        </span>
+                        {/* Character count or extra actions could go here */}
+                    </div>
                 </div>
-                <textarea
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder={t('prompt.placeholder')}
-                    className="w-full h-24 px-4 py-3 rounded-xl border border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none resize-none text-base"
-                    disabled={isProcessing || queue.some(i => i.status === 'processing')}
-                />
-                <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    <span>{t('prompt.batchHint') || 'This prompt will be applied to all images in the queue'}</span>
-                </p>
             </div>
 
             {/* Queue UI */}

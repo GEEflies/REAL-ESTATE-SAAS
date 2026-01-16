@@ -181,10 +181,10 @@
         "footerRights": "Všetky práva vyhradené."
     },
     "Enhance": {
-        "badge": "AI Vylepšenie",
+        "badge": "AI Vylepšovanie",
         "title": "Vylepšite svoju fotku",
         "subtitle": "Vyberte režim vylepšenia nižšie a potom nahrajte svoj obrázok.",
-        "modeTitle": "Vyberte režim vylepšenia",
+        "modeTitle": "VYBERTE REŽIM VYLEPŠENIA",
         "selected": "Vybrané",
         "addons": {
             "title": "Voliteľné vylepšenia"
@@ -242,11 +242,11 @@
             "download": "Stiahnuť Štandardnú Verziu"
         },
         "batch": {
-            "title": "Hromadné spracovanie (Max 20 obrázkov)",
+            "title": "Dávka",
+            "processing": "Spracúvam...",
+            "start": "Spustiť vylepšovanie",
             "addMore": "Pridať ďalšie",
-            "clearAll": "Vymazať všetko",
-            "start": "Spustiť vylepšenie",
-            "processing": "Spracováva sa..."
+            "clearAll": "Vymazať všetko"
         },
         "replicateCard": {
             "title": "4K Upscaled (Replicate)",
