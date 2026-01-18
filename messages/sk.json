@@ -452,7 +452,7 @@
             }
         },
         "mostPopular": "Najpopulárnejšie",
-        "getStarted": "Začať Zadarmo",
+        "getStarted": "Začať ZADARMO",
         "upgrade": "Inovovať",
         "currentPlan": "Aktuálny Plán"
     },
@@ -519,7 +519,7 @@
     "PreFooter": {
         "title": "Pripravení začať?",
         "subtitle": "Pridajte sa k tisíckam realitných profesionálov, ktorí šetria čas s AI.",
-        "cta": "Začať zadarmo",
+        "cta": "Začať ZADARMO",
         "demo": "Pozrieť demo"
     },
     "Footer": {

@@ -157,6 +157,8 @@ export default function HomePage() {
                       <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                       <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                     </div>
+                    <span className="text-[10px] font-medium text-white hidden sm:inline-block md:hidden">{t('usedBy')}</span>
+                    <span className="text-[10px] font-medium text-white sm:hidden max-w-[120px] truncate">{t('usedBy')}</span>
                   </div>
                 </div>
               </div>
