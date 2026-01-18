@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Download, Loader2, Eraser, Trash2, Plus, AlertCircle, Wand2 } from 'lucide-react'
+import { Download, Loader2, Eraser, Trash2, Plus, AlertCircle, Wand2, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -255,6 +255,15 @@ export default function DashboardRemovePage() {
                                             </div>
                                         </div>
                                     )}
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            removeQueueItem(item.id)
+                                        }}
+                                        className="absolute top-2 right-2 p-1.5 bg-black/20 hover:bg-red-500 backdrop-blur-sm rounded-full text-white transition-colors z-20"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
                                 </div>
                                 <div className="p-3 flex items-center justify-between">
                                     <span className="text-xs font-mono truncate max-w-[100px]">{item.file.name}</span>

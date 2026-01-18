@@ -266,6 +266,7 @@
         "errorLabel": "Chyba"
     },
     "Remove": {
+        "errorLabel": "Chyba",
         "badge": "AI Odstránenie Objektov",
         "title": "Odstrániť nežiaduce objekty",
         "subtitle": "Nahrajte fotku a povedzte nám, čo máme odstrániť. Naša AI to plynule vymaže a doplní pozadie.",

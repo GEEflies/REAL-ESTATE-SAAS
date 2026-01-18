@@ -171,6 +171,7 @@
         "errorLabel": "Error"
     },
     "Remove": {
+        "errorLabel": "Error",
         "badge": "AI Object Removal",
         "title": "Remove Unwanted Objects",
         "subtitle": "Upload a photo and tell us what to remove. Our AI will seamlessly erase it and fill in the background.",
