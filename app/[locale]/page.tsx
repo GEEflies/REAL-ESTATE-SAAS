@@ -1,7 +1,7 @@
 'use client'
 
 import { Link } from '@/navigation'
-import { ArrowRight, Play, Star, Zap, ShieldCheck, TrendingDown } from 'lucide-react'
+import { ArrowRight, Play, Star, StarHalf, Zap, ShieldCheck, TrendingDown } from 'lucide-react'
 import { AnimatedZap, AnimatedShield, AnimatedTrend } from '@/components/HeroIcons'
 import { Button } from '@/components/ui/button'
 import { ImageCompareSlider } from '@/components/ImageCompareSlider'
@@ -155,7 +155,10 @@ export default function HomePage() {
                       <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                       <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                       <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                      <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                      <div className="relative w-3 h-3">
+                        <Star className="w-3 h-3 text-yellow-500" />
+                        <StarHalf className="w-3 h-3 text-yellow-500 fill-yellow-500 absolute top-0 left-0" />
+                      </div>
                     </div>
                     <span className="text-[10px] font-medium text-white/90 antialiased hidden sm:inline-block md:hidden">{t('usedByMobile')}</span>
                     <span className="text-[10px] font-medium text-white/90 antialiased sm:hidden max-w-[120px] truncate">{t('usedByMobile')}</span>
@@ -235,7 +238,10 @@ export default function HomePage() {
                     <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                     <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                     <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <div className="relative w-4 h-4">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <StarHalf className="w-4 h-4 text-yellow-500 fill-yellow-500 absolute top-0 left-0" />
+                    </div>
                   </div>
                   <span className="text-sm font-medium text-white">{t('usedBy')}</span>
                 </div>
