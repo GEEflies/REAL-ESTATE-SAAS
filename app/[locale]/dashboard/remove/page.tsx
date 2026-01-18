@@ -128,7 +128,7 @@ export default function DashboardRemovePage() {
                     body: JSON.stringify({
                         image: base64,
                         mimeType: mimeType,
-                        prompt: prompt.trim(),
+                        objectToRemove: prompt.trim(),
                     }),
                 })
 
