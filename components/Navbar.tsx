@@ -51,8 +51,8 @@ export function Navbar() {
 
     const navItems = [
         { href: '/', label: t('home'), icon: Home },
-        { href: '/enhance', label: t('enhance'), icon: Sparkles },
-        { href: '/remove', label: t('remove'), icon: Eraser },
+        { href: '/vylepsit', label: t('enhance'), icon: Sparkles },
+        { href: '/odstranit', label: t('remove'), icon: Eraser },
     ]
 
     const dashboardHref = process.env.NODE_ENV === 'production'
